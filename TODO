@@ -1,0 +1,20 @@
+  * Write documentation
+  * Create task system
+    * Rebuild -- to rebuild an index
+    * Optimize -- to optimize an index
+    * Generate -- to generate indices from YAML file 
+    * About -- to display information about an index
+  * Create basic search module
+  * Create generator to build search systems from YAML
+  * Write sfPropelSearchPlugin/sfDoctrineSearchPlugin to index Propel/Doctrine documents
+    * Basic column to field mapping
+    * Relationships and foreign keys
+    * Transparency option to retrieve the original Propel/Doctrine object
+  * Write sfActionSearchPlugin to index symfony actions
+  * Create xfIndexCollection to hold a collection of indices
+    * i18n support
+  * Write sfHighlighterPlugin to highlight search results
+  * Write sfCategorySearchPlugin to incorporate categories
+  * Write sfPdfSearchPlugin to index PDF files
+
+  * Do we want/need a sfSphinxPlugin? sfMyIsamFulltextPlugin?

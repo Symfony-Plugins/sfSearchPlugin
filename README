@@ -1,0 +1,104 @@
+= Introduction =
+sfSearch is an flexible search engine platform for symfony.  Its functionality is broken down into components that users can cherry-pick as required. sfSearch's goal is to provide a flexible search engine for users and create an extensible platform for developers.
+
+Warning: This documentation is a work-in-progress and may be difficult to read. 
+
+= Dependencies =
+  * symfony 1.1
+  * PHP 5.2
+
+= Features =
+  * Flexible and modular architecture
+  * Decoupled search engine backend
+  * Full unit test coverage
+
+= Installation =
+sfSearch is currently only available from symfony's subversion repository:
+{{{
+svn co http://svn.symfony-project.com/plugins/sfSearchPlugin/trunk
+}}}
+
+= Creating an Index =
+Central to sfSearch's architecture is an index.  The index contains all the information that the search engine searches on. As a result, the primary operations for an index are add, remove, and find.   
+
+To create your index, create the folder {{{ lib/search }}} in your project root directory. Create a file titled "MyIndex.class.php" and in it put the following contents:
+{{{
+class MyIndex extends xfIndex
+{
+  protected function configure()
+  {
+  }
+}
+}}}
+
+If you have used symfony 1.1's new form system, you'll notice a similarity to the sfForm base class.  sfSearch works much in the same way.
+
+We now must give our index an engine to store documents that we are going to add, remove, and search on.  sfSearch supports many different types of search engine backends, but the most widely used engine is Lucene. To tell our index to use a Lucene index, we install the [[sfLucenePlugin]] and then simply do:
+{{{
+protected function configure()
+{
+  $this->setEngine(new xfLuceneEngine(sfConfig::get('sf_data_dir') . '/index/MyIndex'));
+}
+}}}
+
+== Services ==
+The second central idea to sfSearch is a service.  We define a service for each type of data that we have.  For example, if we are indexinga a Book model and a Reader model, we would create one service for the books and another service for the readers.  We then add these services to our service registry.:w
+
+Services harnesses composition to maintain maximum flexibility and modularity. This allows us to configure services to our exact needs. We are able to configure:
+  * what the service identifies
+  * how the service builds documents
+  * how the service displays results
+
+The following code snippet demonstrates this (using the [[sfPropelSearchPlugin]]):
+{{{
+$service = new xfService(new xfPropelIdentifier('Book'));
+$service->addBuilder(new xfPropelBuilder(array(new xfField('title', xfField::KEYWORD), new xfField('author', xfField::KEYWORD))));
+$service->addRetort(new xfPropelRetort);
+}}}
+
+The first line creates a service named 'Book' that uses the Propel identifier.  The second line tells this service to use a Propel builder, which will extract data from a Propel model and add it to the sfSearch document.  The third and final line configures the result object.
+
+After building the service, we must add it to a service registry.  A service registry collects services:
+{{{
+$service = new xfService('Book', new xfPropelIdentifier('Book'));
+$service->addBuilder(new xfPropelBuilder(array(new xfField('title', xfField::KEYWORD), new xfField('author', xfField::KEYWORD))));
+$service->addRetort(new xfPropelRetort);
+
+$registry = new xfServiceRegistry;
+$registry->register($service);
+}}}
+
+To tell our index to use this configuration, we simply do:
+{{{
+protected function configure()
+{
+  $service = new xfService('Book', new xfPropelIdentifier('Book'));
+  $service->addBuilder(new xfPropelBuilder(array(new xfField('title', xfField::KEYWORD), new xfField('author', xfField::KEYWORD))));
+  $service->addRetort(new xfPropelRetort);
+
+  $registry = new xfServiceRegistry;
+  $registry->register($service);
+
+  $this->setServiceRegistry($registry);
+}
+}}}
+
+= Using an Index =
+
+= Searching an Index =
+
+= Packaages =
+sfSearch is the base package for a search system.   The core of its functionality is broken down into separate components that plug into sfSearch.
+
+== Engine Backends ==
+  * [[sfLucenePlugin]] to use Zend_Search_Lucene as the backend
+
+== Indexers ==
+  * [[sfPropelSearchPlugin]] to index Propel models
+  * [[sfDoctrineSearchPlugin]] to index Doctrine models
+  * [[sfActionSearchPlugin]] to index symfony actions
+
+== User Interface ==
+  * [[sfHighlighterSearchPlugin]] to highlight search results
+  * [[sfCategorySearchPlugin]] to implement search categoris 
+

@@ -1,0 +1,42 @@
+# A sample YAML file that generates a search index.  The name of this file determines the name of the index.
+#
+# The immediate children of the services define which search plugin should handle this part of the code.
+
+services:
+  propel:
+    Book:
+      fields:
+        id: indexed
+        title: keyword
+        author: keyword
+        description: text
+      route: book/show?id=$id$
+    Reader: 
+      fields:
+        name: 
+          type: keyword
+          boost: 4
+        bio: text
+      route: reader/show?name=$name$
+      peer: ReaderPeer
+      select_method: doSelect
+      count_method: doCount
+      validator_method: isIndexable
+      boost_method: getSearchBoost
+  actions:
+    -
+      url: legal/tos
+      authenticated: true
+      credentials: [admin, overlord]
+  pdf:
+    base: %SF_WEB_DIR%/pdf
+    -
+      file: application.pdf
+      extract_with: Zend_Pdf
+
+engine:
+  class: xfLucene
+  params:
+    location: %SF_DATA_DIR%/search/myindex
+    analyzer: utf8num
+

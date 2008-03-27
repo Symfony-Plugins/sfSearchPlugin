@@ -1,0 +1,73 @@
+<?php
+/**
+ * A service registry holds the services together.
+ *
+ * @package sfSearch
+ * @subpackage Service
+ * @author Carl Vondrick
+ */
+final class xfServiceRegistry
+{
+  /**
+   * The registered services.
+   *
+   * @var array
+   */
+  private $services = array();
+
+  /**
+   * Registers a new service.
+   *
+   * @param xfService $service The service
+   */
+  public function register(xfService $service)
+  {
+    $this->services[$service->getIdentifier()->getName()] = $service;
+  }
+
+  /**
+   * Gets a service from name.
+   *
+   * @param string $name The name
+   * @returns xfService
+   */
+  public function getService($name)
+  {
+    if (!isset($this->services[$name]))
+    {
+      throw new xfServiceNotFoundException('Unable to find service with name ' . $name);
+    }
+
+    return $this->services[$name];
+  }
+
+  /**
+   * Gets all the services.
+   *
+   * @returns array
+   */
+  public function getServices()
+  {
+    return $this->services;
+  }
+
+  /**
+   * Locates a service from input. 
+   *
+   * @param mixed $input
+   * @returns xfService
+   * @throws xfServiceNotFoundException if service is not found
+   */
+  public function locate($input)
+  {
+    foreach ($this->services as $service)
+    {
+      if ($service->getIdentifier()->match($input))
+      {
+        return $service;
+      }
+    }
+
+    throw new xfServiceNotFoundException('Unable to find service from input');
+  }
+}
