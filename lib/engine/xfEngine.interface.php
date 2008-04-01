@@ -1,5 +1,13 @@
 <?php
 /**
+ * This file is part of the sfSearch package.
+ * (c) Carl Vondrick <carl.vondrick@symfony-project.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
+/**
  * An interface for an index.
  *
  * The constructor *should not* open a connection to the index, if it needs to
@@ -29,6 +37,15 @@ interface xfEngine
    * @returns array or SPL Iterator + SPL Countable compatible instance
    */
   public function find(xfCriterion $query);
+
+  /**
+   * Retrieves a document from a guid
+   *
+   * @param string $guid The guid
+   * @returns xfDocument
+   * @throws xfEngineException if guid is not found
+   */
+  public function findGuid($guid);
 
   /**
    * Deletes a GUID

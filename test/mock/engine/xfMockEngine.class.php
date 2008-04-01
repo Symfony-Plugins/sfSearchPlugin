@@ -46,6 +46,11 @@ class xfMockEngine implements xfEngine
     return new ArrayIterator($hits);
   }
 
+  public function findGuid($guid)
+  {
+    return $this->documents[$guid];
+  }
+
   public function count()
   {
     return count($this->documents);

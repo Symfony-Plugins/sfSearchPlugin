@@ -15,9 +15,9 @@ $h->base_dir = realpath(dirname(__FILE__) . '/unit');
 $h->register(sfFinder::type('file')->name('*Test.php')->in($h->base_dir));
 
 $c = new lime_coverage($h);
-$c->extension = '.php';
+$c->extension = '.class.php';
 $c->verbose = true;
 $c->base_dir = realpath(dirname(__FILE__) . '/../lib');
 
-$c->register(sfFinder::type('file')->name('*.php')->prune('vendor')->in($c->base_dir));
+$c->register(sfFinder::type('file')->name('*.class.php')->prune('vendor')->in($c->base_dir));
 $c->run();
