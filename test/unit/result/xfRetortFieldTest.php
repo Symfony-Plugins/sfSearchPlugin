@@ -15,11 +15,11 @@ require 'result/xfDocumentHit.class.php';
 require 'document/xfDocument.class.php';
 require 'document/xfField.class.php';
 require 'document/xfFieldValue.class.php';
-require 'mock/criteria/xfMockCriteria.class.php';
+require 'mock/criteria/xfMockCriterionImplementer.class.php';
 
 $doc = new xfDocument('guid');
 $doc->addField(new xfFieldValue(new xfField('name', xfField::KEYWORD), 'carl'));
-$hit = new xfDocumentHit($doc, new xfMockCriteria);
+$hit = new xfDocumentHit($doc, new xfMockCriterionImplementer);
 
 $t = new lime_test(4, new lime_output_color);
 

@@ -8,7 +8,7 @@
  */
 
 /**
- * A common criteria to combine criterions.
+ * A common criteria to combine operators.
  *
  * @package sfSearch
  * @subpackage Criteria
@@ -17,59 +17,37 @@
 final class xfCriteria implements xfCriterion
 {
   /**
-   * The registered criterions.
+   * The registered operators.
    *
    * @var array
    */
-  private $criterions = array();
+  private $operators = array();
 
   /**
    * Adds a criterion.
    *
-   * @param xfCriterion $crit The criterion
+   * @param xfCriteriaOperator $crit The criterion
    */
-  public function add(xfCriterion $crit)
+  public function add(xfCriteriaOperator $crit, $mode = 1)
   {
-    $this->criterions[] = $crit;
+    $this->operators[] = $crit;
   }
 
   /**
-   * Returns all the criterions.
+   * Returns all the operators.
    *
    * @returns array
    */
-  public function getCriterions()
+  public function getOperators()
   {
-    return $this->criterions;
+    return $this->operators;
   }
 
   /**
    * @see xfCriterion
    */
-  public function rewrite(xfCriterionRewriter $rewriter)
+  public function breakdown()
   {
-    $queries = array();
-
-    foreach ($this->criterions as $crit)
-    {
-      $queries[] = $crit->rewrite($rewriter);
-    }
-
-    return $rewriter->createBoolean($queries);
-  }
-
-  /**
-   * @see xfCriterion
-   */
-  public function tokenize($input)
-  {
-    $tokens = array();
-
-    foreach ($this->criterions as $crit)
-    {
-      $tokens = array_merge($tokens, $crit->tokenize($input));
-    }
-
-    return $tokens;
+    return $this;
   }
 }

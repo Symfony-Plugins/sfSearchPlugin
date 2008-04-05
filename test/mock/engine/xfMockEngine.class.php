@@ -40,7 +40,9 @@ class xfMockEngine implements xfEngine
 
     foreach ($this->documents as $result)
     {
-      $hits[] = new xfDocumentHit($result, $query);
+      $imp = new xfMockCriterionImplementer;
+      $imp->c = $query;
+      $hits[] = new xfDocumentHit($result, $imp);
     }
 
     return new ArrayIterator($hits);

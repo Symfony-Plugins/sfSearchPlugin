@@ -17,26 +17,6 @@
 final class xfCriterionField implements xfCriterion
 {
   /**
-   * Flag to match exactly.
-   */
-  const EXACT = 1;
-
-  /**
-   * Flag to tokenize match first.
-   */
-  const TOKENIZE = 2;
-
-  /**
-   * Flag for non-wildcards.
-   */
-  const TAMECARD = 4;
-  
-  /**
-   * Flag to allow wildcards (dependent on engine implementation)
-   */
-  const WILDCARD = 8;
-
-  /**
    * The field name to search on.
    *
    * @var string
@@ -51,24 +31,24 @@ final class xfCriterionField implements xfCriterion
   private $value;
 
   /**
-   * The match mode
+   * The encoding
    *
-   * @var int
+   * @var string
    */
-  private $mode;
+  private $encoding = 'utf8';
 
   /**
    * Constructor to set initial values.
    *
    * @param string $name The field name
    * @param string $value The field value
-   * @param int $mode The field mode (optional)
+   * @param string $encoding The value encoding (optional)
    */
-  public function __construct($name, $value, $mode = 0)
+  public function __construct($name, $value, $encoding = 'utf8')
   {
     $this->name = $name;
     $this->value = $value;
-    $this->mode = $mode;
+    $this->encoding = $encoding;
   }
 
   /**
@@ -92,27 +72,20 @@ final class xfCriterionField implements xfCriterion
   }
 
   /**
-   * Gets the match mdoe.
+   * Gets the field encoding.
    *
-   * @returns int
+   * @returns string
    */
-  public function getMode()
+  public function getEncoding()
   {
-    return $this->mode;
-  }
-
-  /**
-   * @see xfCriterionRewriter
-   */
-  public function rewrite(xfCriterionRewriter $rewriter)
-  {
-    return $rewriter->createField($this->name, $this->value);
+    return $this->encoding;
   }
 
   /**
    * @see xfCriterion
    */
-  public function tokenize($input)
+  public function breakdown()
   {
+    return $this;
   }
 }

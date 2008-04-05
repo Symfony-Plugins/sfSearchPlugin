@@ -27,7 +27,7 @@ final class xfDocumentHit
   /**
    * The matching criterion.
    *
-   * @var xfCriterion
+   * @var xfCriterionImplementer
    */
   private $criterion;
 
@@ -49,10 +49,10 @@ final class xfDocumentHit
    * Constructor to set document and initial options.
    *
    * @param xfDocument $doc The wrapped document
-   * @param xfCriterion $criterion The criterion that matched the document
+   * @param xfCriterionImplementer $criterion The criterion that matched the document
    * @param array $options The initial options
    */
-  public function __construct(xfDocument $doc, xfCriterion $criterion, array $options = array())
+  public function __construct(xfDocument $doc, xfCriterionImplementer $criterion, array $options = array())
   {
     $this->document = $doc;
     $this->criterion = $criterion;
@@ -141,7 +141,7 @@ final class xfDocumentHit
   /**
    * Gets the matching criterion.
    *
-   * @returns xfCriterion
+   * @returns xfCriterionImplementer
    */
   public function getCriterion()
   {

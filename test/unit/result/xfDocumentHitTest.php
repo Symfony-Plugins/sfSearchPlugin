@@ -12,13 +12,13 @@ require dirname(__FILE__) . '/../../bootstrap/unit.php';
 require 'document/xfDocument.class.php';
 require 'result/xfDocumentHit.class.php';
 require 'result/xfResultException.class.php';
-require 'mock/criteria/xfMockCriteria.class.php';
+require 'mock/criteria/xfMockCriterionImplementer.class.php';
 require 'mock/result/xfMockRetort.class.php';
 
 $t = new lime_test(10, new lime_output_color);
 
 $document = new xfDocument('guid');
-$criterion = new xfMockCriteria;
+$criterion = new xfMockCriterionImplementer;
 $hit = new xfDocumentHit($document, $criterion, array('score' => 0.2));
 
 $t->diag('->getOption(), hasOption(), setOption()');

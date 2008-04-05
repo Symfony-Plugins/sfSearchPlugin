@@ -17,7 +17,7 @@ require 'mock/engine/xfMockEngine.class.php';
 require 'document/xfDocument.class.php';
 require 'document/xfField.class.php';
 require 'document/xfFieldValue.class.php';
-require 'mock/criteria/xfMockCriteria.class.php';
+require 'mock/criteria/xfMockCriterionImplementer.class.php';
 require 'result/xfResultIterator.class.php';
 require 'result/xfDocumentHit.class.php';
 require 'event/sfEvent.class.php';
@@ -78,6 +78,6 @@ $t->is(count($engine->getDocuments()), 3, '->rebuild() erases the index and rebu
 
 $t->diag('->find()');
 
-$results = $index->find(new xfMockCriteria);
+$results = $index->find(new xfMockCriterion);
 $t->isa_ok($results, 'xfResultIterator', '->find() returns an xfResultIterator');
 $t->is($results->count(), 3, '->find() returns results that match');

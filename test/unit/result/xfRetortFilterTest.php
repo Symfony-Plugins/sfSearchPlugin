@@ -17,9 +17,9 @@ require 'result/xfResultException.class.php';
 require 'mock/result/xfMockRetort.class.php';
 require 'mock/result/xfMockRetortFilterCallback.class.php';
 require 'document/xfDocument.class.php';
-require 'mock/criteria/xfMockCriteria.class.php';
+require 'mock/criteria/xfMockCriterionImplementer.class.php';
 
-$hit = new xfDocumentHit(new xfDocument('guid'), new xfMockCriteria);
+$hit = new xfDocumentHit(new xfDocument('guid'), new xfMockCriterionImplementer);
 
 $t = new lime_test(6, new lime_output_color);
 

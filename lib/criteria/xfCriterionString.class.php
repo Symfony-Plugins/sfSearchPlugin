@@ -91,33 +91,10 @@ final class xfCriterionString implements xfCriterion
   }
 
   /**
-   * @see xfCriterionRewriter
+   * @see xfCriterion
    */
-  public function rewrite(xfCriterionRewriter $rewriter)
+  public function breakdown()
   {
-    try
-    {
-      return $rewriter->parse($this->query, $this->encoding);
-    }
-    catch (Exception $e)
-    {
-      if ($this->mode & self::FAILSAFE)
-      {
-        $query = $rewriter->fixParseErrors($this->query);
-        return $rewriter->parse($query, $this->encoding);
-      }
-      else
-      {
-        throw $e;
-      }
-    }
-  }
-
-  /**
-   * @todo
-   * @see xfCriterionRewriter
-   */
-  public function tokenize($input)
-  {
+    return $this;
   }
 }

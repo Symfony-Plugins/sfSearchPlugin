@@ -7,7 +7,6 @@
  * file that was distributed with this source code.
  */
 
-
 require_once 'result/xfRetortFilterCallback.interface.php';
 
 class xfMockRetortFilterCallback implements xfRetortFilterCallback

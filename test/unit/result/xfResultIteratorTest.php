@@ -19,7 +19,7 @@ require 'document/xfFieldValue.class.php';
 require 'service/xfServiceRegistry.class.php';
 require 'service/xfService.class.php';
 require 'mock/service/xfMockIdentifier.class.php';
-require 'mock/criteria/xfMockCriteria.class.php';
+require 'mock/criteria/xfMockCriterionImplementer.class.php';
 
 $service = new xfService(new xfMockIdentifier);
 $retort = new xfMockRetort;
@@ -31,7 +31,7 @@ $registry->register($service);
 $document = new xfDocument('guid');
 $document->addField(new xfFieldValue(new xfField('_service', xfField::KEYWORD), 'foobar'));
 
-$criteria = new xfMockCriteria;
+$criteria = new xfMockCriterionImplementer;
 $hit = new xfDocumentHit($document, $criteria);
 $array = array($hit, 'foo');
 

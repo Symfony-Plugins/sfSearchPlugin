@@ -17,19 +17,9 @@
 interface xfCriterion
 {
   /**
-   * Rewrites the query into fundamental elements that the engine can
-   * understand.
+   * Breaks down the criterion into fundamental pieces.
    *
-   * @param xfCriterionRewriter $rewriter 
-   * @returns mixed
+   * @returns xfCriterion a broken down criterion that is part of the core
    */
-  public function rewrite(xfCriterionRewriter $rewriter);
-
-  /**
-   * Tokenizes input to return token positions.
-   *
-   * @param string $input
-   * @returns array
-   */
-  public function tokenize($input);
+  public function breakdown();
 }

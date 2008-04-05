@@ -7,23 +7,12 @@
  * file that was distributed with this source code.
  */
 
-
 require_once 'criteria/xfCriterion.interface.php';
-require_once 'criteria/xfCriterionRewriter.interface.php';
 
-class xfMockCriteria implements xfCriterion
+class xfMockCriterion implements xfCriterion
 {
-  public $rewriten = false;
-
-  public function rewrite(xfCriterionRewriter $rewriter)
+  public function breakdown()
   {
-    $this->rewriten = true;
-
     return $this;
-  }
-
-  public function tokenize($input)
-  {
-    return array(new xfCriterionToken('foo', 3, 6));
   }
 }

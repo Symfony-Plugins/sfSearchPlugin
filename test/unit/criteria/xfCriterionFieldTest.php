@@ -11,18 +11,12 @@
 require dirname(__FILE__) . '/../../bootstrap/unit.php';
 require 'criteria/xfCriterion.interface.php';
 require 'criteria/xfCriterionField.class.php';
-require 'mock/criteria/xfMockCriteria.class.php';
-require 'mock/criteria/xfMockCriterionRewriter.class.php';
+require 'mock/criteria/xfMockCriterion.class.php';
 
-$t = new lime_test(6, new lime_output_color);
+$t = new lime_test(4, new lime_output_color);
 
-$c = new xfCriterionField('name', 'Carl', xfCriterionField::WILDCARD | xfCriterionField::TOKENIZE);
+$c = new xfCriterionField('name', 'Carl', 'ascii');
 $t->is($c->getName(), 'name', '->getName() returns the name');
 $t->is($c->getValue(), 'Carl', '->getValue() returns the value');
-$t->is($c->getMode(), xfCriterionField::WILDCARD | xfCriterionField::TOKENIZE, '->getMode() returns the mode');
-
-$r = new xfMockCriterionRewriter;
-$t->is($c->rewrite($r)->type, 'field', '->rewrite() rewrites as a field');
-$t->is($c->rewrite($r)->options['name'], 'name', '->rewrite() rewrites with correct name');
-$t->is($c->rewrite($r)->options['value'], 'Carl', '->rewrite() rewrites with correct value');
-
+$t->is($c->getEncoding(), 'ascii', '->getEncoding() returns the encoding');
+$t->is($c->breakdown(), $c, '->breakdown() returns itself (as it already is a fundamental)');
