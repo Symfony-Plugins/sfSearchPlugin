@@ -43,7 +43,7 @@ $t->diag('->current()');
 $response = $iterator->current();
 $t->isa_ok($response, 'xfDocumentHit', '->current() returns an xfDocumentHit');
 $t->is($response->getDocument(), $document, '->current() returns an xfDocumentHit linked to the original document');
-$t->is($response->getCriterion(), $criteria, '->current() returns an xfDocumentHit linked to the original criterion');
+$t->is($response->getCriterionImplementer(), $criteria, '->current() returns an xfDocumentHit linked to the original criterion');
 $iterator->next();
 try {
   $msg = '->current() throws exception if internal iterator does not return an xfDocumentHit';

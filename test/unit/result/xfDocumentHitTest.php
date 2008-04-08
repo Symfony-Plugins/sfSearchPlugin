@@ -30,9 +30,9 @@ $t->ok(!$hit->hasOption('foobar'), '->hasOption() returns false for options that
 $hit->setOption('foobar', 'baz');
 $t->is($hit->getOption('foobar'), 'baz', '->getOption() returns the option value');
 
-$t->diag('->getDocument(), ->getCriterion()');
+$t->diag('->getDocument(), ->getCriterionImplementer()');
 $t->is($hit->getDocument(), $document, '->getDocument() returns the wrapped document');
-$t->is($hit->getCriterion(), $criterion, '->getCriterion() returns the criterion');
+$t->is($hit->getCriterionImplementer(), $criterion, '->getCriterionImplementer() returns the criterion');
 
 $t->diag('->__call()');
 $retort = new xfMockRetort;
