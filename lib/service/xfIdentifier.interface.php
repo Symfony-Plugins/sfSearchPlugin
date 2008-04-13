@@ -17,6 +17,21 @@
 interface xfIdentifier
 {
   /**
+   * Constant for ->match().  Indicates that can identify.
+   */
+  const MATCH_YES = 1;
+
+  /**
+   * Constant for ->match().  Indicates that can identify, but should ignore.
+   */
+  const MATCH_IGNORED = 2;
+
+  /**
+   * Constant for ->match().  Indicates that cannot identify.
+   */
+  const MATCH_NO = 3;
+
+  /**
    * Gets the name for this service.
    *
    * @returns string
@@ -35,14 +50,15 @@ interface xfIdentifier
    * Tests to see if the identifier can identify it.
    *
    * @param mixed $input
-   * @returns bool true if can identify, false otherwise
+   * @returns int a MATCH_* constant
    */
   public function match($input);
 
   /**
    * Discovers all objects that this identifier can match.
    *
-   * @returns array
+   * @param int $count The count to allow a method to page through long results.
+   * @returns array of results
    */
-  public function discover();
+  public function discover($count);
 }

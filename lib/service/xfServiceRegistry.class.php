@@ -68,14 +68,28 @@ final class xfServiceRegistry
    */
   public function locate($input)
   {
+    $ignored = null;
+
     foreach ($this->services as $service)
     {
-      if ($service->getIdentifier()->match($input))
+      switch($service->getIdentifier()->match($input))
       {
-        return $service;
+        case xfIdentifier::MATCH_YES:
+          return $service;
+        case xfIdentifier::MATCH_IGNORED;
+          $ignored = $service;
+          break;
+        default:
       }
     }
-
-    throw new xfServiceNotFoundException('Unable to find service from input');
+    
+    if ($ignored == null)
+    {
+      throw new xfServiceNotFoundException('Unable to find service from input');
+    }
+    else
+    {
+      throw new xfServiceIgnoredException($ignored);
+    }
   }
 }

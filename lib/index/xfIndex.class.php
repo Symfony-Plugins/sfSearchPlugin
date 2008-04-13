@@ -152,9 +152,15 @@ abstract class xfIndex
    */
   final public function insert($input)
   {
-    $doc = $this->registry->locate($input)->buildDocument($input);
-    $this->engine->add($doc);
-    $this->log('Inserted document "' . $doc->getGuid() . '" from the index');
+    try
+    {
+      $doc = $this->registry->locate($input)->buildDocument($input);
+      $this->engine->add($doc);
+      $this->log('Inserted document "' . $doc->getGuid() . '" from the index');
+    }
+    catch (xfServiceIgnoredException $e)
+    {
+    }
   }
 
   /**
@@ -164,9 +170,15 @@ abstract class xfIndex
    */
   final public function remove($input)
   {
-    $guid = $this->registry->locate($input)->getIdentifier()->getGuid($input);
-    $this->engine->delete($guid);
-    $this->log('Removed document "' . $guid . '" from the index');
+    try
+    {
+      $guid = $this->registry->locate($input)->getIdentifier()->getGuid($input);
+      $this->engine->delete($guid);
+      $this->log('Removed document "' . $guid . '" from the index');
+    }
+    catch (xfServiceIgnoredException $e)
+    {
+    }
   }
 
   /**
@@ -177,19 +189,29 @@ abstract class xfIndex
     $start = microtime(true);
     $this->log('Index rebuild in progress...');
     $this->engine->erase();
-    $this->log('Index erased successfully.');
+    $this->log('Index erased.');
+
+    $this->engine->open();
+    $this->log('Index opene.');
+
+    $services = $this->registry->getServices();
+
+    $this->log('Processing ' . count($services) . ' services now...');
    
-    foreach ($this->registry->getServices() as $service)
+    foreach ($services as $service)
     {
       $name = $service->getIdentifier()->getName();
 
       $this->log('Processing "' . $name . '" now...');
 
-      foreach ($service->getIdentifier()->discover() as $object)
+      for ($x = 0; $objects = $service->getIdentifier()->discover($x); $x++)
       {
-        $doc = $service->buildDocument($object);
-        $this->engine->add($doc);
-        $this->log('Document "' . $doc->getGuid() . '" inserted.');
+        foreach ($service->getIdentifier()->discover($x) as $object)
+        {
+          $doc = $service->buildDocument($object);
+          $this->engine->add($doc);
+          $this->log('Document "' . $doc->getGuid() . '" inserted.');
+        }
       }
 
       $this->log('Service "' . $name . '" successfully processed.');
