@@ -192,7 +192,7 @@ abstract class xfIndex
     $this->log('Index erased.');
 
     $this->engine->open();
-    $this->log('Index opene.');
+    $this->log('Index opened.');
 
     $services = $this->registry->getServices();
 
@@ -204,9 +204,9 @@ abstract class xfIndex
 
       $this->log('Processing "' . $name . '" now...');
 
-      for ($x = 0; $objects = $service->getIdentifier()->discover($x); $x++)
+      for ($x = 0; count($objects = $service->getIdentifier()->discover($x)) > 0; $x++)
       {
-        foreach ($service->getIdentifier()->discover($x) as $object)
+        foreach ($objects as $object)
         {
           $doc = $service->buildDocument($object);
           $this->engine->add($doc);
