@@ -192,7 +192,6 @@ abstract class xfIndex
     $this->log('Index erased.');
 
     $this->engine->open();
-    $this->log('Index opened.');
 
     $services = $this->registry->getServices();
 
@@ -217,7 +216,7 @@ abstract class xfIndex
       $this->log('Service "' . $name . '" successfully processed.');
     }
 
-    $this->log('Index successfully rebuilt in "' . (microtime(true) - $start) . '" seconds.');
+    $this->log('Index successfully rebuilt in "' . round(microtime(true) - $start, 2) . '" seconds.', array('fg' => 'blue', 'bold' => true));
   }
 
   /**
@@ -226,9 +225,10 @@ abstract class xfIndex
   final public function optimize()
   {
     $start = microtime(true);
+    $this->engine->open();
     $this->log('Index optimization in progress...');
     $this->engine->optimize();
-    $this->log('Index successfully optimized in "' . (microtime(true) - $start) . '" seconds.');
+    $this->log('Index successfully optimized in "' . round(microtime(true) - $start, 2) . '" seconds.', array('fg' => 'blue', 'bold' => true));
   }
 
   /**
@@ -243,12 +243,22 @@ abstract class xfIndex
   }
 
   /**
+   * Describes the index with any information worth noting
+   *
+   * @returns array
+   */
+  final public function describe()
+  {
+    return $this->engine->describe();
+  }
+
+  /**
    * Notify the dispatcher to log.
    *
    * @param string $message The message
    */
-  final private function log($message)
+  final private function log($message, $options = array())
   {
-    $this->dispatcher->notify(new sfEvent($this, 'search.log', array($message, 'name' => $this->name)));
+    $this->dispatcher->notify(new sfEvent($this, 'search.log', array($message, 'name' => $this->name, 'options' => $options)));
   }
 }

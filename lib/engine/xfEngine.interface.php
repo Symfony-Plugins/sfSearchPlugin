@@ -83,4 +83,11 @@ interface xfEngine
    * If engine does not support optimizing, then the method should do nothing.
    */
   public function optimize();
+
+  /**
+   * Describes the index with any statistics worth giving.
+   *
+   * @returns array
+   */
+  public function describe();
 }

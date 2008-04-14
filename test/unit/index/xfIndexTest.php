@@ -35,7 +35,7 @@ class TestIndex extends xfIndex
   }
 }
 
-$t = new lime_test(13, new lime_output_color);
+$t = new lime_test(14, new lime_output_color);
 $dispatcher = new sfEventDispatcher;
 $index = new TestIndex($dispatcher);
 
@@ -77,7 +77,9 @@ $index->rebuild();
 $t->is(count($engine->getDocuments()), 3, '->rebuild() erases the index and rebuilds all documents');
 
 $t->diag('->find()');
-
 $results = $index->find(new xfMockCriterion);
 $t->isa_ok($results, 'xfResultIterator', '->find() returns an xfResultIterator');
 $t->is($results->count(), 3, '->find() returns results that match');
+
+$t->diag('->describe()');
+$t->is($index->describe(), array('Engine' => 'Mock vINF'), '->describe() returns the engine\'s description');

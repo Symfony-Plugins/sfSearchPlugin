@@ -73,6 +73,13 @@ class xfMockEngine implements xfEngine
     $this->optimized++;
   }
 
+  public function describe()
+  {
+    return array(
+      'Engine' => 'Mock vINF',
+    );
+  }
+
   public function getDocuments()
   {
     return $this->documents;
