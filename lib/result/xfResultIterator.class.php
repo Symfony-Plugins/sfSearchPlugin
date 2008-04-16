@@ -97,7 +97,7 @@ final class xfResultIterator implements SeekableIterator, Countable
    */
   public function valid()
   {
-    $this->iterator->valid();
+    return $this->iterator->valid();
   }
 
   /**

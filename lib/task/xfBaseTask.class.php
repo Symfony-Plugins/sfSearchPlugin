@@ -17,18 +17,33 @@
 abstract class xfBaseTask extends sfBaseTask
 {
   /**
-   * Binds the autoloader
+   * Flag for when autoloader is already setup (true if setup)
+   *
+   * @var bool
    */
-  protected function bindAutoloader()
-  {
-    $auto = sfSimpleAutoload::getInstance();
-    $auto->addDirectory(sfConfig::get('sf_lib_dir'));
-    $auto->addDirectory(sfConfig::get('sf_root_dir') . '/lib');
-    $auto->addDirectory(sfConfig::get('sf_plugins_dir') . '/*/lib');
+  static private $done = false;
 
-    foreach (sfFinder::type('file')->name('config.php')->in(sfConfig::get('sf_plugins_dir')) as $config)
+  /**
+   * @see sfTask
+   */
+  public function initialize(sfEventDispatcher $dispatcher, sfFormatter $formatter)
+  {
+    parent::initialize($dispatcher, $formatter);
+
+    if (!self::$done)
     {
-      require_once $config;
+      $auto = sfSimpleAutoload::getInstance();
+      $auto->addDirectory(sfConfig::get('sf_lib_dir'));
+      $auto->addDirectory(sfConfig::get('sf_root_dir') . '/lib');
+      $auto->addDirectory(sfConfig::get('sf_plugins_dir') . '/*/lib');
+      $auto->register();
+
+      foreach (sfFinder::type('file')->name('config.php')->in(sfConfig::get('sf_plugins_dir')) as $config)
+      {
+        require_once $config;
+      }
+
+      self::$done = true;
     }
   }
 

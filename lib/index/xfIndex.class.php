@@ -239,6 +239,8 @@ abstract class xfIndex
    */
   final public function find(xfCriterion $crit)
   {
+    $this->engine->open();
+
     return new xfResultIterator($this->engine->find($crit), $this->registry);
   }
 

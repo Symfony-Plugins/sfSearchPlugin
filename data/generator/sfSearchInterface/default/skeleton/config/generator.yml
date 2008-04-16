@@ -1,0 +1,5 @@
+generator:
+  class:              xfGeneratorInterface
+  param:
+    index_class:      ##INDEX_CLASS##
+    theme:            ##THEME##

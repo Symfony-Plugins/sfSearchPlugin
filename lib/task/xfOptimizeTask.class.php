@@ -53,7 +53,6 @@ EOF;
   {
     $index = $arguments['index'];
 
-    $this->bindAutoloader();
     $this->checkIndexExists($index);
     $this->connectLogging();
 
