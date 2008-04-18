@@ -53,6 +53,16 @@ final class xfGeneratorInterface extends sfGenerator
       throw new xfGeneratorException('Unable to build interface for nonexistant index "' . $this->params['index_class'] . '"');
     }
 
+    if (null !== $form = $this->get('simple.form.class', null))
+    {
+      $reflection = new ReflectionClass($form);
+      
+      if (!$reflection->isSubClassOf(new ReflectionClass('xfForm')))
+      {
+        throw new xfGeneratorException('Form class must extend xfForm');
+      }
+    }
+
     // check to see if theme exists
     if (!isset($this->params['theme']))
     {
@@ -75,7 +85,7 @@ final class xfGeneratorInterface extends sfGenerator
     $this->generatePhpFiles($this->generatedModuleName, $themeFiles);
 
     return "require_once(sfConfig::get('sf_module_cache_dir') . '/" . $this->generatedModuleName . "/actions/actions.class.php');";
-  }    
+  }   
 
   /**
    * A shortcut for templates to get parameters.

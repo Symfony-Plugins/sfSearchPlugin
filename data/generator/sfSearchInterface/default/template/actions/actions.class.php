@@ -24,7 +24,7 @@ abstract class <?php echo $this->getGeneratedModuleName() ?>Actions extends sfAc
 
   public function executeSearch()
   {
-    $this->form = new <?php echo $this->get('mode.simple.form.class', 'xfSimpleForm') ?>;
+    $this->form = new <?php echo $this->get('simple.form.class', 'xfSimpleForm') ?>;
     $this->form->getWidgetSchema()->setNameFormat('search[%s]');
 
     $data = $this->getRequestParameter('search');
@@ -40,20 +40,20 @@ abstract class <?php echo $this->getGeneratedModuleName() ?>Actions extends sfAc
 
         if (count($this->results))
         {
-          $this->setTitle('<?php echo $this->get('mode.simple.results.title', 'Search Results') ?>');
+          $this->setTitle('<?php echo $this->get('simple.results.title', 'Search Results') ?>');
 
           return 'Results';
         }
         else
         {
-          $this->setTitle('<?php echo $this->get('mode.simple.no_results.title', 'No Search Results') ?>');
+          $this->setTitle('<?php echo $this->get('simple.no_results.title', 'No Search Results') ?>');
 
           return 'NoResults';
         }
       }
     }
 
-    $this->setTitle('<?php echo $this->get('mode.simple.controls.title', 'Search') ?>');
+    $this->setTitle('<?php echo $this->get('simple.controls.title', 'Search') ?>');
     
     return 'Controls';
   }
