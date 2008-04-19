@@ -15,7 +15,7 @@ require 'util/xfException.class.php';
 
 $dispatcher = new sfEventDispatcher;
 
-$t = new lime_test(null, new lime_output_color);
+$t = new lime_test(5, new lime_output_color);
 
 try {
   $msg = '->getIndex() fails if manager has not been initialized';
