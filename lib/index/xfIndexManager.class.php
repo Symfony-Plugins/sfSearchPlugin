@@ -10,14 +10,6 @@
 /**
  * The inde manager stores all the indices and provides a singleton access point.
  *
- * Example usage: <code>
- * xfIndexManager::getInstance()->initialize(sfContext::getInstance()->getEventDispatcher());
- *
- * // later on...
- *
- * $index = xfIndexManager::getInstance()->getIndex('MySearch');
- * </code>
- *
  * Note: You do not have to use the index manager.  The index manager provides a
  * way of maintaining a singleton of the indices.
  *
@@ -62,13 +54,13 @@ final class xfIndexManager
    */
   static public function get($name)
   {
-    if (self::$dispatcher == null)
-    {
-      throw new xfException('xfIndexManager has not been initialized yet');
-    }
-
     if (!isset(self::$indices[$name]))
     {
+      if (self::$dispatcher == null)
+      {
+        throw new xfException('xfIndexManager has not been initialized yet');
+      }
+
       $r = new ReflectionClass($name);
       if (!$r->isSubclassOf(new ReflectionClass('xfIndex')))
       {
