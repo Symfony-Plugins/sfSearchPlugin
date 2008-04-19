@@ -1,20 +1,20 @@
-  * Write documentation
-  * Create task system
-    * Rebuild -- to rebuild an index
-    * Optimize -- to optimize an index
-    * Generate -- to generate indices from YAML file 
-    * About -- to display information about an index
-  * Create basic search module
-  * Create generator to build search systems from YAML
-  * Write sfPropelSearchPlugin/sfDoctrineSearchPlugin to index Propel/Doctrine documents
-    * Basic column to field mapping
-    * Relationships and foreign keys
-    * Transparency option to retrieve the original Propel/Doctrine object
-  * Write sfActionSearchPlugin to index symfony actions
-  * Create xfIndexCollection to hold a collection of indices
-    * i18n support
-  * Write sfHighlighterPlugin to highlight search results
-  * Write sfCategorySearchPlugin to incorporate categories
-  * Write sfPdfSearchPlugin to index PDF files
+  * [wip] Write documentation
+  * [done] Create task system
+    * [done] Rebuild -- to rebuild an index
+    * [done] Optimize -- to optimize an index
+    * [done] Generate -- to generate indices from YAML file 
+    * [done] About -- to display information about an index
+  * [75%] Create basic search module
+  * [0%] Create generator to build search systems from YAML
+  * [10%] Write sfPropelSearchPlugin/sfDoctrineSearchPlugin to index Propel/Doctrine documents
+    * [done] Basic column to field mapping
+    * [0%] Relationships and foreign keys
+    * [0%] Transparency option to retrieve the original Propel/Doctrine object
+  * [0%] Write sfActionSearchPlugin to index symfony actions
+  * [0%] Create xfIndexCollection to hold a collection of indices
+    * [0%] i18n support
+  * [0%] Write sfHighlighterPlugin to highlight search results
+  * [0%] Write sfCategorySearchPlugin to incorporate categories
+  * [0%] Write sfPdfSearchPlugin to index PDF files
 
   * Do we want/need a sfSphinxPlugin? sfMyIsamFulltextPlugin?
