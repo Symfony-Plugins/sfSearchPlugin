@@ -60,10 +60,7 @@ abstract class <?php echo $this->getGeneratedModuleName() ?>Actions extends sfAc
 
   protected function doSearch(xfCriterion $c)
   {
-    $index = new <?php echo $this->get('index_class') ?>($this->getContext()->getEventDispatcher());
-    $index->setup();
-
-    return $index->find($c);
+    return xfIndexManager::get('<?php echo $this->get('index_class') ?>')->find($c);
   }
 
   protected function setTitle($title)

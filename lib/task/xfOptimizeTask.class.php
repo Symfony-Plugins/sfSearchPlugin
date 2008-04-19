@@ -55,9 +55,8 @@ EOF;
 
     $this->checkIndexExists($index);
     $this->connectLogging();
+    $this->initializeManager();
 
-    $index = new $index($this->dispatcher);
-    $index->setup();
-    $index->optimize();
+    xfIndexManager::get($index)->optimize();
   }
 }

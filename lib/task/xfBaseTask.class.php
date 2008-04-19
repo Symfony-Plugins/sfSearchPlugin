@@ -64,9 +64,17 @@ abstract class xfBaseTask extends sfBaseTask
   /**
    * Connects the logging output to the dispatcher.
    */
-  public function connectLogging()
+  protected function connectLogging()
   {
     $this->dispatcher->connect('search.log', array($this, 'handleLogEvent'));
+  }
+
+  /**
+   * Initializes the index manager.
+   */
+  protected function initializeManager()
+  {
+    xfIndexManager::initialize($this->dispatcher);
   }
 
   /**
