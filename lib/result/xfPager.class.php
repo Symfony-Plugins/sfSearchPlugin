@@ -49,6 +49,13 @@ final class xfPager
   private $per = 10; 
 
   /**
+   * The URL format.
+   *
+   * @var string
+   */
+  private $urlFormat;
+
+  /**
    * The constructor.
    *
    * @param xfResultIterator $results 
@@ -224,7 +231,6 @@ final class xfPager
       return 1;
     }
     else
-
     {
       return $this->page - 1;
     }
@@ -250,5 +256,26 @@ final class xfPager
     $end = $end > $last ? $last : $end;
 
     return range($start, $end);
+  }
+
+  /**
+   * Sets the URL format for the pager.
+   *
+   * @param string $format The URL format.  %page% = page number
+   */
+  public function setUrlFormat($format)
+  {
+    $this->urlFormat = $format;
+  }
+
+  /**
+   * Gets a URL with the page.
+   *
+   * @param int $page The page number
+   * @returns string The URL for that page.
+   */
+  public function getPageUrl($page)
+  {
+    return str_replace('%page%', $page, $this->urlFormat);
   }
 }

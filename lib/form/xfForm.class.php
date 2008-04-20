@@ -22,4 +22,18 @@ abstract class xfForm extends sfForm
    * @returns xfCriterion
    */
   abstract public function getCriterion();
+
+  /**
+   * Gets the page number.
+   *
+   * @returns int
+   */
+  abstract public function getPageNumber();
+
+  /**
+   * Returns the URL format with %s in place of the page.
+   *
+   * @returns string
+   */
+  abstract public function getUrlFormat();
 }

@@ -40,7 +40,18 @@ abstract class <?php echo $this->getGeneratedModuleName() ?>Actions extends sfAc
 
         if (count($this->results))
         {
-          $this->setTitle('<?php echo $this->get('simple.results.title', 'Search Results') ?>');
+          $this->pager = new xfPager($this->results);
+          $this->pager->setPerPage(<?php echo $this->get('simple.results.per_page', 10) ?>);
+          $this->pager->setPage($this->form->getPageNumber());
+          $this->pager->setUrlFormat($this->form->getUrlFormat());
+
+          $replacements = array(
+            '%total%' => count($this->results),
+            '%page%' => count($this->pager->getPage()),
+            '%total_pages%' => count($this->pager->getLastPage()),
+          );
+
+          $this->setTitle(str_replace(array_keys($replacements), array_values($replacements), '<?php echo $this->get('simple.results.title', 'Search Results') ?>'));
 
           return 'Results';
         }

@@ -10,7 +10,7 @@
 require dirname(__FILE__) . '/../../bootstrap/unit.php';
 require 'result/xfPager.class.php';
 
-$t = new lime_test(29, new lime_output_color);
+$t = new lime_test(30, new lime_output_color);
 
 $pager = new xfPager(new ArrayIterator(range(1, 1000)));
 
@@ -82,3 +82,7 @@ $pager->setPage(1);
 $t->is($pager->getLinks(10), range(1, 6), '->getLinks() returns array of numbers with current page first if at first page');
 $pager->setPage(100);
 $t->is($pager->getLinks(10), range(95, 100), '->getLinks() returns array of numbers with current page last if at last page');
+
+$t->diag('->setUrlFormat(), ->getPageUrl()');
+$pager->setUrlFormat('page=%page%');
+$t->is($pager->getPageUrl(5), 'page=5', '->getPageUrl() generates a page URL');

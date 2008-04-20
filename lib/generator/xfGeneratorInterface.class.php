@@ -84,7 +84,10 @@ final class xfGeneratorInterface extends sfGenerator
 
     $this->generatePhpFiles($this->generatedModuleName, $themeFiles);
 
-    return "require_once(sfConfig::get('sf_module_cache_dir') . '/" . $this->generatedModuleName . "/actions/actions.class.php');";
+    $data = "require_once(sfConfig::get('sf_module_cache_dir') . '/" . $this->generatedModuleName . "/actions/actions.class.php');"; 
+    $data .= "require_once(sfConfig::get('sf_module_cache_dir') . '/" . $this->generatedModuleName . "/actions/components.class.php');";
+
+    return $data;
   }   
 
   /**

@@ -39,4 +39,37 @@ abstract class xfSimpleFormBase extends xfForm
   {
     return new xfCriterionString($this->getValue('query'), xfCriterionString::FAILSAFE);
   }
+
+  /**
+   * @see xfForm
+   */
+  public function getPageNumber()
+  {
+    $value = $this->getValue('page');
+
+    return $value ? $value : 1;
+  }
+
+  /**
+   * @see xfForm
+   */
+  public function getUrlFormat()
+  {
+    $url = '?';
+
+    foreach ($this->getValues() as $key => $value)
+    {
+      if ($key == 'page')
+      {
+        continue;
+      }
+
+      $key = urlencode(sprintf($this->getWidgetSchema()->getNameFormat(), $key));
+      $url .= $key . '=' . $value . '&amp;';
+    }
+
+    $url .= urlencode(sprintf($this->getWidgetSchema()->getNameFormat(), 'page')) . '=%page%';
+
+    return $url;
+  }
 }
