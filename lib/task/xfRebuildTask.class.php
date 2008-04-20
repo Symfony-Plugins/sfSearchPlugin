@@ -57,7 +57,7 @@ EOF;
 
     // this is a hack and will be hopefully removed
     // see http://groups.google.com/group/symfony-devs/browse_thread/thread/dc399312da49598a
-    $db = new sfDatabaseManager(new xfSearchConfiguration('test', false, $this->configuration->getRootDir(), $this->dispatcher));
+    $db = new sfDatabaseManager(new xfSearchConfiguration('cli', false, $this->configuration->getRootDir(), $this->dispatcher));
 
     $index = xfIndexManager::get($index);
     $index->rebuild();

@@ -56,19 +56,13 @@ abstract class xfSimpleFormBase extends xfForm
   public function getUrlFormat()
   {
     $url = '?';
+    $values = array_merge($this->getValues(), array('page' => '%page%'));
 
-    foreach ($this->getValues() as $key => $value)
+    foreach ($values as $key => $value)
     {
-      if ($key == 'page')
-      {
-        continue;
-      }
-
       $key = urlencode(sprintf($this->getWidgetSchema()->getNameFormat(), $key));
       $url .= $key . '=' . $value . '&amp;';
     }
-
-    $url .= urlencode(sprintf($this->getWidgetSchema()->getNameFormat(), 'page')) . '=%page%';
 
     return $url;
   }

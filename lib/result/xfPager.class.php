@@ -143,6 +143,16 @@ final class xfPager
   }
 
   /**
+   * Returns the number of results.
+   *
+   * @returns int
+   */
+  public function getNbResults()
+  {
+    return $this->count;
+  }
+
+  /**
    * Gets the first page.
    *
    * @returns int
@@ -234,6 +244,26 @@ final class xfPager
     {
       return $this->page - 1;
     }
+  }
+
+  /**
+   * Gets the start position.
+   *
+   * @returns int
+   */
+  public function getStartPosition()
+  {
+    return ($this->getPage() - 1) * $this->getPerPage() + 1;
+  }
+
+  /**
+   * Gets the end position.
+   *
+   * @returns int
+   */
+  public function getEndPosition()
+  {
+    return min($this->getPage() * $this->getPerPage(), $this->count);
   }
 
   /**

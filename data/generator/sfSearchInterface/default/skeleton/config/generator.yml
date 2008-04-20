@@ -10,7 +10,8 @@ generator:
 #        heading: Search                     # heading for search controls
 #
 #      results:                              # when search results are displayed
-#        title: Search Results               # title for search results
+#        title: |                            # title for search results
+#         Results %start_pos% to %end_pos%
 #        heading: Search Results             # heading for search controls
 #        per_page: 10                        # how many results per page
 #        pager_links: 5                      # how many pager links to display

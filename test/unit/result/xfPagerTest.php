@@ -10,7 +10,7 @@
 require dirname(__FILE__) . '/../../bootstrap/unit.php';
 require 'result/xfPager.class.php';
 
-$t = new lime_test(30, new lime_output_color);
+$t = new lime_test(37, new lime_output_color);
 
 $pager = new xfPager(new ArrayIterator(range(1, 1000)));
 
@@ -34,11 +34,12 @@ $pager->setPage(100);
 $pager->setPerPage(100);
 $t->is($pager->getPage(), 10, '->setPerPage() keeps the page count in bounds');
 
-$t->diag('->getResults()');
+$t->diag('->getResults(), ->getNbResults()');
 $pager->setPage(2);
 $t->isa_ok($pager->getResults(), 'LimitIterator', '->getResults() returns a LimitIterator');
 $t->is($pager->getResults()->getPosition(), 0, '->getResults() returns a LimitIterator with correct position');
 $t->isa_ok($pager->getResults()->getInnerIterator(), 'ArrayIterator', '->getResults() returns LimitIterator with the correct iterator');
+$t->is($pager->getNbResults(), 1000, '->getNbResults() returns the number of results');
 
 $t->diag('->getFirstPage(), ->getLastPage()');
 $pager->setPerPage(11);
@@ -75,7 +76,20 @@ $pager->setPage(100);
 $t->is($pager->getNextPage(), 100, '->getNextPage() returns the last page if at last page already');
 $t->is($pager->getPreviousPage(), 99, '->getPreviusPage() is the previous page');
 
+$t->diag('->getStartPosition(), ->getEndPosition()');
+$pager->setPage(1);
+$t->is($pager->getStartPosition(), 1, '->getStartPosition() returns the start position when at start');
+$t->is($pager->getEndPosition(), 10, '->getEndPosition() returns the end position when at astart');
+$pager->setPage(2);
+$t->is($pager->getStartPosition(), 11, '->getStartPosition() returns the start position when in middle');
+$t->is($pager->getEndPosition(), 20, '->getEndPosition() returns the end position when in middle');
+$pager->setPerPage(99);
+$pager->setPage(11);
+$t->is($pager->getStartPosition(), 991, '->getStartPosition() returns the start position when at end');
+$t->is($pager->getEndPosition(), 1000, '->getEndPosition() returns the end position when at end');
+
 $t->diag('->getLinks()');
+$pager->setPerPage(10);
 $pager->setPage(50);
 $t->is($pager->getLinks(10), range(45, 55), '->getLinks() returns array of numbers with current page at center');
 $pager->setPage(1);

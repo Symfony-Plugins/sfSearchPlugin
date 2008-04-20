@@ -38,11 +38,11 @@ final class xfInitInterfaceTask extends xfBaseTask
 
     $this->briefDescription = 'Initializes a basic search module.';
     $this->detailedDescription = <<<EOF
-The [search:init-module|INFO] generates a sfSearch interface module:
+The [search:init-interface|INFO] generates a sfSearch interface module:
 
-  [./symfony search:init-module frontend search MySearch|INFO]
+  [./symfony search:init-interface frontend search MySearch|INFO]
 
-The task creates a [%module|COMMENT] module in the [%application%|COMMENT] application 
+The task creates a [%module%|COMMENT] module in the [%application%|COMMENT] application 
 for the index class [%index%|COMMENT].
 
 The created module is an empty one that inherits its actions and templates

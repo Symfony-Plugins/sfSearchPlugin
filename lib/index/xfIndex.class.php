@@ -32,7 +32,7 @@ abstract class xfIndex
 
   /**
    * The backend search engine.
-   *
+   
    * @var xfEngine
    */
   private $engine;
@@ -152,6 +152,8 @@ abstract class xfIndex
    */
   final public function insert($input)
   {
+    $this->checkState();
+
     try
     {
       $doc = $this->registry->locate($input)->buildDocument($input);
@@ -170,6 +172,8 @@ abstract class xfIndex
    */
   final public function remove($input)
   {
+    $this->checkState();
+
     try
     {
       $guid = $this->registry->locate($input)->getIdentifier()->getGuid($input);
@@ -186,6 +190,8 @@ abstract class xfIndex
    */
   final public function rebuild()
   {
+    $this->checkState();
+
     $start = microtime(true);
     $this->log('Index rebuild in progress...');
     $this->engine->erase();
@@ -224,6 +230,8 @@ abstract class xfIndex
    */
   final public function optimize()
   {
+    $this->checkState();
+
     $start = microtime(true);
     $this->engine->open();
     $this->log('Index optimization in progress...');
@@ -239,6 +247,8 @@ abstract class xfIndex
    */
   final public function find(xfCriterion $crit)
   {
+    $this->checkState();
+
     $this->engine->open();
 
     return new xfResultIterator($this->engine->find($crit), $this->registry);
@@ -251,6 +261,8 @@ abstract class xfIndex
    */
   final public function describe()
   {
+    $this->checkState();
+
     return $this->engine->describe();
   }
 
@@ -262,5 +274,18 @@ abstract class xfIndex
   final private function log($message, $options = array())
   {
     $this->dispatcher->notify(new sfEvent($this, 'search.log', array($message, 'name' => $this->name, 'options' => $options)));
+  }
+
+  /**
+   * Checks for a stable state.
+   *
+   * @throws xfException if something is wrong
+   */
+  final private function checkState()
+  {
+    if (!($this->engine instanceof xfEngine))
+    {
+      throw new xfException($this->getName() . ' does not have an engine');
+    }
   }
 }
