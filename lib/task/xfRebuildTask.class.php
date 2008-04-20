@@ -55,6 +55,10 @@ EOF;
     $this->connectLogging();
     $this->initializeManager();
 
+    // this is a hack and will be hopefully removed
+    // see http://groups.google.com/group/symfony-devs/browse_thread/thread/dc399312da49598a
+    $db = new sfDatabaseManager(new xfSearchConfiguration('test', false, $this->configuration->getRootDir(), $this->dispatcher));
+
     $index = xfIndexManager::get($index);
     $index->rebuild();
     $index->optimize();
