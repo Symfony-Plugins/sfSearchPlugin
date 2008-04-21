@@ -53,10 +53,16 @@ protected function configure()
           new xfField('isbn', xfField::KEYORD)
           )));
   $bookService->addRetort(new xfRetortField);
-  $bookService->addRetort(new xfRetortRouter('book/preview?isbn=$isbn$'));
+  $bookService->addRetort(new xfRetortRoute('book/preview?isbn=$isbn$'));
 
   $this->getServiceRegistry()->register($bookService);
 }
+}}}
+
+To have sfSearch automatically update your model when you save or delete it, open {{{ lib/model/Book.php }}} and append the following to the bottom of the class declaration:
+
+{{{
+xfPropelBehavior::register('Book', array('MySearchIndex'));
 }}}
 
 Repeat for each model.
@@ -103,6 +109,11 @@ for every service you have.
 
 == Find Something ==
 We are now ready to start searching the index.
+
+== Clear Cache ==
+{{{
+symfony cc
+}}}
 
 === Populate Index ===
 Build the index:
