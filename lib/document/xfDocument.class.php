@@ -171,5 +171,4 @@ final class xfDocument
   {
     return isset($this->fields[$name]);
   }
-
 }

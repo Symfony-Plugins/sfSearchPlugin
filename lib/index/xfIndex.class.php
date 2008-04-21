@@ -154,6 +154,8 @@ abstract class xfIndex
   {
     $this->checkState();
 
+    $this->engine->open();
+
     try
     {
       $doc = $this->registry->locate($input)->buildDocument($input);
@@ -173,6 +175,8 @@ abstract class xfIndex
   final public function remove($input)
   {
     $this->checkState();
+
+    $this->engine->open();
 
     try
     {

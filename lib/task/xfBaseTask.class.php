@@ -38,11 +38,6 @@ abstract class xfBaseTask extends sfBaseTask
       $auto->addDirectory(sfConfig::get('sf_plugins_dir') . '/*/lib');
       $auto->register();
 
-      foreach (sfFinder::type('file')->name('config.php')->in(sfConfig::get('sf_plugins_dir')) as $config)
-      {
-        require_once $config;
-      }
-
       self::$done = true;
     }
   }
