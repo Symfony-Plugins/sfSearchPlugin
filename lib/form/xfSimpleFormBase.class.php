@@ -37,6 +37,8 @@ abstract class xfSimpleFormBase extends xfForm
    */
   public function getCriterion()
   {
+    $this->checkIfBound();
+
     return new xfCriterionString($this->getValue('query'), xfCriterionString::FAILSAFE);
   }
 
@@ -45,6 +47,8 @@ abstract class xfSimpleFormBase extends xfForm
    */
   public function getPageNumber()
   {
+    $this->checkIfBound();
+
     $value = $this->getValue('page');
 
     return $value ? $value : 1;
@@ -55,6 +59,8 @@ abstract class xfSimpleFormBase extends xfForm
    */
   public function getUrlFormat()
   {
+    $this->checkIfBound();
+
     $url = '?';
     $values = array_merge($this->getValues(), array('page' => '%page%'));
 
@@ -64,6 +70,21 @@ abstract class xfSimpleFormBase extends xfForm
       $url .= $key . '=' . $value . '&amp;';
     }
 
+    $url = substr($url, 0, -5);
+
     return $url;
+  }
+
+  /**
+   * Throws exception if not bound.
+   *
+   * @throws xfException if not bound
+   */
+  private function checkIfBound()
+  { 
+    if (!$this->isBound())
+    {
+      throw new xfException(get_class($this) . ' is not bound');
+    }
   }
 }
