@@ -14,7 +14,7 @@
  * @subpackage Service
  * @author Carl Vondrick
  */
-final class xfService
+class xfService
 {
   /**
    * The identifier, which identifies this service.
@@ -49,9 +49,21 @@ final class xfService
    *
    * @param xfIdentifier $identifier The identifier
    */
-  public function __construct(xfIdentifier $identifier)
+  final public function __construct(xfIdentifier $identifier)
   {
     $this->identifier = $identifier;
+
+    $this->configure();
+  }
+
+  /**
+   * Runs an internal setup procedure.  If you wish to create 'packaged'
+   * services, overload this method.  You are, however, strongly encouraged to
+   * avoid packaged services.
+   */
+  protected function configure()
+  {
+    // nothing to do
   }
 
   /**
@@ -59,7 +71,7 @@ final class xfService
    *
    * @returns xfIdentifier
    */
-  public function getIdentifier()
+  final public function getIdentifier()
   {
     return $this->identifier;
   }
@@ -69,7 +81,7 @@ final class xfService
    *
    * @param xfBuilder $builder
    */
-  public function addBuilder(xfBuilder $builder)
+  final public function addBuilder(xfBuilder $builder)
   {
     $this->builders[] = $builder;
   }
@@ -80,7 +92,7 @@ final class xfService
    * @param mixed $input The input to build off
    * @returns xfDocument
    */
-  public function buildDocument($input)
+  final public function buildDocument($input)
   {
     $doc = new xfDocument($this->getIdentifier()->getGuid($input));
     $doc->addField(new xfFieldValue(new xfField('_service', xfField::UNINDEXED), $this->getIdentifier()->getName()));
@@ -98,7 +110,7 @@ final class xfService
    *
    * @param xfRetort $responer
    */
-  public function addRetort(xfRetort $retort)
+  final public function addRetort(xfRetort $retort)
   {
     $this->retorts[] = $retort;
   }
@@ -108,7 +120,7 @@ final class xfService
    *
    * @returns array
    */
-  public function getRetorts()
+  final public function getRetorts()
   {
     return $this->retorts;
   }
@@ -119,7 +131,7 @@ final class xfService
    * @param string $name The option name
    * @param mixed $value The option value
    */
-  public function setOption($name, $value)
+  final public function setOption($name, $value)
   {
     $this->options[$name] = $value;
   }
@@ -131,7 +143,7 @@ final class xfService
    * @param mixed $default The default response (optional)
    * @returns mixed The option value
    */
-  public function getOption($name, $default = null)
+  final public function getOption($name, $default = null)
   {
     if (isset($this->options[$name]))
     {
@@ -147,7 +159,7 @@ final class xfService
    * @param string $name The option name
    * @returns bool true if it exists, false otherwise
    */
-  public function hasOption($name)
+  final public function hasOption($name)
   {
     return isset($this->options[$name]);
   }

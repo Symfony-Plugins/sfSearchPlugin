@@ -14,7 +14,7 @@ require 'mock/service/xfMockIdentifier.class.php';
 require 'mock/builder/xfMockBuilder.class.php';
 require 'mock/result/xfMockRetort.class.php';
 
-$t = new lime_test(11, new lime_output_color);
+$t = new lime_test(12, new lime_output_color);
 
 $identifier = new xfMockIdentifier;
 $service = new xfService($identifier);
@@ -43,3 +43,17 @@ $t->is($service->getOption('foobar', 42), 42, '->getOption() returns the default
 $service->setOption('foobar', 82);
 $t->ok($service->hasOption('foobar'), '->hasOption() returns true for set options');
 $t->is($service->getOption('foobar', 42), 82, '->getOption() returns the option value');
+
+$t->diag('->configure()');
+class FooService extends xfService
+{
+  public $configured = false;
+
+  public function configure()
+  {
+    $this->configured = true;
+  }
+}
+
+$service = new FooService($identifier);
+$t->ok($service->configured, '->configure() is called during object construction');
