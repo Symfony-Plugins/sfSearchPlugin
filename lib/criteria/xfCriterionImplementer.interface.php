@@ -33,7 +33,7 @@ interface xfCriterionImplementer
   /**
    * Tokenizes the input to see what it matched.
    *
-   * @returns array of xfCriterionToken
+   * @returns array of xfToken
    */
   public function tokenize($input);
 }
