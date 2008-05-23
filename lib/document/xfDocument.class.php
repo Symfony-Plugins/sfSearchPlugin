@@ -132,7 +132,7 @@ final class xfDocument
    */
   public function addField(xfFieldValue $fieldValue)
   {
-    $this->fields[$fieldValue->getField()->getName()] = $fieldValue;
+    $this->fields[strtolower($fieldValue->getField()->getName())] = $fieldValue;
   }
 
   /**
@@ -153,6 +153,7 @@ final class xfDocument
    */
   public function getField($name)
   {
+    $name = strtolower($name);
     if (!isset($this->fields[$name]))
     {
       throw new xfDocumentException('Field ' . $name . ' not found in document');
