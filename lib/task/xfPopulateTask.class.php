@@ -10,30 +10,30 @@
 require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . 'xfBaseTask.class.php';
 
 /**
- * A task to rebuild a index.
+ * A task to populate a index.
  *
  * @package sfSearch
  * @subpackage Task
  * @author Carl Vondrick
  */
-final class xfRebuildTask extends xfBaseTask
+final class xfPopulateTask extends xfBaseTask
 {
   /**
    * Configures the task.
    */
   protected function configure()
   {
-    $this->addArguments(array(new sfCommandArgument('index', sfCommandArgument::REQUIRED, 'The index name to rebuild')));
+    $this->addArguments(array(new sfCommandArgument('index', sfCommandArgument::REQUIRED, 'The index name to populate')));
 
     $this->namespace = 'search';
-    $this->name = 'rebuild';
+    $this->name = 'populate';
 
-    $this->briefDescription = 'Rebuilds a search index';
+    $this->briefDescription = 'Populates a search index';
     $this->detailedDescription = <<<EOF
-The [search:rebuild|INFO] task empties, rebuilds, and optimizes an index
+The [search:populate|INFO] task empties, populates, and optimizes an index
 in the current project:
 
-  [./symfony search:rebuild MySearch|INFO]
+  [./symfony search:populate MySearch|INFO]
 
 This task may take quite a while to run, depending on your configuration.
 Avoid running this task on a production site, as it's primary purpose is
@@ -42,7 +42,7 @@ EOF;
   }
 
   /**
-   * Rebuilds an index.
+   * Populates an index.
    *
    * @param array $arguments
    * @param array $options
@@ -60,7 +60,7 @@ EOF;
     $db = new sfDatabaseManager(new xfSearchConfiguration('cli', false, $this->configuration->getRootDir(), $this->dispatcher));
 
     $index = xfIndexManager::get($index);
-    $index->rebuild();
+    $index->populate();
     $index->optimize();
   }
 }

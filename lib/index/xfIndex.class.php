@@ -190,14 +190,14 @@ abstract class xfIndex
   }
 
   /**
-   * Rebuilds the index from scratch.
+   * Empties and populates the index
    */
-  final public function rebuild()
+  final public function populate()
   {
     $this->checkState();
 
     $start = microtime(true);
-    $this->log('Index rebuild in progress...');
+    $this->log('Populating index...');
     $this->engine->erase();
     $this->log('Index erased.');
 
@@ -226,7 +226,7 @@ abstract class xfIndex
       $this->log('Service "' . $name . '" successfully processed.');
     }
 
-    $this->log('Index successfully rebuilt in "' . round(microtime(true) - $start, 2) . '" seconds.', array('fg' => 'blue', 'bold' => true));
+    $this->log('Index successfully populated in "' . round(microtime(true) - $start, 2) . '" seconds.', array('fg' => 'blue', 'bold' => true));
   }
 
   /**
@@ -238,7 +238,7 @@ abstract class xfIndex
 
     $start = microtime(true);
     $this->engine->open();
-    $this->log('Index optimization in progress...');
+    $this->log('Optimizing index...');
     $this->engine->optimize();
     $this->log('Index successfully optimized in "' . round(microtime(true) - $start, 2) . '" seconds.', array('fg' => 'blue', 'bold' => true));
   }

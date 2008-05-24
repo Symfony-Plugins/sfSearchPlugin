@@ -51,7 +51,7 @@ EOF;
   }
 
   /**
-   * Rebuilds an index.
+   * Initializes an index
    *
    * @param array $arguments
    * @param array $options
@@ -120,7 +120,7 @@ class $index extends xfIndex
     // After you have configured the index, you should populate it.  Do this by
     // running the symfony task:
     //  
-    //    $ ./symfony search:rebuild $index
+    //    $ ./symfony search:populate $index
     // 
     // For more information, please see the documentation included in the
     // sfSearch package.

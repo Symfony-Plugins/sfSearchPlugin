@@ -71,10 +71,10 @@ $t->diag('->optimize()');
 $index->optimize();
 $t->is($engine->optimized, 1, '->optimize() optimizes the engine');
 
-$t->diag('->rebuild()');
+$t->diag('->populate()');
 $engine->add(new xfDocument('foo'));
-$index->rebuild();
-$t->is(count($engine->getDocuments()), 3, '->rebuild() erases the index and rebuilds all documents');
+$index->populate();
+$t->is(count($engine->getDocuments()), 3, '->populate() erases the index and populates all documents');
 
 $t->diag('->find()');
 $results = $index->find(new xfMockCriterion);
