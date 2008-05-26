@@ -88,31 +88,38 @@ final class xfDocument
    * Adds a child document.
    *
    * @param xfDocument $doc The child document
+   * @throws xfDocumentException if circular reference found
    */
   public function addChild(xfDocument $doc)
   {
-    $this->checkCircularReference($doc);
+    if ($this->checkCircularReference($doc) > 0)
+    {
+      throw new xfException('Cannot add a child to itself (circular references are not allowed)');
+    }
 
     $this->children[$doc->getGuid()] = $doc;
   }
 
   /**
-   * Checks for circular references and throws exception if found.
+   * Checks for circular references
    *
    * @param xfDocument $child The child document
-   * @throws xfDocumentException if circular reference found
+   * @return int The number of circular references found
    */
   private function checkCircularReference(xfDocument $child)
   {
+    $circular = 0;
+
     if ($child === $this)
     {
-      throw new xfDocumentException('Circular reference detected: A child document cannot be the same instance as the parent');
+      $circular++;
     }
-    
     foreach ($child->getChildren() as $grandchild)
     {
-      $this->checkCircularReference($grandchild);
+      $circular += $this->checkCircularReference($grandchild);
     }
+
+    return $circular;
   }
 
   /**
