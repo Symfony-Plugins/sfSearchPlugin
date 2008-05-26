@@ -71,11 +71,6 @@ final class xfGeneratorInterface extends sfGenerator
 
     $themeDir = $this->generatorManager->getConfiguration()->getGeneratorTemplate($this->getGeneratorClass(), $this->params['theme'], '');
 
-    if (!is_dir($themeDir))
-    {
-      throw new xfGeneratorException('The theme "' . $this->params['theme'] . '" does not exist');
-    }
-
     $this->setGeneratedModuleName('auto' . ucfirst($this->params['moduleName']));
     $this->setModuleName($this->params['moduleName']);
     $this->setTheme($this->params['theme']);

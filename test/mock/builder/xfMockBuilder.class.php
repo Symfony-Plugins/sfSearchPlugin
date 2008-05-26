@@ -23,6 +23,7 @@ class xfMockBuilder implements xfBuilder
   public function build($input, xfDocument $doc)
   {
     $doc->addField(new xfFieldValue(new xfField('foobar', xfField::KEYWORD), 'bar'));
+    $doc->addField(new xfFieldValue(new xfField('input', xfField::TEXT), $input));
     
     return $doc;
   }

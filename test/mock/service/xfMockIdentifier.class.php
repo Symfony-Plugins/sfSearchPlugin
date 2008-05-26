@@ -17,7 +17,7 @@ require 'service/xfIdentifier.interface.php';
  */
 class xfMockIdentifier implements xfIdentifier
 {
-  public $name = 'foobar', $guid = '~guid~', $match = xfIdentifier::MATCH_YES, $objects = array('foo', 'bar', 'baz');
+  public $name = 'foobar', $match = xfIdentifier::MATCH_YES, $objects = array('foo', 'bar', 'baz');
 
   public function getName()
   {

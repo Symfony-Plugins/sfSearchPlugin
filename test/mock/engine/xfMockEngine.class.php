@@ -17,7 +17,7 @@ require_once 'engine/xfEngine.interface.php';
  */
 class xfMockEngine implements xfEngine
 {
-  public $open = false, $documents = array(), $results = array(), $optimized = 0;
+  public $open = false, $documents = array(), $optimized = 0;
 
   public function open()
   {
