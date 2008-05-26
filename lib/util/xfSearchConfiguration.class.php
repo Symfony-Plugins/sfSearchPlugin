@@ -17,7 +17,7 @@
  * @subpackage Utilities
  * @author Carl Vondrick
  */
-final class xfSearchConfiguration extends sfApplicationConfiguration
+class xfSearchConfiguration extends sfApplicationConfiguration
 {
   public function configure()
   {
