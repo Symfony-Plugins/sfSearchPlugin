@@ -20,6 +20,7 @@ require 'document/xfFieldValue.class.php';
 require 'mock/criteria/xfMockCriterionImplementer.class.php';
 require 'result/xfResultIterator.class.php';
 require 'result/xfDocumentHit.class.php';
+require 'util/xfException.class.php';
 require 'event/sfEvent.class.php';
 require 'event/sfEventDispatcher.class.php';
 
@@ -35,9 +36,10 @@ class TestIndex extends xfIndex
   }
 }
 
-$t = new lime_test(14, new lime_output_color);
+$t = new lime_test(20, new lime_output_color);
 $dispatcher = new sfEventDispatcher;
 $index = new TestIndex($dispatcher);
+$invalid = new TestIndex($dispatcher);
 
 $t->diag('->get*(), ->set*(), ->setup()');
 $t->is($index->getName(), 'TestIndex', '->getName() is initially the name of the class');
@@ -66,20 +68,62 @@ $index->insert('foo');
 $t->is(count($engine->getDocuments()), 1, '->insert() adds a document');
 $index->remove('foo');
 $t->is(count($engine->getDocuments()), 0, '->remove() deletes a document');
+try {
+  $msg = '->insert() fails if an engine does not exist';
+  $invalid->insert('foo');
+  $t->fail($msg);
+} catch (Exception $e) {
+  $t->pass($msg);
+}
+try {
+  $msg = '->remove() fails if an engine does not exist';
+  $invalid->remove('foo');
+  $t->fail($msg);
+} catch (Exception $e) {
+  $t->pass($msg);
+}
 
 $t->diag('->optimize()');
 $index->optimize();
 $t->is($engine->optimized, 1, '->optimize() optimizes the engine');
+try {
+  $msg = '->optimize() fails if an engine does not exist';
+  $invalid->optimize();
+  $t->fail($msg);
+} catch (Exception $e) {
+  $t->pass($msg);
+}
 
 $t->diag('->populate()');
 $engine->add(new xfDocument('foo'));
 $index->populate();
 $t->is(count($engine->getDocuments()), 3, '->populate() erases the index and populates all documents');
+try {
+  $msg = '->populate() fails if an engine does not exist';
+  $invalid->populate();
+  $t->fail($msg);
+} catch (Exception $e) {
+  $t->pass($msg);
+}
 
 $t->diag('->find()');
 $results = $index->find(new xfMockCriterion);
 $t->isa_ok($results, 'xfResultIterator', '->find() returns an xfResultIterator');
 $t->is($results->count(), 3, '->find() returns results that match');
+try {
+  $msg = '->find() fails if an engine does not exist';
+  $invalid->find(new xfMockCriterion);
+  $t->fail($msg);
+} catch (Exception $e) {
+  $t->pass($msg);
+}
 
 $t->diag('->describe()');
 $t->is($index->describe(), array('Engine' => 'Mock vINF'), '->describe() returns the engine\'s description');
+try {
+  $msg = '->describe() fails if an engine does not exist';
+  $invalid->describe();
+  $t->fail($msg);
+} catch (Exception $e) {
+  $t->pass($msg);
+}
