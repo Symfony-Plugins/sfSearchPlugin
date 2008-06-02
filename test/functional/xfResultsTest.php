@@ -69,7 +69,7 @@ $b->
   checkResponseElement('ol[start="1"]', true)->
   checkResponseElement('ol li', 10)->
   checkResponseElement('ol li a', 10)->
-  checkResponseElement('ol li a[href="module/action?input=0"]', 'Title0', array('count' => 1))->
+  checkResponseElement('ol li a[href="/index.php/module/action/input/0"]', 'Title0', array('count' => 1))->
   checkResponseElement('ol li', '/Description0/', array('position' => 0))->
 
   checkResponseElement('form[method="get"]', true)->
