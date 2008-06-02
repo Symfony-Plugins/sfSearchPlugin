@@ -24,7 +24,13 @@ abstract class <?php echo $this->getGeneratedModuleName() ?>Components extends s
     switch ($this->result->getDocument()->getField('_service')->getValue())
     {
       <?php
-      foreach ($this->get('simple.services', array('default' => array())) as $name => $properties)
+      $config = $this->get('simple.services', array());
+      if (!isset($config['default']))
+      {
+        $config['default'] = array();
+      }
+
+      foreach ($config as $name => $properties)
       {
         if ($name == 'default')
         {
