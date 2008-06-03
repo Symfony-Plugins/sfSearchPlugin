@@ -107,6 +107,16 @@ final class xfDocumentHit
   }
 
   /**
+   * Gets all the options
+   *
+   * @returns array
+   */
+  public function getOptions()
+  {
+    return $this->options;
+  }
+
+  /**
    * Tests to see if an option exists.
    *
    * @param string $name The option name

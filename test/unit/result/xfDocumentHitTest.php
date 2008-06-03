@@ -15,13 +15,13 @@ require 'result/xfResultException.class.php';
 require 'mock/criteria/xfMockCriterionImplementer.class.php';
 require 'mock/result/xfMockRetort.class.php';
 
-$t = new lime_test(10, new lime_output_color);
+$t = new lime_test(11, new lime_output_color);
 
 $document = new xfDocument('guid');
 $criterion = new xfMockCriterionImplementer;
 $hit = new xfDocumentHit($document, $criterion, array('score' => 0.2));
 
-$t->diag('->getOption(), hasOption(), setOption()');
+$t->diag('->getOption(), ->getOptions(), hasOption(), setOption()');
 $t->is($hit->getOption('score'), 0.2, '->getOption() returns the option value');
 $t->is($hit->getOption('foobar'), null, '->getOption() returns null for unset options');
 $t->is($hit->getOption('foobar', 42), 42, '->getOption() returns the default for unset options');
@@ -29,6 +29,7 @@ $t->ok($hit->hasOption('score'), '->hasOption() returns true for options that ex
 $t->ok(!$hit->hasOption('foobar'), '->hasOption() returns false for options that do not exist');
 $hit->setOption('foobar', 'baz');
 $t->is($hit->getOption('foobar'), 'baz', '->getOption() returns the option value');
+$t->is($hit->getOptions(), array('score' => 0.2, 'foobar' => 'baz'), '->getOptions() returns all options');
 
 $t->diag('->getDocument(), ->getCriterionImplementer()');
 $t->is($hit->getDocument(), $document, '->getDocument() returns the wrapped document');
