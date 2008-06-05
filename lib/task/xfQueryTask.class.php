@@ -29,7 +29,7 @@ final class xfQueryTask extends xfBaseTask
     ));
 
     $this->addOptions(array(
-      new sfCommandOption('limit', 'l', sfCommandOption::PARAMETER_REQUIRED, 'How many results to display', 10),
+      new sfCommandOption('limit', 'l', sfCommandOption::PARAMETER_REQUIRED, 'How many results to display', 3),
       new sfCommandOption('page', 'p', sfCommandOption::PARAMETER_REQUIRED, 'The page to display', 1),
       new sfCommandOption('verbose', null, sfCommandOption::PARAMETER_NONE, 'If passed, displays more information')
     ));
@@ -149,7 +149,7 @@ EOF;
   private function processHit(xfDocumentHit $result, $count, $verbose = false)
   {
     $this->log('');
-    $this->log($this->formatter->format($count . ') ' . $result->getDocument()->getGuid(), array('fg' => 'blue', 'bold' => true)) . ':');
+    $this->log($count . ') ' . $this->formatter->format($result->getDocument()->getGuid(), array('fg' => 'blue', 'bold' => true)) . ':');
     
     foreach ($result->getDocument()->getFields() as $field)
     {
