@@ -26,10 +26,8 @@ abstract class xfBaseTask extends sfBaseTask
   /**
    * @see sfTask
    */
-  public function initialize(sfEventDispatcher $dispatcher, sfFormatter $formatter)
+  protected function doRun(sfCommandManager $commandManager, $options)
   {
-    parent::initialize($dispatcher, $formatter);
-
     if (!self::$done)
     {
       $auto = sfSimpleAutoload::getInstance();
@@ -40,6 +38,8 @@ abstract class xfBaseTask extends sfBaseTask
 
       self::$done = true;
     }
+
+    return parent::doRun($commandManager, $options);
   }
 
   /**
