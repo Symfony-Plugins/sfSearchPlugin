@@ -118,7 +118,7 @@ symfony cc
 === Populate Index ===
 Build the index:
 {{{
-symfony search:rebuild MySearchIndex
+symfony search:populate MySearchIndex
 }}}
 
 === Test Interface ===
