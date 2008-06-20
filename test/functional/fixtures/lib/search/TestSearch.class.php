@@ -7,7 +7,7 @@
  * file that was distributed with this source code.
  */
 
-class TestSearch extends xfIndex
+class TestSearch extends xfIndexSingle
 {
   protected function configure()
   {

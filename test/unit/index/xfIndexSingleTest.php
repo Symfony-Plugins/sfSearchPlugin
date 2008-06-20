@@ -9,7 +9,9 @@
 
 
 require_once dirname(__FILE__) . '/../../bootstrap/unit.php';
-require 'index/xfIndex.class.php';
+require 'index/xfIndex.interface.php';
+require 'index/xfIndexCommon.class.php';
+require 'index/xfIndexSingle.class.php';
 require 'service/xfService.class.php';
 require 'service/xfServiceRegistry.class.php';
 require 'mock/service/xfMockIdentifier.class.php';
@@ -24,24 +26,18 @@ require 'util/xfException.class.php';
 require 'event/sfEvent.class.php';
 require 'event/sfEventDispatcher.class.php';
 
-class TestIndex extends xfIndex
+class TestIndex extends xfIndexSingle
 {
-  public $configured = false;
-
-  protected function configure()
-  {
-    parent::configure();
-
-    $this->configured = true;
-  }
 }
 
-$t = new lime_test(20, new lime_output_color);
+$t = new lime_test(21, new lime_output_color);
 $dispatcher = new sfEventDispatcher;
-$index = new TestIndex($dispatcher);
-$invalid = new TestIndex($dispatcher);
+$index = new TestIndex;
+$invalid = new TestIndex;
+$index->setEventDispatcher($dispatcher);
+$invalid->setEventDispatcher($dispatcher);
 
-$t->diag('->get*(), ->set*(), ->setup()');
+$t->diag('->get*(), ->set*()');
 $t->is($index->getName(), 'TestIndex', '->getName() is initially the name of the class');
 $index->setName('foobar');
 $t->is($index->getName(), 'foobar', '->setName() changes the name');
@@ -53,10 +49,10 @@ $t->is($index->getServiceRegistry(), $registry, '->setServiceRegistry() changes 
 $engine = new xfMockEngine;
 $index->setEngine($engine);
 $t->is($index->getEngine(), $engine, '->setEngine() changes the engine');
-$index->setup();
-$t->ok($index->configured, '->setup() returns ->configure()');
+$t->ok(!$index->isSetup(), '->isSetup() is false initially');
 
-$index = new TestIndex($dispatcher);
+$index = new TestIndex;
+$index->setEventDispatcher($dispatcher);
 $registry = new xfServiceRegistry;
 $registry->register(new xfService(new xfMockIdentifier));
 $engine = new xfMockEngine;
@@ -65,6 +61,7 @@ $index->setEngine($engine);
 
 $t->diag('->insert(), ->remove()');
 $index->insert('foo');
+$t->ok($index->isSetup(), '->insert() automatically runs setup');
 $t->is(count($engine->getDocuments()), 1, '->insert() adds a document');
 $index->remove('foo');
 $t->is(count($engine->getDocuments()), 0, '->remove() deletes a document');

@@ -7,11 +7,13 @@
  * file that was distributed with this source code.
  */
 
-require 'index/xfIndex.class.php';
+require 'index/xfIndex.interface.php';
+require 'index/xfIndexCommon.class.php';
+require 'index/xfIndexSingle.class.php';
 require 'mock/engine/xfMockEngine.class.php';
 require 'service/xfServiceRegistry.class.php';
 
-class xfMockIndex extends xfIndex
+class xfMockIndex extends xfIndexSingle
 {
   public $configured = false;
 

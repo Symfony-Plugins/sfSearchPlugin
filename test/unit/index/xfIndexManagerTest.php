@@ -11,11 +11,12 @@ require dirname(__FILE__) . '/../../bootstrap/unit.php';
 require 'index/xfIndexManager.class.php';
 require 'mock/index/xfMockIndex.class.php';
 require 'event/sfEventDispatcher.class.php';
+require 'event/sfEvent.class.php';
 require 'util/xfException.class.php';
 
 $dispatcher = new sfEventDispatcher;
 
-$t = new lime_test(5, new lime_output_color);
+$t = new lime_test(4, new lime_output_color);
 
 try {
   $msg = '->getIndex() fails if manager has not been initialized';
@@ -30,7 +31,6 @@ xfIndexManager::initialize($dispatcher);
 $index = xfIndexManager::get('xfMockIndex');
 $t->isa_ok($index, 'xfMockIndex', '->getIndex() retuns an instance of the index');
 $t->ok($index === xfIndexManager::get('xfMockIndex'), '->getIndex() is a singleton method');
-$t->ok($index->configured, '->getIndex() runs ->setup()');
 
 try {
   $msg = '->getIndex() fails if index does not inherit xfIndex';

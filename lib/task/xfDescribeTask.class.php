@@ -69,19 +69,30 @@ EOF;
    *
    * @param string $key
    * @param string|array $value
+   * @param int $indent The indent level
    */
-  private function outputRow($key, $value)
+  private function outputRow($key, $value, $indent = 1)
   {
     if (is_array($value))
     {
-      $value = implode($value, ', ');
+      $this->log(str_repeat(' ', $indent * 2) . $this->formatter->format($key, array('fg' => 'blue', 'bold' => true)) . ':');
+
+      $indent++;
+
+      foreach ($value as $nKey => $nValue)
+      {
+        $this->outputRow($nKey, $nValue, $indent);
+      }
     }
+    else
+    {
+      $value = str_replace(sfConfig::get('sf_root_dir') . '/', '', $value);
 
-    $value = str_replace(sfConfig::get('sf_root_dir') . '/', '', $value);
+      // str_pad() doesn't like ansi formatting
+      $size = 30 - $indent * 2 - strlen($key);
+      $padding = $size > 0 ? str_repeat(' ', $size) : '';
 
-    // str_pad() doesn't like ansi formatting
-    $padding = str_repeat(' ', 20 - strlen($key));
-
-    $this->log(str_repeat(' ', 2) . $this->formatter->format($key, array('fg' => 'green', 'bold' => true)) . ':' . $padding . ' ' . $value); 
+      $this->log(str_repeat(' ', $indent * 2) . $this->formatter->format($key, array('fg' => 'green', 'bold' => true)) . ':' . $padding . ' ' . $value); 
+    }
   }
 }

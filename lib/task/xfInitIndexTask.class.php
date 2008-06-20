@@ -28,6 +28,7 @@ final class xfInitIndexTask extends xfBaseTask
     ));
 
     $this->addOptions(array(
+      new sfCommandOption('group', 'g', sfCommandOption::PARAMETER_NONE, 'Create a search group instead of an index'),
       new sfCommandOption('dir', null, sfCommandOption::PARAMETER_OPTIONAL, 'The directory to create the index in', 'lib/search'),
     ));
 
@@ -47,6 +48,15 @@ directory, use the [--dir|COMMENT] option:
   [./symfony search:init-index --dir=lib/find MySearch|INFO]
 
 However, it is recommended you put search indices in [lib/search|COMMENT]
+
+The task can also generate index groups which combine multiple indices
+together that share a common service registry.  Pass the [--group|COMMENT]
+option to create an index group:
+  
+  [./symfony search:init-index --group MySearchGroup|INFO]
+
+Keep in mind that you can always create search indices and groups through
+manual file creation.
 EOF;
   }
 
@@ -69,7 +79,8 @@ EOF;
 
     $project  = isset($properties['symfony']['name'])   ? $properties['symfony']['name']   : 'symfony';
     $author   = isset($properties['symfony']['author']) ? $properties['symfony']['author'] : 'Your name here';
-    $content = <<<INDEX
+
+    $singleContent = <<<INDEX
 <?php
 
 /**
@@ -80,8 +91,18 @@ EOF;
  * @author      $author
  * @version     SVN: \$Id$
  */
-class $index extends xfIndex
+class $index extends xfIndexSingle
 {
+  /**
+   * Configures initial state of search index by setting a name.
+   *
+   * @see xfIndex
+   */
+  protected function initialize()
+  {
+    \$this->setName('$index');
+  }
+
   /**
    * Configures the search index by setting up a search engine and service
    * registry.
@@ -128,6 +149,74 @@ class $index extends xfIndex
 }
 INDEX;
 
+    $groupContent = <<<INDEX
+<?php
+
+/**
+ * $index search group index.
+ *
+ * @package     $project
+ * @subpackage  search
+ * @author      $author
+ * @version     SVN: \$Id$
+ */
+class $index extends xfIndexGroup
+{
+  /**
+   * Configures initial state of search group index by setting a name.
+   *
+   * @see xfIndex
+   */
+  protected function initialize()
+  {
+    \$this->setName('$index');
+  }
+
+  /**
+   * Configures the search index by setting up a service registry and child indices.
+   *
+   * @see xfIndex
+   */
+  protected function configure()
+  {
+    // The ->configure() method setups the search index so it knows how to
+    // behave.  You must setup a service registry and all child indices.
+    //
+    // This method is analogous to ->configure() in sfForm.  In fact, it has the
+    // same purpose and follows similar logic.
+    //
+    // Consider the following examples as you setup your index:
+    // 
+    // Setup the services:
+    //
+    //    \$s1 = new xfService(new MyIdentifier('...'));
+    //    \$s1->addBuilder(new MyBuilder(array(
+    //                                        new xfField('foo', xfField::KEYWORD),
+    //                                        new xfField('bar', xfField::TEXT)
+    //                                  ));
+    //    \$s1->addRetort(new xfRetortField);
+    //    \$s1->addRetort(new xfRetortRoute('module/action?param=%foo%'));
+    //
+    //    \$this->getServiceRegistry()->register(\$s1);
+    //
+    // Repeat for each service you require.
+    //
+    // Setup child indices:
+    //
+    //    \$this->addIndex(new {$index}ChildOne, 'child1');
+    //    \$this->addIndex(new {$index}ChildTwo, 'child2');
+    //
+    // After you have configured the index, you should populate it.  Do this by
+    // running the symfony task:
+    //  
+    //    $ ./symfony search:populate $index
+    // 
+    // For more information, please see the documentation included in the
+    // sfSearch package.
+  }
+}
+INDEX;
+
     if (!is_readable(sfConfig::get('sf_root_dir') . '/' . $options['dir']))
     {
       $this->getFilesystem()->mkdirs(str_replace('/', DIRECTORY_SEPARATOR, $options['dir']));
@@ -138,6 +227,15 @@ INDEX;
     if (is_readable($file))
     {
       throw new sfException(sprintf('The index "%s" already exists in "%s"', $index, $file));
+    }
+
+    if ($options['group'])
+    {
+      $content = $groupContent;
+    }
+    else
+    {
+      $content = $singleContent;
     }
 
     $this->logSection('search', sprintf('Creating "%s" index skeleton', $file));

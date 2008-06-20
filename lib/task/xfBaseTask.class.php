@@ -81,8 +81,7 @@ abstract class xfBaseTask extends sfBaseTask
   {
     $parameters = $event->getParameters();
 
-    $section = isset($parameters['name']) ? $parameters['name'] : 'search';
-    $options = isset($parameters['options']) ? $parameters['options'] : array();
+    $section = $event->getSubject()->getName();
 
     foreach ($parameters as $key => $parameter)
     {
@@ -90,6 +89,7 @@ abstract class xfBaseTask extends sfBaseTask
       {
         $parameter = preg_replace('/"(.+?)"/e', '$this->formatter->format("\\1", array("fg" => "blue", "bold" => true));', $parameter);
         $parameter = preg_replace('/\.{3}$/e', '$this->formatter->format("...", array("fg" => "red", "bold" => true));', $parameter);
+        $parameter = preg_replace('/(Warning|Error)!/e', '$this->formatter->format("\\1!", array("fg" => "red", "bold" => true));', $parameter);
 
         $this->log($this->formatter->format($section, array('fg' => 'green', 'bold' => true)) . ' >> ' . $parameter);
       }

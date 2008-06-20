@@ -67,8 +67,8 @@ final class xfIndexManager
         throw new xfException('xfIndexManager can only handle instances of xfIndex');
       }
 
-      $index = new $name(self::$dispatcher);
-      $index->setup();
+      $index = new $name;
+      $index->setEventDispatcher(self::$dispatcher);
 
       self::$indices[$name] = $index;
     }
