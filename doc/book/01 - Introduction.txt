@@ -19,15 +19,18 @@ sfSearch has very few requirements:
 == Installation ==
 sfSearch is currently only available from symfony's Subversion repository:
 
-  * {{{
-    cd /path/to/symfony/project
-    }}}
-  * {{{
-    svn co http://svn.symfony-project.com/plugins/sfSearchPlugin/trunk plugins/sfSearchPlugin
-    }}}
-  * {{{
-    ./symfony cache:clear
-    }}}
+  *
+{{{
+cd /path/to/symfony/project
+}}}
+  *
+{{{
+svn co http://svn.symfony-project.com/plugins/sfSearchPlugin/trunk plugins/sfSearchPlugin
+}}}
+  *
+{{{
+./symfony cache:clear
+}}}
 
 == Table of Contents ==
   0. Quick Start Guide
@@ -42,5 +45,3 @@ sfSearch is pre-alpha software and is rapidly changing.  As a result, sfSearch m
 == License ==
 sfSearch is released under the MIT License and is free, open source software. By using sfSearch, you agree to the terms in the {{{ LICENSE }}} file included in the sfSearch package.
 
-== Quick Start ==
-Want to get started right away?  See {{{ 00 - Quick Start.txt }}} to get started.

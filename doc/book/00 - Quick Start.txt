@@ -1,17 +1,20 @@
-= Quick Start=
+= Quick Start =
 This guide will quickly setup sfSearch in about 10 minutes.  It is written to integrate Zend_Search_Lucene, Propel, and symfony specifically.
 
 == Install ==
 Checkout the neccessary packages:
-  * {{{
-    svn co http://svn.symfony-project.com/plugins/sfSearchPlugin/trunk plugins/sfSearchPlugin
-    }}}
-  * {{{
-    svn co http://svn.symfony-project.com/plugins/sfLucenePlugin/trunk plugins/sfLucenePlugin
-    }}}
-  * {{{
-    svn co http://svn.symfony-project.com/plugins/sfPropelSearchPlugin/trunk plugins/sfPropelSearchPlugin
-    }}}
+  *
+{{{
+svn co http://svn.symfony-project.com/plugins/sfSearchPlugin/trunk plugins/sfSearchPlugin
+}}}
+  *
+{{{
+svn co http://svn.symfony-project.com/plugins/sfLucenePlugin/trunk plugins/sfLucenePlugin
+}}}
+  *
+{{{
+svn co http://svn.symfony-project.com/plugins/sfPropelSearchPlugin/trunk plugins/sfPropelSearchPlugin
+}}}
 
 == Configure Index ==
 === Intialize Index ===
