@@ -52,14 +52,13 @@ EOF;
     $index = $arguments['index'];
 
     $this->checkIndexExists($index);
-    $this->connectLogging();
-    $this->initializeManager();
 
     // this is a hack and will be hopefully removed
     // see http://groups.google.com/group/symfony-devs/browse_thread/thread/dc399312da49598a
     $db = new sfDatabaseManager(new xfSearchConfiguration('cli', false, $this->configuration->getRootDir(), $this->dispatcher));
 
-    $index = xfIndexManager::get($index);
+    $index = new $index;
+    $index->setLogger(new xfLoggerTask($this->dispatcher, $this->formatter));
     $index->populate();
     $index->optimize();
   }

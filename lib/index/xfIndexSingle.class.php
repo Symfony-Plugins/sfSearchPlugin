@@ -69,7 +69,7 @@ abstract class xfIndexSingle extends xfIndexCommon
     {
       $doc = $this->getServiceRegistry()->locate($input)->buildDocument($input);
       $this->engine->add($doc);
-      $this->log('Inserted document "' . $doc->getGuid() . '" from the index');
+      $this->getLogger()->log('Inserted document "' . $doc->getGuid() . '" from the index', $this->getName());
     }
     catch (xfServiceIgnoredException $e)
     {
@@ -89,7 +89,7 @@ abstract class xfIndexSingle extends xfIndexCommon
     {
       $guid = $this->getServiceRegistry()->locate($input)->getIdentifier()->getGuid($input);
       $this->engine->delete($guid);
-      $this->log('Removed document "' . $guid . '" from the index');
+      $this->getLogger()->log('Removed document "' . $guid . '" from the index', $this->getName());
     }
     catch (xfServiceIgnoredException $e)
     {
@@ -104,21 +104,21 @@ abstract class xfIndexSingle extends xfIndexCommon
     $this->setup();
 
     $start = microtime(true);
-    $this->log('Populating index...');
+    $this->getLogger()->log('Populating index...', $this->getName());
     $this->engine->erase();
-    $this->log('Index erased.');
+    $this->getLogger()->log('Index erased.', $this->getName());
 
     $this->engine->open();
 
     $services = $this->getServiceRegistry()->getServices();
 
-    $this->log('Found "' . count($services) . '" services.');
+    $this->getLogger()->log('Found "' . count($services) . '" services.', $this->getName());
    
     foreach ($services as $service)
     {
       $name = $service->getIdentifier()->getName();
 
-      $this->log('Processing service "' . $name . '"...');
+      $this->getLogger()->log('Processing service "' . $name . '"...', $this->getName());
 
       for ($x = 0; count($objects = $service->getIdentifier()->discover($x)) > 0; $x++)
       {
@@ -126,12 +126,12 @@ abstract class xfIndexSingle extends xfIndexCommon
         {
           $doc = $service->buildDocument($object);
           $this->engine->add($doc);
-          $this->log('Document "' . $doc->getGuid() . '" inserted.');
+          $this->getLogger()->log('Document "' . $doc->getGuid() . '" inserted.', $this->getName());
         }
       }
     }
 
-    $this->log('Index populated in "' . round(microtime(true) - $start, 2) . '" seconds.');
+    $this->getLogger()->log('Index populated in "' . round(microtime(true) - $start, 2) . '" seconds.', $this->getName());
   }
 
   /**
@@ -143,9 +143,9 @@ abstract class xfIndexSingle extends xfIndexCommon
 
     $start = microtime(true);
     $this->engine->open();
-    $this->log('Optimizing index...');
+    $this->getLogger()->log('Optimizing index...', $this->getName());
     $this->engine->optimize();
-    $this->log('Index optimized in "' . round(microtime(true) - $start, 2) . '" seconds.');
+    $this->getLogger()->log('Index optimized in "' . round(microtime(true) - $start, 2) . '" seconds.', $this->getName());
   }
 
   /**

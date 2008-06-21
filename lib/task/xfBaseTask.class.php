@@ -55,44 +55,4 @@ abstract class xfBaseTask extends sfBaseTask
       throw new sfException('Index ' . $index . ' does not exist');
     }
   }
-
-  /**
-   * Connects the logging output to the dispatcher.
-   */
-  protected function connectLogging()
-  {
-    $this->dispatcher->connect('search.log', array($this, 'handleLogEvent'));
-  }
-
-  /**
-   * Initializes the index manager.
-   */
-  protected function initializeManager()
-  {
-    xfIndexManager::initialize($this->dispatcher);
-  }
-
-  /**
-   * Sends a log notice to the dispatcher.
-   *
-   * @param sfEvent $event
-   */
-  public function handleLogEvent(sfEvent $event)
-  {
-    $parameters = $event->getParameters();
-
-    $section = $event->getSubject()->getName();
-
-    foreach ($parameters as $key => $parameter)
-    {
-      if (is_numeric($key))
-      {
-        $parameter = preg_replace('/"(.+?)"/e', '$this->formatter->format("\\1", array("fg" => "blue", "bold" => true));', $parameter);
-        $parameter = preg_replace('/\.{3}$/e', '$this->formatter->format("...", array("fg" => "red", "bold" => true));', $parameter);
-        $parameter = preg_replace('/(Warning|Error)!/e', '$this->formatter->format("\\1!", array("fg" => "red", "bold" => true));', $parameter);
-
-        $this->log($this->formatter->format($section, array('fg' => 'green', 'bold' => true)) . ' >> ' . $parameter);
-      }
-    }
-  }
 }

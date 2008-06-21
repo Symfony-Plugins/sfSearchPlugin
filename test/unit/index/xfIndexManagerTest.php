@@ -10,23 +10,11 @@
 require dirname(__FILE__) . '/../../bootstrap/unit.php';
 require 'index/xfIndexManager.class.php';
 require 'mock/index/xfMockIndex.class.php';
-require 'event/sfEventDispatcher.class.php';
-require 'event/sfEvent.class.php';
+require 'log/xfLogger.interface.php';
+require 'log/xfLoggerBlackhole.class.php';
 require 'util/xfException.class.php';
 
-$dispatcher = new sfEventDispatcher;
-
-$t = new lime_test(4, new lime_output_color);
-
-try {
-  $msg = '->getIndex() fails if manager has not been initialized';
-  xfIndexManager::get('foobar');
-  $t->fail($msg);
-} catch (Exception $e) {
-  $t->pass($msg);
-}
-
-xfIndexManager::initialize($dispatcher);
+$t = new lime_test(3, new lime_output_color);
 
 $index = xfIndexManager::get('xfMockIndex');
 $t->isa_ok($index, 'xfMockIndex', '->getIndex() retuns an instance of the index');

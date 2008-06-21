@@ -64,10 +64,7 @@ abstract class xfIndexGroup extends xfIndexCommon
         $index->setServiceRegistry($this->getServiceRegistry());
       }
 
-      if ($index->getEventDispatcher() == null && $this->getEventDispatcher() instanceof sfEventDispatcher)
-      {
-        $index->setEventDispatcher($this->getEventDispatcher());
-      }
+      $index->setLogger($this->getLogger());
     }
 
     parent::postSetup();
@@ -108,16 +105,16 @@ abstract class xfIndexGroup extends xfIndexCommon
 
     $start = microtime(true);
 
-    $this->log('Populating group...');
+    $this->getLogger()->log('Populating group...', $this->getName());
 
     foreach ($this->indices as $name => $index)
     {
-      $this->log('Populating index "' . $name . '"...');
+      $this->getLogger()->log('Populating index "' . $name . '"...', $this->getName());
 
       $index->populate();
     }
 
-    $this->log('Group populated in "' . round(microtime(true) - $start, 2) . '" seconds.');
+    $this->getLogger()->log('Group populated in "' . round(microtime(true) - $start, 2) . '" seconds.', $this->getName());
   }
 
   /**
@@ -129,16 +126,16 @@ abstract class xfIndexGroup extends xfIndexCommon
 
     $start = microtime(true);
 
-    $this->log('Optimizing group...');
+    $this->getLogger()->log('Optimizing group...', $this->getName());
 
     foreach ($this->indices as $name => $index)
     {
-      $this->log('Optimizing index "' . $name . '"...');
+      $this->getLogger()->log('Optimizing index "' . $name . '"...', $this->getName());
 
       $index->optimize();
     }
 
-    $this->log('Group optimized in "' . round(microtime(true) - $start, 2) . '" seconds.');
+    $this->getLogger()->log('Group optimized in "' . round(microtime(true) - $start, 2) . '" seconds.', $this->getName());
   }
 
   /**

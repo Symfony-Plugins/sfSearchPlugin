@@ -12,6 +12,8 @@ require_once dirname(__FILE__) . '/../../bootstrap/unit.php';
 require 'index/xfIndex.interface.php';
 require 'index/xfIndexCommon.class.php';
 require 'index/xfIndexSingle.class.php';
+require 'log/xfLogger.interface.php';
+require 'log/xfLoggerBlackhole.class.php';
 require 'service/xfService.class.php';
 require 'service/xfServiceRegistry.class.php';
 require 'mock/service/xfMockIdentifier.class.php';
@@ -23,25 +25,19 @@ require 'mock/criteria/xfMockCriterionImplementer.class.php';
 require 'result/xfResultIterator.class.php';
 require 'result/xfDocumentHit.class.php';
 require 'util/xfException.class.php';
-require 'event/sfEvent.class.php';
-require 'event/sfEventDispatcher.class.php';
 
 class TestIndex extends xfIndexSingle
 {
 }
 
-$t = new lime_test(21, new lime_output_color);
-$dispatcher = new sfEventDispatcher;
+$t = new lime_test(20, new lime_output_color);
 $index = new TestIndex;
 $invalid = new TestIndex;
-$index->setEventDispatcher($dispatcher);
-$invalid->setEventDispatcher($dispatcher);
 
 $t->diag('->get*(), ->set*()');
 $t->is($index->getName(), 'TestIndex', '->getName() is initially the name of the class');
 $index->setName('foobar');
 $t->is($index->getName(), 'foobar', '->setName() changes the name');
-$t->is($index->getEventDispatcher(), $dispatcher, '->getEventDispatcher() returns the dispatcher');
 $t->isa_ok($index->getServiceRegistry(), 'xfServiceRegistry', '->getServiceRegistry() returns a service registry');
 $registry = new xfServiceRegistry;
 $index->setServiceRegistry($registry);
@@ -52,7 +48,6 @@ $t->is($index->getEngine(), $engine, '->setEngine() changes the engine');
 $t->ok(!$index->isSetup(), '->isSetup() is false initially');
 
 $index = new TestIndex;
-$index->setEventDispatcher($dispatcher);
 $registry = new xfServiceRegistry;
 $registry->register(new xfService(new xfMockIdentifier));
 $engine = new xfMockEngine;

@@ -51,10 +51,9 @@ EOF;
     $index = $arguments['index'];
 
     $this->checkIndexExists($index);
-    $this->connectLogging();
-    $this->initializeManager();
 
-    $index = xfIndexManager::get($index);
+    $index = new $index;
+    $index->setLogger(new xfLoggerTask($this->dispatcher, $this->formatter));
 
     $this->log($this->formatter->format($arguments['index'], array('fg' => 'red', 'bold' => true)) . ':');
     

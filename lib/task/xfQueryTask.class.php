@@ -85,14 +85,13 @@ EOF;
     $index = $arguments['index'];
 
     $this->checkIndexExists($index);
-    $this->connectLogging();
-    $this->initializeManager();
 
     $prefix = $this->formatter->format($arguments['index'], array('fg' => 'green', 'bold' => true)) . ' >> ';
 
     $this->log($prefix . 'Query ' . $this->formatter->format($arguments['query'], array('fg' => 'blue', 'bold' => true)));
 
-    $index = xfIndexManager::get($index);
+    $index = new $index;
+    $index->setLogger(new xfLoggerTask($this->dispatcher, $this->formatter));
 
     $c = new xfCriterionString($arguments['query'], xfCriterionString::FATAL);
 

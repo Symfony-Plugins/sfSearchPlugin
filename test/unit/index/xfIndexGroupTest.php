@@ -12,6 +12,9 @@ require 'index/xfIndex.interface.php';
 require 'index/xfIndexCommon.class.php';
 require 'index/xfIndexSingle.class.php';
 require 'index/xfIndexGroup.class.php';
+require 'log/xfLogger.interface.php';
+require 'log/xfLoggerBlackhole.class.php';
+require 'log/xfLoggerEventDispatcher.class.php';
 require 'service/xfService.class.php';
 require 'service/xfServiceRegistry.class.php';
 require 'mock/service/xfMockIdentifier.class.php';
@@ -59,18 +62,18 @@ class TestGroup extends xfIndexGroup
 $one = new TestChildOne;
 $two = new TestChildTwo;
 $two->setServiceRegistry(new xfServiceRegistry);
-$two->setEventDispatcher(new sfEventDispatcher);
 $two->describe(); // forces ->setup()
 
 $dispatcher = new sfEventDispatcher;
+$logger = new xfLoggerEventDispatcher($dispatcher);
 $service = new xfService(new xfMockIdentifier);
 $group = new TestGroup;
-$group->setEventDispatcher($dispatcher);
+$group->setLogger($logger);
 $group->one = $one;
 $group->two = $two;
 $group->service = $service;
 
-$t = new lime_test(12, new lime_output_color);
+$t = new lime_test(11, new lime_output_color);
 
 $t->ok($group->getIndex('child1') === $one, '->getIndex() returns the index');
 try {
@@ -81,10 +84,8 @@ try {
   $t->pass($msg);
 }
 
-$t->ok($one->getEventDispatcher() === $dispatcher, '->setup() configures the event dispatcher of the child');
+$t->ok($one->getLogger() === $logger, '->setup() configures the logger of the child');
 $t->ok($one->getServiceRegistry() === $group->getServiceRegistry(), '->search() passes on the service registry');
-
-$t->ok($two->getEventDispatcher() !== $dispatcher, '->setup() does not override an event dispatcher');
 $t->ok($two->getServiceRegistry() !== $group->getServiceRegistry(), '->setup() does not override a service registry');
 
 $group->insert('foo');

@@ -8,7 +8,7 @@
  */
 
 /**
- * The inde manager stores all the indices and provides a singleton access point.
+ * The index manager stores all the indices and provides a singleton access point.
  *
  * Note: You do not have to use the index manager.  The index manager provides a
  * way of maintaining a singleton of the indices.
@@ -31,23 +31,6 @@ final class xfIndexManager
   static private $indices = array();
 
   /**
-   * The common event dispatcher.
-   *
-   * @var sfEventDispatcher
-   */
-  static private $dispatcher;
-
-  /**
-   * Initialize the index manager.
-   *
-   * @param sfEventDispatcher $dispatcher
-   */
-  static public function initialize(sfEventDispatcher $dispatcher)
-  {
-    self::$dispatcher = $dispatcher;
-  }
-
-  /**
    * Gets an index from the singleton
    *
    * @param string $name The index name
@@ -56,21 +39,13 @@ final class xfIndexManager
   {
     if (!isset(self::$indices[$name]))
     {
-      if (self::$dispatcher == null)
-      {
-        throw new xfException('xfIndexManager has not been initialized yet');
-      }
-
       $r = new ReflectionClass($name);
       if (!$r->isSubclassOf(new ReflectionClass('xfIndex')))
       {
         throw new xfException('xfIndexManager can only handle instances of xfIndex');
       }
 
-      $index = new $name;
-      $index->setEventDispatcher(self::$dispatcher);
-
-      self::$indices[$name] = $index;
+      self::$indices[$name] = new $name;
     }
 
     return self::$indices[$name];

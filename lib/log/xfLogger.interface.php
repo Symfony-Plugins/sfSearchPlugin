@@ -7,4 +7,19 @@
  * file that was distributed with this source code.
  */
 
-xfIndexManager::initialize($this->dispatcher);
+/**
+ * The logger interface
+ *
+ * @package sfSearch
+ * @subpackage Log
+ * @author Carl Vondrick
+ */
+interface xfLogger
+{
+  /**
+   * Logs a message
+   *
+   * @param string $message
+   */
+  public function log($message, $section = 'sfSearch');
+}

@@ -31,18 +31,18 @@ interface xfIndex
   public function getName();
 
   /**
-   * Gets the event dispatcher
+   * Sets the logger
    *
-   * @returns sfEventDispatcher
+   * @param xfLogger $logger
    */
-  public function getEventDispatcher();
+  public function setLogger(xfLogger $logger);
 
   /**
-   * Sets the event dispatcher
+   * Gets the logger
    *
-   * @returns sfEventDispatcher
+   * @returns xfLogger
    */
-  public function setEventDispatcher(sfEventDispatcher $dispatcher);
+  public function getLogger();
 
   /**
    * Sets the service registry

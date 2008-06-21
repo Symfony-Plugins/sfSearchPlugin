@@ -17,11 +17,11 @@
 abstract class xfIndexCommon implements xfIndex
 {
   /**
-   * The event dispatcher.
+   * The logger
    *
-   * @var sfEventDispatcher 
+   * @var xfLogger
    */
-  private $dispatcher;
+  private $logger;
 
   /**
    * The service registry.
@@ -51,6 +51,8 @@ abstract class xfIndexCommon implements xfIndex
   {
     $this->registry = new xfServiceRegistry;
     $this->name = get_class($this);
+    
+    $this->setLogger(new xfLoggerBlackhole);
 
     $this->initialize();
   }
@@ -78,19 +80,17 @@ abstract class xfIndexCommon implements xfIndex
   /**
    * @see xfIndex
    */
-  final public function setEventDispatcher(sfEventDispatcher $dispatcher)
+  final public function setLogger(xfLogger $logger)
   {
-    $this->dispatcher = $dispatcher;
+    $this->logger = $logger;
   }
 
   /**
-   * Gets the event dispatcher.
-   *
-   * @returns sfEventDispatcher
+   * @see xfIndex
    */
-  final public function getEventDispatcher()
+  final public function getLogger()
   {
-    return $this->dispatcher;
+    return $this->logger;
   }
 
   /**
@@ -164,18 +164,5 @@ abstract class xfIndexCommon implements xfIndex
   protected function initialize()
   {
     // nothing to do
-  }
-
-  /**
-   * Notify the dispatcher to log.
-   *
-   * @param string $message The message
-   */
-  final protected function log($message)
-  {
-    if ($this->dispatcher)
-    {
-      $this->dispatcher->notify(new sfEvent($this, 'search.log', array($message)));
-    }
   }
 }
