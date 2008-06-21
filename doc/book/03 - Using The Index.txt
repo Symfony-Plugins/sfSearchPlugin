@@ -1,0 +1,221 @@
+= Using The Index =
+After we have created an index as described in Chapter 2, we can use the search API to search the index.  The public search API is simple but powerful and accomdates most use cases.
+
+== The Task System ==
+sfSearch ships with a powerful task system to help you matain your index.  You already used one of the tasks to generate a search index skeleton.  We will now use four more tasks to maintain the index.
+
+=== Populating ===
+Even though we have configured our index, we have not populated it -- that is to say index all the data.
+
+To launch the indexing process, we run the symfony command:
+{{{
+./symfony search:populate SiteSearch 
+}}}
+
+Depending on how much data you index, this command may take from a few seconds to a few hours.  The console will keep you informed on its process.
+
+Note: If you give the {{{ search:populate }}} command a group, it will populate all child indices.
+
+=== Optimizing ===
+You should optimize your index every so often to keep searches fast and efficient.  Optimizing depends on the underlying engine implementation, so the time it takes to complete varies. 
+
+To optimize an index, simply run:
+{{{
+./symfony search:optimize SiteSearch
+}}}
+
+The optimization process will modify the index to make searching more efficient. You may consider optimizing your index every month.
+
+=== Describing ===
+If you want to find meta information about any given index, use the describe command:
+{{{
+./symfony search:describe SiteSearch
+}}}
+
+This will output information about the index, such as how many documents and the index size.
+
+=== Querying ===
+You can search your index directly from the command line to test how your index was populated.  Use the query command:
+{{{
+./symfony search:query SiteSearch "search query"
+}}}
+
+The above command will display the first results that match the query {{{ search query }}}.  You can jump to the next results by passing the {{{ --page }}} option:
+{{{
+./symfony search:query --page=2 SiteSearch "search query"
+}}}
+
+== Opening an Index ==
+Now the index is populated and optimized, we can begin to use it in our code:
+{{{
+$index = new SiteSearch();
+}}}
+
+That's it!  We've already setup the index in the its {{{ ->configure() }}} so we are all ready to begin using the index.  We can now run a variety of commands.
+
+In fact, all of the tasks described above are simply wrappers for index commands. We can populate the index using {{{ ->populate() }}}:
+{{{
+$index = new SiteSearch();
+$index->populate();
+}}}
+
+Likewise, we can then optimize:
+{{{
+$index = new SiteSearch();
+$index->populate();
+$index->optimize();
+}}}
+
+But, we are using sfSearch to provide search results, so why don't we match some queries?
+
+== Searching ==
+To search, we use the {{{ ->find() }}} method and pass it an {{{ xfCriterion }}} object. 
+
+Typically with search engines we want to allow the user to enter a search string and have the computer match from that string.  sfSearch provides the {{{ xfCriterionString }}} class to parse strings:
+
+{{{
+$crit = new xfCriterionString('search query');
+}}}
+
+We can then return results with {{{ ->find() }}}:
+{{{
+$crit = new xfCriterionString('search query');
+
+$index = new SiteSearch();
+$results = $index->find($crit);
+}}}
+
+By default, {{{ xfCriterionString }}} will supress any parsing errors because many engine implementations will throw an exception if the query is malformed. However, you can make sfSearch throw any exceptions by passing a flag to the constructor:
+{{{
+try
+{
+  $crit = new xfCriterionString('search query with parse error', xfCriterionString::FATAL);
+}
+catch (Exception $e)
+{
+  // respond to malformed search query
+}
+}}}
+
+For more on xfCriterion, see the criterion recipes in the documentation directory.
+
+=== Results ===
+The {{{ ->find() }}} method returns a result object that we can iterate over and display the results to the user:
+
+{{{
+$crit = new xfCriterionString($querystring);
+
+$index = new SiteSearch;
+$results = $index->find($crit);
+
+foreach ($results as $result)
+{
+  echo 'Title: ' . $result->getTitle() . '<br />';
+  echo 'Description: ' . $result->getDescription() . '<hr />';
+}
+}}}
+
+Remember back to Chapter 2 where you configured retorts into your search configuration.  The {{{ $result }}} object returned from the {{{ $results }}} iterator implements the retorts to provide quick access to information.  The above example assumes that each result has a retort that will respond to {{{ getTitle }}} and {{{ getDescription }}}.
+
+=== Integrating with MVC ===
+But, sfSearch is not complete without allowing a simple implementation to the MVC pattern. sfSearch was designed to easily fit into MVC.
+
+For example, we can create a symfony action to search:
+{{{
+// in apps/frontend/modules/search/actions/actions.php
+
+class searchActions extends sfActions
+{
+  public function executeSearch()
+  {
+    $query = $this->getRequestParameter('query');
+
+    if ($query) // did the user enter a query?
+    {
+      // user entered query, display search results
+
+      $index = new SiteSearch;
+      $this->results = $index->find(new xfCriterionString($query));
+
+      if (count($this->results) > 0) // where there any results?
+      {
+        return 'Results';
+      }
+      else
+      {
+        return 'NoResults'; // no results found
+      }
+    }
+    else
+    {
+      return 'Controls';
+    }
+  }
+}
+}}}
+
+The above action checks to see if the user entered a query. If they did not enter a query, display the search form.  If they did enter a query and there are results, display the results, otherwise show a warning that no results were found.
+
+We can then create the results template:
+{{{
+// in apps/frontend/modules/search/templates/searchResults.php
+
+<ol>
+  <?php foreach ($results as $result): ?>
+    <li>
+      <strong><?php echo $result->getTitle() ?></strong><br />
+      <p><?php echo $result->getDescription() ?></p>
+    </li>
+  <?php endforeach ?>
+</ol>
+}}}
+
+The above will loop through all results found and display them to the user, as long as retorts for {{{ getTitle }}} and {{{ getDescription }}} exist.
+
+However, indices can get very large and can return thousands of results.  What if Google returned every webpage on the web that mentioned a "symfony"?  There would be thousands, if not millions, of results!
+
+We can restrict our results by using a pager.  sfSearch ships with a pager designed to operate on result iterators.  The API is very similar to sfPager and sfPropelPager, so you should feel right at home.
+
+Consider the following modified snippet from the above action:
+{{{
+// user entered query, display search results
+
+$index = new SiteSearch;
+$this->results = $index->find(new xfCriterionString($query));
+
+if (count($this->results) > 0) // where there any results?
+{
+  $this->pager = new xfPager($this->results);
+  $this->pager->setPerPage(15);
+  $this->pager->setPage($this->getRequestParameter('page', 1));
+
+  return 'Results';
+}
+else
+{
+  return 'NoResults'; // no results found
+}
+}}}
+
+and the corresponding template:
+{{{
+<ol start="<?php echo $pager->getStartPosition() ?>">
+  <?php foreach ($pager->getResults() as $result): ?>
+    <li>
+      <strong><?php echo $result->getTitle() ?></strong><br />
+      <p><?php echo $result->getDescription() ?></p>
+    </li>
+  <?php endforeach ?>
+</ol>
+
+<div class="page-numbers">
+  <?php foreach ($pager->getLinks() as $page): ?>
+    <a href="<?php echo url_for('search/search?query=' . $query . '&page=' . $page) ?>"><?php echo $page ?></a>
+  <?php endforeach ?>
+</div>
+}}}
+
+The first page of the template is a modified order list to accomdate the pager, while the second part gives the user links to move between pages. Consult the {{{ xfPager }}} API documentation for even more possibilities.
+
+== Summary ==
+sfSearch provides a powerful API to find and display search results while still fitting into the MVC pattern.  By using retorts, we are able to create easy to use methods to gain quick access to information.
