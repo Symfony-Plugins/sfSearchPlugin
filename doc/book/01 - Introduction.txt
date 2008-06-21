@@ -32,16 +32,8 @@ svn co http://svn.symfony-project.com/plugins/sfSearchPlugin/trunk plugins/sfSea
 ./symfony cache:clear
 }}}
 
-== Table of Contents ==
-  0. Quick Start Guide
-  1. Introduction (this page)
-  2. Creating an Index
-  3. Using the Index
-  4. Generating an Interface
-
 == Development Status ==
 sfSearch is pre-alpha software and is rapidly changing.  As a result, sfSearch may not be suitable for a critical production environment at this time. 
 
 == License ==
 sfSearch is released under the MIT License and is free, open source software. By using sfSearch, you agree to the terms in the {{{ LICENSE }}} file included in the sfSearch package.
-

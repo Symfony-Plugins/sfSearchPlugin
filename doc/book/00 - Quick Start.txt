@@ -3,20 +3,22 @@ This guide will quickly setup sfSearch in about 10 minutes.  It is written to in
 
 == Install ==
 Checkout the neccessary packages:
-  * Checkout sfSearch:
+  * Checkout [wiki:sfSearchPlugin]:
 {{{
 svn co http://svn.symfony-project.com/plugins/sfSearchPlugin/trunk plugins/sfSearchPlugin
 }}}
-  * Checkout sfLucene:
+  * Checkout [wiki:sfLucenePlugin]:
 {{{
 svn co http://svn.symfony-project.com/plugins/sfLucenePlugin/trunk plugins/sfLucenePlugin
 }}}
-  * Checkout sfPropelSearch:
+  * Checkout [wiki:sfPropelSearch]:
 {{{
 svn co http://svn.symfony-project.com/plugins/sfPropelSearchPlugin/trunk plugins/sfPropelSearchPlugin
 }}}
 
 == Configure Index ==
+Now we are ready to configure our first index.
+
 === Intialize Index ===
 Create the index skeleton:
 {{{
@@ -63,12 +65,11 @@ protected function configure()
 }}}
 
 To have sfSearch automatically update your model when you save or delete it, open {{{ lib/model/Book.php }}} and append the following to the bottom of the class declaration:
-
 {{{
 xfPropelBehavior::register('Book', array('MySearchIndex'));
 }}}
 
-Repeat for each model.
+Repeat this section for each model.
 
 == Configure Interface ==
 Create skeleton interface:
@@ -101,21 +102,23 @@ generator:
         route: getRoute 
 }}}
 
+Make sure you change "title", "description", and "route" to match the retorts you registered in the service registry.
+
 Repeat the block
 {{{
-      propel-Book:
-        title: getTitle
-        description: getDescription
-        route: getRoute 
+propel-Book:
+  title: getTitle
+  description: getDescription
+  route: getRoute 
 }}}
 for every service you have.
 
 == Find Something ==
 We are now ready to start searching the index.
 
-== Clear Cache ==
+=== Clear Cache ===
 {{{
-symfony cc
+symfony cache:clear
 }}}
 
 === Populate Index ===
@@ -125,7 +128,4 @@ symfony search:populate MySearchIndex
 }}}
 
 === Test Interface ===
-Surf to {{{ http://localhost/project/search }}} and try a search.
-
-== For More Information ==
-For more information and how to customize search even more, please see the regular documentation.  
+Surf to {{{ http://localhost/project/search }}} and try a search. Enjoy!

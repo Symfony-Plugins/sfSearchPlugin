@@ -50,6 +50,52 @@ $service->addBuilder(new YourBuilder);
 
 sfSearch does not ship with any builders by default.  However, [wiki:sfPropelSearchPlugin] provides builders for Propel models and [wiki:sfSymfonySearchPlugin] provides builders for symfony actions. Refer to their respective documentations for usage.
 
+==== Fields ====
+Most builders take a fields argument that tells the builder what to store. For example, the sfPropelSearchPlugin builder only indexes the fields you tell it to, as otherwise your index would come massive. 
+
+sfSearch provides the xfField class to facilitate of passing the field to the index.  xfField's constructor first argument is the field name, which is the name that it is stored as in the index.  The second argument is the field type.  The field type specifies how the engine should store the field.  Refer to the following table for the field types:
+
+|| '''Type''' || '''Behavior'''                                   ||
+|| STORED     || Stores value in index to be retrieved later      ||
+|| INDEXED    || Indexes value in index to be matched in queries  ||
+|| TOKENIZED  || Breaks value into tokens for natural matching    ||
+|| BINARY     || Indicates data is raw binary, such as an image   ||
+
+You can use bitwise logic to mix and match the exact requirements.  For example:
+{{{
+$field = new xfField('title', xfField::STORED | xfField::INDEXED);
+}}}
+will create a field that is stored in the index, indexed, but not tokenized nor binary.
+
+If you do like or do not understand bitwise logic, xfField provides some common shortcut constants:
+
+|| '''Shortcut''' || '''Bitwise alternative'''      ||
+|| KEYWORD        || INDEXED + STORED               ||
+|| TEXT           || INDEXED + STORED + TOKENIZED   ||
+|| UNSTORED       || INDEXED + TOKENIZED            ||
+|| UNINDEXED      || STORED                         ||
+
+You can use shortcuts just as you could use the bitwise versions:
+{{{
+$field = new xfField('title', xfField::STORED | xfField::INDEXED);
+// or
+$field = new xfField('title', xfField::KEYWORD);
+}}}
+
+Some fields are also more important than others.  You can set a boost on the field to signify that this field holds more than weight all the others:
+{{{
+$field = new xfField('title', xfField::TEXT);
+$field->setBoost(2);
+}}}
+The default boost is 1. You can use values less than 1 to signify that this field is ''less'' important.
+
+Finally, you can register a callback to the field that will the field will use to transform values that are assigned to it.  For example, suppose you wish to store the hash of a field in your ORM model.  Instead of going out of your way to add a "->getHashedField()" to your model, simply use xfField's callbacks:
+{{{
+$field = new xfField('title', xfField::TEXT);
+$field->registerCallback('md5');
+}}}
+All the fields for 'title' will now automatically be MD5 before being processed by the index.
+
 === Retorts ===
 Retorts describe how to display the data indexed by the builders.  They provide a convenient means of easily generating data from the results. Like builders, you may register as many retorts as you require.
 
@@ -59,7 +105,38 @@ $service->addRetort(new MyRetort);
 $service->addRetort(new YourRetort);
 }}}
 
-All results returned by {{{ $service }}} will have retorts you register for it.  Retorts are explained in more detail in Chapter 3.
+All results returned by {{{ $service }}} will have retorts you register for it. As described in Chapter 3, retorts bind to the result objects returned from searching the index and respond to methods.  For example, if you call {{{ ->getTitle() }}} on the result object, it will search for a retort that can respond to the event "getTitle".  
+
+sfSearch ships with three of the most common retorts:
+
+==== Fields ====
+The most common need for a search engine is to provide an interface to return the fields stored in your search index.  For example, you may store the fields "title" and "author" for the books your website sell.  In order to be able to retrieve the title and author of a book returned from the search result, we must register xfRetortField retort with the service:
+
+{{{
+$service->addRetort(new xfRetortField);
+}}}
+
+This retort binds to "getXXX" where XXX is any field in your index.
+
+==== Routes ====
+Usually you want to provide a route for your search results that take the user to more information.  To continue the book analogy, the search results might just display the title, author, and a short description of the book.  But, with the "more info" link, we are able to provide a page with its ISBN number, table of contents, price, and reviews.  The retort to use for a route is xfRetortRoute:
+
+{{{
+$service->addRetort(new xfRetortRoute('book/show?isbn=$isbn$'));
+}}}
+
+The above retort binds to "getRoute" and will return the string "book/show?isbn=$isbn$" where $isbn$ is replaced by the {{{ isbn }}} field stored in the index. You can pass the result of this retort to the URL helper, {{{ url_for() }}}.
+
+==== Filters ====
+The final common retort is a filtering retort.  A filtering retort wraps around another retort but sends the result through one or more filters before returning it to the caller. For example, you may want to strip all HTML tags from your search results to keep your site safe. We can use xfRetortFilter to register {{{ strip_tags() }}} as a filter around the fields:
+
+{{{
+$retortFilter = new xfRetortFilter(new xfRetortField); // the constructor will take *any* retort
+$retortFilder->registerFilter('strip_tags');
+$service->addRetort($retortFilter);
+}}}
+
+The above retort will bind to whatever retort it wraps in the constructor.
 
 === Service Registry ===
 After we have configured a service, we must register it with the service registry.  The service registry holds all the services.
@@ -140,7 +217,7 @@ class SiteSearchGroup extends xfIndexGroup
 
 Both {{{ SiteSearchEnglish }}} and {{{ SiteSearchFrench }}} will automatically inherit the service registry, where they can modify it and extend it to match their requirements depending on the locale. 
 
-{{{ ->addIndex() }}} takes two parameters.  The first parameter is an internal name that the group uses to identify the child index.  This name is necessary for when you retrieve that specific index.  Do not confuse this name with an individual index name. The second parameter takes an object instance of xfIndex, which can be either a group index or single index.
+The method {{{ ->addIndex() }}} takes two parameters.  The first parameter is an internal name that the group uses to identify the child index.  This name is necessary for when you retrieve that specific index.  Do not confuse this name with an individual index name. The second parameter takes an object instance of xfIndex, which can be either a group index or single index.
 
 You are not limited to just child indices -- you can also add other child groups. For example:
 {{{

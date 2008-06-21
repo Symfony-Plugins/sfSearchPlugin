@@ -71,6 +71,10 @@ But, we are using sfSearch to provide search results, so why don't we match some
 == Searching ==
 To search, we use the {{{ ->find() }}} method and pass it an {{{ xfCriterion }}} object. 
 
+=== xfCriterion ===
+Think of xfCriterion as abstract query objects that hide the implementation of the search engine.  They allow you to easily query and switch between backend search engines, without changing the query.
+
+==== Parsing Strings ====
 Typically with search engines we want to allow the user to enter a search string and have the computer match from that string.  sfSearch provides the {{{ xfCriterionString }}} class to parse strings:
 
 {{{
@@ -90,6 +94,9 @@ By default, {{{ xfCriterionString }}} will supress any parsing errors because ma
 try
 {
   $crit = new xfCriterionString('search query with parse error', xfCriterionString::FATAL);
+
+  $index = new SiteSearch();
+  $results = $index->find($crit);
 }
 catch (Exception $e)
 {
@@ -97,7 +104,53 @@ catch (Exception $e)
 }
 }}}
 
-For more on xfCriterion, see the criterion recipes in the documentation directory.
+Note: xfCriterionString will throw its exception from inside {{{ ->find() }}} because this method will parse the string.
+
+==== Matching Fields ====
+You may want to match an entire field in your search engine.  For example, you might want to return all results that have been reviewed by your co-worker. We can use xfCriterionField to accomplish this:
+{{{
+$crit = new xfCriterionField('reviewed', 'Fabien');
+
+$index = new SiteSearch();
+$results = $index->find($crit);
+}}}
+
+The above populate match all records that have a "reviewed" field where the value is "Fabien".
+
+==== Creating Complex Queries ====
+We can combine criterions together use the xfCriteria class. xfCriteria allows us to construct statements like the following:
+{{{
+Match all results that have been reviewed by Fabien and (are not published or match the query string "symfony") and increase score if they match the query string "sfSearch"
+}}}
+
+Consider the following syntax:
+{{{
+$c = new xfCriteria;
+$c->add(new xfCriteriaOperator(new xfCriterionField('reviewed', 'Fabien'), xfCriteriaOperator::MUST));
+
+$csub = new xfCriteria;
+$csub->add(new xfCriteriaOperator(new xfCriterionField('published', 'true'), xfCriteriaOperator::CANNOT));
+$csub->add(new xfCriteriaOperator(new xfCriterionString('symfony'), xfCriteriaOperator::MUST));
+$c->add(new xfCriteriaOperator($csub, xfCriteriaOperator::MUST);
+
+$c->add(new xfCriteriaOperator(new xfCriterionString('sfSearch'), xfCriteriaOperator::SHOULD));
+
+$results = $index->find($c);
+}}}
+
+The first line creates our xfCriteria object to hold all the subqueries.  The second line adds the first subquery that says it MUST match the xfCriterionField.
+
+The fourth to seventh lines create a sub xfCriteria and say that MUST NOT match "published = true" but MUST match the query string "symfony".  On the seventh line, the subcriteria is added to the main criteria, asserting that the subcriteria MUST match.
+
+The nineth line says that we are looking for something about 'sfSearch', but allows the index to still return results that are do not match the querystring.  Note: On most search backend engines, these types of queries will be placed higher in the search results because they matched more terms.
+
+There are three xfCriteriaOperators:
+|| '''Operator'''             || '''Behavior'''                                                                           ||
+|| xfCriteriaOperator::MUST   || The subquery MUST match.  If it does not, do not include in results.                     ||
+|| xfCriteriaOperator::CANNOT || The subquery MUST NOT match.  If it does, do not include in results.                     ||
+|| xfCriteriaOperator::SHOULD || The subquery SHOULD match.  If it does, include in results and score the result higher.  ||
+
+However, most uses cases only require you to use xfCriterionString, so do not get scared off by such complicated queries! 
 
 === Results ===
 The {{{ ->find() }}} method returns a result object that we can iterate over and display the results to the user:
@@ -137,7 +190,7 @@ class searchActions extends sfActions
       $index = new SiteSearch;
       $this->results = $index->find(new xfCriterionString($query));
 
-      if (count($this->results) > 0) // where there any results?
+      if (count($this->results) > 0) // were there any results?
       {
         return 'Results';
       }
@@ -183,7 +236,7 @@ Consider the following modified snippet from the above action:
 $index = new SiteSearch;
 $this->results = $index->find(new xfCriterionString($query));
 
-if (count($this->results) > 0) // where there any results?
+if (count($this->results) > 0) // were there any results?
 {
   $this->pager = new xfPager($this->results);
   $this->pager->setPerPage(15);
@@ -197,7 +250,9 @@ else
 }
 }}}
 
-and the corresponding template:
+If results are found, we set a pager object that displays 15 results per page and jump to the page specified in the query string. 
+
+Now we need the corresponding template:
 {{{
 <ol start="<?php echo $pager->getStartPosition() ?>">
   <?php foreach ($pager->getResults() as $result): ?>
