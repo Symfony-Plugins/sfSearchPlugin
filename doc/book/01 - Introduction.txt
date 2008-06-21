@@ -19,15 +19,15 @@ sfSearch has very few requirements:
 == Installation ==
 sfSearch is currently only available from symfony's Subversion repository:
 
-  *
+  * Change directory to your symfony project root:
 {{{
 cd /path/to/symfony/project
 }}}
-  *
+  * Checkout sfSearch:
 {{{
 svn co http://svn.symfony-project.com/plugins/sfSearchPlugin/trunk plugins/sfSearchPlugin
 }}}
-  *
+  * Clear symfony's internal cache:
 {{{
 ./symfony cache:clear
 }}}
