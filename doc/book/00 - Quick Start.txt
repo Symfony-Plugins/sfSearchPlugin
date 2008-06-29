@@ -11,7 +11,7 @@ svn co http://svn.symfony-project.com/plugins/sfSearchPlugin/trunk plugins/sfSea
 {{{
 svn co http://svn.symfony-project.com/plugins/sfLucenePlugin/trunk plugins/sfLucenePlugin
 }}}
-  * Checkout [wiki:sfPropelSearch]:
+  * Checkout [wiki:sfPropelSearchPlugin]:
 {{{
 svn co http://svn.symfony-project.com/plugins/sfPropelSearchPlugin/trunk plugins/sfPropelSearchPlugin
 }}}
