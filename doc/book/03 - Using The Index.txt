@@ -225,7 +225,7 @@ We can then create the results template:
 
 The above will loop through all results found and display them to the user, as long as retorts for {{{ getTitle }}} and {{{ getDescription }}} exist.
 
-However, indices can get very large and can return thousands of results.  What if Google returned every webpage on the web that mentioned a "symfony"?  There would be thousands, if not millions, of results!
+However, indices can get very large and can return thousands of results.  What if Google returned every webpage on the web that mentioned "symfony"?  There would be thousands, if not millions, of results!
 
 We can restrict our results by using a pager.  sfSearch ships with a pager designed to operate on result iterators.  The API is very similar to sfPager and sfPropelPager, so you should feel right at home.
 

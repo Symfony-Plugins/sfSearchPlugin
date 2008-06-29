@@ -51,7 +51,7 @@ $service->addBuilder(new YourBuilder);
 sfSearch does not ship with any builders by default.  However, [wiki:sfPropelSearchPlugin] provides builders for Propel models and [wiki:sfSymfonySearchPlugin] provides builders for symfony actions. Refer to their respective documentations for usage.
 
 ==== Fields ====
-Most builders take a fields argument that tells the builder what to store. For example, the sfPropelSearchPlugin builder only indexes the fields you tell it to, as otherwise your index would come massive. 
+Most builders take a fields argument that tells the builder what to store. For example, the sfPropelSearchPlugin builder only indexes the fields you tell it to, as otherwise your index would become massive. 
 
 sfSearch provides the xfField class to facilitate of passing the field to the index.  xfField's constructor first argument is the field name, which is the name that it is stored as in the index.  The second argument is the field type.  The field type specifies how the engine should store the field.  Refer to the following table for the field types:
 
@@ -180,7 +180,7 @@ class SiteSearch extends xfIndexSingle
 }
 }}}
 
-An index can only hold one index and all engines must implement the "xfEngine" interface.
+An index can only hold one engine and all engines must implement the "xfEngine" interface.
 
 == Index Groups ==
 If your project has multiple search engines that share a common service registry, you may consider using an index group.  An index group combines multiple indices together.
