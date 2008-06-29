@@ -29,6 +29,8 @@ This will create the file {{{ %SF_ROOT_DIR%/lib/search/MySearchIndex.class.php }
 
 Open {{{ %SF_ROOT_DIR%/lib/search/MySearchIndex.class.php }}} and locate the following segment:
 {{{
+#!php
+<?php
 protected function configure()
 {
 }
@@ -37,6 +39,8 @@ protected function configure()
 === Setup Zend_Search_Lucene ===
 Give the index a backend indexing engine:
 {{{
+#!php
+<?php
 protected function configure()
 {
   $this->setEngine(new xfLuceneEngine(sfConfig::get('sf_data_dir') . '/index/MySearchIndex'));
@@ -46,6 +50,8 @@ protected function configure()
 === Setup Propel Services ===
 Tell sfSearch to index your book model:
 {{{
+#!php
+<?php
 protected function configure()
 {
   $this->setEngine(new xfLuceneEngine(sfConfig::get('sf_data_dir') . '/index/MySearchIndex'));
@@ -66,6 +72,8 @@ protected function configure()
 
 To have sfSearch automatically update your model when you save or delete it, open {{{ lib/model/Book.php }}} and append the following to the bottom of the class declaration:
 {{{
+#!php
+<?php
 xfPropelBehavior::register('Book', array('MySearchIndex'));
 }}}
 

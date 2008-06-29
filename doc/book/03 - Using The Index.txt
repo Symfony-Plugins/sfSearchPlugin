@@ -48,6 +48,8 @@ The above command will display the first results that match the query {{{ search
 == Opening an Index ==
 Now the index is populated and optimized, we can begin to use it in our code:
 {{{
+#!php
+<?php
 $index = new SiteSearch();
 }}}
 
@@ -55,12 +57,16 @@ That's it!  We've already setup the index in the its {{{ ->configure() }}} so we
 
 In fact, all of the tasks described above are simply wrappers for index commands. We can populate the index using {{{ ->populate() }}}:
 {{{
+#!php
+<?php
 $index = new SiteSearch();
 $index->populate();
 }}}
 
 Likewise, we can then optimize:
 {{{
+#!php
+<?php
 $index = new SiteSearch();
 $index->populate();
 $index->optimize();
@@ -78,11 +84,15 @@ Think of xfCriterion as abstract query objects that hide the implementation of t
 Typically with search engines we want to allow the user to enter a search string and have the computer match from that string.  sfSearch provides the {{{ xfCriterionString }}} class to parse strings:
 
 {{{
+#!php
+<?php
 $crit = new xfCriterionString('search query');
 }}}
 
 We can then return results with {{{ ->find() }}}:
 {{{
+#!php
+<?php
 $crit = new xfCriterionString('search query');
 
 $index = new SiteSearch();
@@ -91,6 +101,8 @@ $results = $index->find($crit);
 
 By default, {{{ xfCriterionString }}} will supress any parsing errors because many engine implementations will throw an exception if the query is malformed. However, you can make sfSearch throw any exceptions by passing a flag to the constructor:
 {{{
+#!php
+<?php
 try
 {
   $crit = new xfCriterionString('search query with parse error', xfCriterionString::FATAL);
@@ -109,6 +121,8 @@ Note: xfCriterionString will throw its exception from inside {{{ ->find() }}} be
 ==== Matching Fields ====
 You may want to match an entire field in your search engine.  For example, you might want to return all results that have been reviewed by your co-worker. We can use xfCriterionField to accomplish this:
 {{{
+#!php
+<?php
 $crit = new xfCriterionField('reviewed', 'Fabien');
 
 $index = new SiteSearch();
@@ -125,6 +139,8 @@ Match all results that have been reviewed by Fabien and (are not published or ma
 
 Consider the following syntax:
 {{{
+#!php
+<?php
 $c = new xfCriteria;
 $c->add(new xfCriteriaOperator(new xfCriterionField('reviewed', 'Fabien'), xfCriteriaOperator::MUST));
 
@@ -156,6 +172,8 @@ However, most uses cases only require you to use xfCriterionString, so do not ge
 The {{{ ->find() }}} method returns a result object that we can iterate over and display the results to the user:
 
 {{{
+#!php
+<?php
 $crit = new xfCriterionString($querystring);
 
 $index = new SiteSearch;
@@ -175,6 +193,8 @@ But, sfSearch is not complete without allowing a simple implementation to the MV
 
 For example, we can create a symfony action to search:
 {{{
+#!php
+<?php
 // in apps/frontend/modules/search/actions/actions.php
 
 class searchActions extends sfActions
@@ -211,6 +231,8 @@ The above action checks to see if the user entered a query. If they did not ente
 
 We can then create the results template:
 {{{
+#!php
+<?php
 // in apps/frontend/modules/search/templates/searchResults.php
 
 <ol>
@@ -231,6 +253,8 @@ We can restrict our results by using a pager.  sfSearch ships with a pager desig
 
 Consider the following modified snippet from the above action:
 {{{
+#!php
+<?php
 // user entered query, display search results
 
 $index = new SiteSearch;
@@ -254,6 +278,7 @@ If results are found, we set a pager object that displays 15 results per page an
 
 Now we need the corresponding template:
 {{{
+#!php
 <ol start="<?php echo $pager->getStartPosition() ?>">
   <?php foreach ($pager->getResults() as $result): ?>
     <li>
