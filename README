@@ -2,17 +2,21 @@
 sfSearch is a flexible search engine platform written for symfony.  sfSearch decouples its functionality into components that users can cherry-pick as their demands require.  sfSearch hopes to provide a flexible search engine for users and create an extensible platform for developers to make searching fun and powerful with symfony!
 
 == Requirements ==
-sfSearch is only available for symfony 1.1 at this time.
+sfSearch is only available for symfony 1.1 at this time.  Additionally, it has only be tested on PHP 5.2.
 
 == Stability ==
-Warning: sfSearch is currently alpha software and may be unsuitable for production applications.
+Warning: sfSearch is currently alpha software and may be unsuitable for production applications. Use at your own risk.
 
 == Documentation ==
-The documentation is currently contained in four chapters:
+Consult the documentation to explore sfSearch and its features. If you are anxious to get started right away, see [wiki:sfSearchPlugin/QuickStart the quick start guide] to have a working search engine in 10 minutes.
 
-  * [wiki:sfSearchPlugin/QuickStart Quick Start Guide]
+=== Book ===
+The book is contained in four chapters:
   * [wiki:sfSearchPlugin/Chapter1 Chapter 1 - Introduction]
   * [wiki:sfSearchPlugin/Chapter2 Chapter 2 - Creating An Index]
   * [wiki:sfSearchPlugin/Chapter3 Chapter 3 - Using The Index]
   * [wiki:sfSearchPlugin/Chapter4 Chapter 4 - Generating An Interface]
 
+=== Cookbook ===
+The cookbook has useful hints and tips:
+  * [wiki:sfSearchPlugin/QuickStart Quick Start Guide]
