@@ -16,27 +16,27 @@ bootstrap('frontend');
 
 class TitleRetort implements xfRetort
 {
-  public function can(xfDocumentHit $hit, $method, array $args = array())
+  public function can(xfDocument $doc, $method, array $args = array())
   {
     return $method == 'getTitle';
   }
 
-  public function respond(xfDocumentHit $hit, $method, array $args = array())
+  public function respond(xfDocument $doc, $method, array $args = array())
   {
-    return 'Title' . $hit->getDocument()->getField('input')->getValue();
+    return 'Title' . $doc->getField('input')->getValue();
   }
 }
 
 class DescriptionRetort implements xfRetort
 {
-  public function can(xfDocumentHit $hit, $method, array $args = array())
+  public function can(xfDocument $doc, $method, array $args = array())
   {
     return $method == 'getDescription';
   }
 
-  public function respond(xfDocumentHit $hit, $method, array $args = array())
+  public function respond(xfDocument $doc, $method, array $args = array())
   {
-    return 'Description' . $hit->getDocument()->getField('input')->getValue();
+    return 'Description' . $doc->getField('input')->getValue();
   }
 }
 

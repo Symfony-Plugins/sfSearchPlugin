@@ -11,7 +11,7 @@ require_once 'result/xfRetortFilterCallback.interface.php';
 
 class xfMockRetortFilterCallback implements xfRetortFilterCallback
 {
-  public function filter($response, xfDocumentHit $hit, $method, array $args = array())
+  public function filter($response, xfDocument $hit, $method, array $args = array())
   {
     return md5($response);
   }

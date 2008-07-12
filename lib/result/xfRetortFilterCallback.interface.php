@@ -20,10 +20,10 @@ interface xfRetortFilterCallback
    * Filters the response.
    *
    * @param string $response
-   * @param xfDocumentHit $hit
+   * @param xfDocument $doc
    * @param string $method
    * @param array $args
    * @returns string
    */
-  public function filter($response, xfDocumentHit $hit, $method, array $args = array());
+  public function filter($response, xfDocument $doc, $method, array $args = array());
 }

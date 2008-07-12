@@ -70,9 +70,9 @@ final class xfDocumentHit
   {
     foreach ($this->retorts as $retort)
     {
-      if ($retort->can($this, $method, $args))
+      if ($retort->can($this->document, $method, $args))
       {
-        return $retort->respond($this, $method, $args);
+        return $retort->respond($this->document, $method, $args);
       }
     }
 

@@ -10,31 +10,28 @@
 require dirname(__FILE__) . '/../../bootstrap/unit.php';
 require 'result/xfRetort.interface.php';
 require 'result/xfRetortRoute.class.php';
-require 'result/xfDocumentHit.class.php';
 require 'document/xfDocument.class.php';
 require 'document/xfField.class.php';
 require 'document/xfFieldValue.class.php';
-require 'mock/criteria/xfMockCriterionImplementer.class.php';
 
 $doc = new xfDocument('guid');
 $doc->addField(new xfFieldValue(new xfField('isbn', xfField::KEYWORD), '1234567890'));
 $doc->addField(new xfFieldValue(new xfField('id', xfField::KEYWORD), '42'));
-$hit = new xfDocumentHit($doc, new xfMockCriterionImplementer);
 
 $t = new lime_test(5, new lime_output_color);
 
 $retort = new xfRetortRoute('show/book?id=$id$');
 
 $t->diag('->can()');
-$t->ok(!$retort->can($hit, 'getFoo'), '->can() returns false if method does not match');
-$t->ok($retort->can($hit, 'getRoute'), '->can() returns true if method does match');
+$t->ok(!$retort->can($doc, 'getFoo'), '->can() returns false if method does not match');
+$t->ok($retort->can($doc, 'getRoute'), '->can() returns true if method does match');
 
 $t->diag('->respond()');
-$t->is($retort->respond($hit, 'getRoute'), 'show/book?id=42', '->respond() can do a single replacement');
+$t->is($retort->respond($doc, 'getRoute'), 'show/book?id=42', '->respond() can do a single replacement');
 
 $retort = new xfRetortRoute('show/book?id=$id$&isbn=$isbn$');
-$t->is($retort->respond($hit, 'getRoute'), 'show/book?id=42&isbn=1234567890', '->respond() can do a double replacement');
+$t->is($retort->respond($doc, 'getRoute'), 'show/book?id=42&isbn=1234567890', '->respond() can do a double replacement');
 
 $t->diag('->setMethod()');
 $retort->setMethod('getIt');
-$t->ok($retort->can($hit, 'getIt'), '->setMethod() changes the matching method');
+$t->ok($retort->can($doc, 'getIt'), '->setMethod() changes the matching method');

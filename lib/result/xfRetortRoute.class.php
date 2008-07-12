@@ -63,7 +63,7 @@ final class xfRetortRoute implements xfRetort
   /**
    * @see xfRetort
    */
-  public function can(xfDocumentHit $hit, $method, array $args = array())
+  public function can(xfDocument $doc, $method, array $args = array())
   {
     return $this->method == $method;
   }
@@ -71,13 +71,13 @@ final class xfRetortRoute implements xfRetort
   /**
    * @see xfRetort
    */
-  public function respond(xfDocumentHit $hit, $method, array $args = array())
+  public function respond(xfDocument $doc, $method, array $args = array())
   {
     $route = $this->template;
 
     foreach ($this->matches as $match)
     {
-      $route = str_replace('$' . $match . '$', $hit->getDocument()->getField($match)->getValue(), $route);
+      $route = str_replace('$' . $match . '$', $doc->getField($match)->getValue(), $route);
     }
 
     return $route;
