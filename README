@@ -1,22 +1,20 @@
 = Welcome to sfSearch =
-sfSearch is a flexible search engine platform written for symfony.  sfSearch decouples its functionality into components that users can cherry-pick as their demands require.  sfSearch hopes to provide a flexible search engine for users and create an extensible platform for developers to make searching fun and powerful with symfony!
+Searching is complicated!  There are too many variables to easily create a search engine, index all your content, and then display accurate results to your users.  If not maintained properly, a search index can quickly get out dated and start returning old results.  Slight spelling variations can also confuse your search engine and create radically different results for two nearly identical queries.  And accomplishing all of this while maintaining optimal performance can be quite a daunting task! Introducing sfSearch.
 
-== Requirements ==
-sfSearch is only available for symfony 1.1 at this time.  Additionally, it has only be tested on PHP 5.2.
+sfSearch is a flexible search engine platform written for symfony. It simplifies the indexing process with a centralized place to configure how to index your data, and provides powerful backend engines to return useful search results.  Its search engine abstraction layer (SEAL) allows you to scale the search engine depending on your requirements. But, most importantly, it is flexible and extensible and allows every component to be changed to match your requirements.
 
-== Stability ==
-Warning: sfSearch is currently alpha software and may be unsuitable for production applications. Use at your own risk.
+sfSearch requires PHP 5.2+ and symfony 1.1+ at this time.
+
+'''Warning:''' sfSearch is currently alpha software and may be unsuitable for production applications. Use at your own risk.
 
 == Documentation ==
-Consult the documentation to explore sfSearch and its features. If you are anxious to get started right away, see [wiki:sfSearchPlugin/QuickStart the quick start guide] to have a working search engine in 10 minutes.
+Consult the documentation to explore sfSearch and its features. If you are anxious to get started right away, see [wiki:sfSearchPlugin/QuickStart the quick start guide] to implement a search engine in less than 10 minutes.
 
-=== Book ===
 The book is contained in four chapters:
   * [wiki:sfSearchPlugin/Chapter1 Chapter 1 - Introduction]
   * [wiki:sfSearchPlugin/Chapter2 Chapter 2 - Creating An Index]
   * [wiki:sfSearchPlugin/Chapter3 Chapter 3 - Using The Index]
   * [wiki:sfSearchPlugin/Chapter4 Chapter 4 - Generating An Interface]
 
-=== Cookbook ===
 The cookbook has useful hints and tips:
   * [wiki:sfSearchPlugin/QuickStart Quick Start Guide]
