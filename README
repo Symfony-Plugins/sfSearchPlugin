@@ -1,6 +1,4 @@
 = Welcome to sfSearch =
-Searching is complicated!  There are too many variables to easily create a search engine, index all your content, and then display accurate results to your users.  If not maintained properly, a search index can quickly get out dated and start returning old results.  Slight spelling variations can also confuse your search engine and create radically different results for two nearly identical queries.  And accomplishing all of this while maintaining optimal performance can be quite a daunting task! Introducing sfSearch.
-
 sfSearch is a flexible search engine platform written for symfony. It simplifies the indexing process with a centralized place to configure how to index your data, and provides powerful backend engines to return useful search results.  Its search engine abstraction layer (SEAL) allows you to scale the search engine depending on your requirements. But, most importantly, it is flexible and extensible and allows every component to be changed to match your requirements.
 
 sfSearch requires PHP 5.2+ and symfony 1.1+ at this time.
