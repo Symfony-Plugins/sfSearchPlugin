@@ -12,14 +12,12 @@ require dirname(__FILE__) . '/../../bootstrap/unit.php';
 require 'document/xfDocument.class.php';
 require 'result/xfDocumentHit.class.php';
 require 'result/xfResultException.class.php';
-require 'mock/criteria/xfMockCriterionImplementer.class.php';
 require 'mock/result/xfMockRetort.class.php';
 
-$t = new lime_test(11, new lime_output_color);
+$t = new lime_test(10, new lime_output_color);
 
 $document = new xfDocument('guid');
-$criterion = new xfMockCriterionImplementer;
-$hit = new xfDocumentHit($document, $criterion, array('score' => 0.2));
+$hit = new xfDocumentHit($document, array('score' => 0.2));
 
 $t->diag('->getOption(), ->getOptions(), hasOption(), setOption()');
 $t->is($hit->getOption('score'), 0.2, '->getOption() returns the option value');
@@ -33,7 +31,6 @@ $t->is($hit->getOptions(), array('score' => 0.2, 'foobar' => 'baz'), '->getOptio
 
 $t->diag('->getDocument(), ->getCriterionImplementer()');
 $t->is($hit->getDocument(), $document, '->getDocument() returns the wrapped document');
-$t->is($hit->getCriterionImplementer(), $criterion, '->getCriterionImplementer() returns the criterion');
 
 $t->diag('->__call()');
 $retort = new xfMockRetort;

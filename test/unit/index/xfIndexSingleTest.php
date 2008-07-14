@@ -21,7 +21,7 @@ require 'mock/engine/xfMockEngine.class.php';
 require 'document/xfDocument.class.php';
 require 'document/xfField.class.php';
 require 'document/xfFieldValue.class.php';
-require 'mock/criteria/xfMockCriterionImplementer.class.php';
+require 'mock/criteria/xfMockCriterion.class.php';
 require 'result/xfResultIterator.class.php';
 require 'result/xfDocumentHit.class.php';
 require 'util/xfException.class.php';

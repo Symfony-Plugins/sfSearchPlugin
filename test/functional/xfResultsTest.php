@@ -11,32 +11,31 @@ require dirname(__FILE__) . '/../bootstrap/functional.php';
 require 'mock/engine/xfMockEngine.class.php';
 require 'mock/service/xfMockIdentifier.class.php';
 require 'mock/builder/xfMockBuilder.class.php';
-require 'mock/criteria/xfMockCriterionImplementer.class.php';
 bootstrap('frontend');
 
 class TitleRetort implements xfRetort
 {
-  public function can(xfDocument $doc, $method, array $args = array())
+  public function can(xfDocumentHit $hit, $method, array $args = array())
   {
     return $method == 'getTitle';
   }
 
-  public function respond(xfDocument $doc, $method, array $args = array())
+  public function respond(xfDocumentHit $hit, $method, array $args = array())
   {
-    return 'Title' . $doc->getField('input')->getValue();
+    return 'Title' . $hit->getDocument()->getField('input')->getValue();
   }
 }
 
 class DescriptionRetort implements xfRetort
 {
-  public function can(xfDocument $doc, $method, array $args = array())
+  public function can(xfDocumentHit $hit, $method, array $args = array())
   {
     return $method == 'getDescription';
   }
 
-  public function respond(xfDocument $doc, $method, array $args = array())
+  public function respond(xfDocumentHit $hit, $method, array $args = array())
   {
-    return 'Description' . $doc->getField('input')->getValue();
+    return 'Description' . $hit->getDocument()->getField('input')->getValue();
   }
 }
 

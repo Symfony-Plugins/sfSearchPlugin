@@ -64,23 +64,23 @@ final class xfRetortFilter implements xfRetort
   /**
    * @see xfRetort
    */
-  public function can(xfDocument $doc, $method, array $args = array())
+  public function can(xfDocumentHit $hit, $method, array $args = array())
   {
-    return $this->retort->can($doc, $method, $args);
+    return $this->retort->can($hit, $method, $args);
   }
 
   /**
    * @see xfRetort
    */
-  public function respond(xfDocument $doc, $method, array $args = array())
+  public function respond(xfDocumentHit $hit, $method, array $args = array())
   {
-    $response = $this->retort->respond($doc, $method, $args);
+    $response = $this->retort->respond($hit, $method, $args);
 
     foreach ($this->filters as $filter)
     {
       if ($filter instanceof xfRetortFilterCallback)
       {
-        $response = $filter->filter($response, $doc, $method, $args);
+        $response = $filter->filter($response, $hit, $method, $args);
       }
       elseif (is_callable($filter))
       {

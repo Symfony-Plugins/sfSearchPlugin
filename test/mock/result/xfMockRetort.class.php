@@ -20,12 +20,12 @@ class xfMockRetort implements xfRetort
 {
   public $can = true, $response = 42;
 
-  public function can(xfDocument $result, $method, array $args = array())
+  public function can(xfDocumentHit $result, $method, array $args = array())
   {
     return $this->can;
   }
 
-  public function respond(xfDocument $result, $method, array $args = array())
+  public function respond(xfDocumentHit $result, $method, array $args = array())
   {
     return $this->response;
   }

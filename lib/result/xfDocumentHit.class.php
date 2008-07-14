@@ -8,8 +8,8 @@
  */
 
 /**
- * A document hit wraps a document to provide extra meta information about the
- * document that the search engine returned.
+ * A document hit decorates a document to provide extra information about the
+ * result.
  *
  * @package sfSearch
  * @subpackage Result
@@ -23,13 +23,6 @@ final class xfDocumentHit
    * @var xfDocument
    */
   private $document;
-
-  /**
-   * The matching criterion.
-   *
-   * @var xfCriterionImplementer
-   */
-  private $implementer;
 
   /**
    * Additional options for the document.
@@ -49,13 +42,11 @@ final class xfDocumentHit
    * Constructor to set document and initial options.
    *
    * @param xfDocument $doc The wrapped document
-   * @param xfCriterionImplementer $implementer The criterion implementer that matched the document
    * @param array $options The initial options
    */
-  public function __construct(xfDocument $doc, xfCriterionImplementer $implementer, array $options = array())
+  public function __construct(xfDocument $doc, array $options = array())
   {
     $this->document = $doc;
-    $this->implementer = $implementer;
     $this->options = array_merge(array('score' => 0), $options);
   }
 
@@ -70,9 +61,9 @@ final class xfDocumentHit
   {
     foreach ($this->retorts as $retort)
     {
-      if ($retort->can($this->document, $method, $args))
+      if ($retort->can($this, $method, $args))
       {
-        return $retort->respond($this->document, $method, $args);
+        return $retort->respond($this, $method, $args);
       }
     }
 
@@ -146,15 +137,5 @@ final class xfDocumentHit
   public function getDocument()
   {
     return $this->document;
-  }
-
-  /**
-   * Gets the matching criterion.
-   *
-   * @returns xfCriterionImplementer
-   */
-  public function getCriterionImplementer()
-  {
-    return $this->implementer;
   }
 }

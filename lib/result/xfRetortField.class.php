@@ -30,13 +30,13 @@ final class xfRetortField implements xfRetort
    *
    * @see xfRetort
    */
-  public function can(xfDocument $doc, $method, array $args = array())
+  public function can(xfDocumentHit $hit, $method, array $args = array())
   {
     if (substr($method, 0, 3) == 'get')
     {
       $field = $this->normalize($method);
 
-      return $doc->hasField($field);
+      return $hit->getDocument()->hasField($field);
     }
 
     return false;
@@ -45,11 +45,11 @@ final class xfRetortField implements xfRetort
   /**
    * @see xfRetort
    */
-  public function respond(xfDocument $doc, $method, array $args = array())
+  public function respond(xfDocumentHit $hit, $method, array $args = array())
   {
     $field = $this->normalize($method);
 
-    return $doc->getField($field)->getValue();
+    return $hit->getDocument()->getField($field)->getValue();
   }
 
   /**

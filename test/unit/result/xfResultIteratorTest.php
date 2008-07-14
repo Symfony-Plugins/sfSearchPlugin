@@ -19,7 +19,6 @@ require 'document/xfFieldValue.class.php';
 require 'service/xfServiceRegistry.class.php';
 require 'service/xfService.class.php';
 require 'mock/service/xfMockIdentifier.class.php';
-require 'mock/criteria/xfMockCriterionImplementer.class.php';
 
 $service = new xfService(new xfMockIdentifier);
 $retort = new xfMockRetort;
@@ -31,19 +30,17 @@ $registry->register($service);
 $document = new xfDocument('guid');
 $document->addField(new xfFieldValue(new xfField('_service', xfField::KEYWORD), 'foobar'));
 
-$criteria = new xfMockCriterionImplementer;
-$hit = new xfDocumentHit($document, $criteria);
+$hit = new xfDocumentHit($document);
 $array = array($hit, 'foo');
 
 $iterator = new xfResultIterator(new ArrayIterator($array), $registry);
 
-$t = new lime_test(10, new lime_output_color);
+$t = new lime_test(9, new lime_output_color);
 
 $t->diag('->current()');
 $response = $iterator->current();
 $t->isa_ok($response, 'xfDocumentHit', '->current() returns an xfDocumentHit');
 $t->is($response->getDocument(), $document, '->current() returns an xfDocumentHit linked to the original document');
-$t->is($response->getCriterionImplementer(), $criteria, '->current() returns an xfDocumentHit linked to the original criterion');
 $iterator->next();
 try {
   $msg = '->current() throws exception if internal iterator does not return an xfDocumentHit';
