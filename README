@@ -3,7 +3,7 @@ sfSearch is a flexible search engine platform written for symfony. It simplifies
 
 sfSearch requires PHP 5.2+ and symfony 1.1+ at this time.
 
-'''Warning:''' sfSearch is currently alpha software and may be unsuitable for production applications. Use at your own risk.
+'''Warning:''' sfSearch is currently alpha software and is '''unsuitable for production applications at this time'''. Use at your own risk.
 
 == Documentation ==
 Consult the documentation to explore sfSearch and its features. If you are anxious to get started right away, see [wiki:sfSearchPlugin/QuickStart the quick start guide] to implement a search engine in less than 10 minutes.
