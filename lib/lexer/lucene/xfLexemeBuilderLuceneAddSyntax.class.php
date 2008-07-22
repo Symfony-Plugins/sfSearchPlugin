@@ -40,7 +40,7 @@ final class xfLexemeBuilderLuceneAddSyntax extends xfLexemeBuilderActionCommon
       $previous->setType(xfLexemeLucene::FIELD);
     }
     // if we are dealing with a double
-    elseif ($char == '&' | $char == '|')
+    elseif ($char == '&' || $char == '|')
     {
       $this->builder->advancePosition();
 
