@@ -14,78 +14,65 @@
  * @subpackage Criteria
  * @author Carl Vondrick
  */
-final class xfCriterionField implements xfCriterion
+final class xfCriterionField extends xfCriterionDecorator
 {
   /**
-   * The field name to search on.
+   * The fields it must match on.
    *
-   * @var string
+   * @var array
    */
-  private $name;
-
-  /**
-   * The field value
-   *
-   * @var string
-   */
-  private $value;
-
-  /**
-   * The encoding
-   *
-   * @var string
-   */
-  private $encoding = 'utf8';
+  private $fields = array();
 
   /**
    * Constructor to set initial values.
    *
-   * @param string $name The field name
-   * @param string $value The field value
-   * @param string $encoding The value encoding (optional)
+   * @param xfCriterion $criterion The criterion that must match this field.
+   * @param string|array $fields The field or fields that the criterion must match
    */
-  public function __construct($name, $value, $encoding = 'utf8')
+  public function __construct(xfCriterion $criterion, $fields)
   {
-    $this->name = $name;
-    $this->value = $value;
-    $this->encoding = $encoding;
+    parent::__construct($criterion);
+    
+    if (is_string($fields))
+    {
+      $fields = array($fields);
+    }
+    
+    $this->fields = $fields;
   }
 
   /**
-   * Gets the field name.
+   * Gets the fields
    *
-   * @returns string
+   * @returns array
    */
-  public function getName()
+  public function getFields()
   {
-    return $this->name;
-  }
-
-  /**
-   * Gets the field value.
-   *
-   * @returns string
-   */
-  public function getValue()
-  {
-    return $this->value;
-  }
-
-  /**
-   * Gets the field encoding.
-   *
-   * @returns string
-   */
-  public function getEncoding()
-  {
-    return $this->encoding;
+    return $this->fields;
   }
 
   /**
    * @see xfCriterion
    */
-  public function breakdown()
+  public function toString()
   {
-    return $this;
+    if (count($this->fields) == 1)
+    {
+      return 'FIELD {' . $this->fields[0] . ' IS ' . $this->getCriterion()->toString() . '}';
+    }
+
+    return 'FIELD {' . implode($this->fields, ', ') . ' ARE ' . $this->getCriterion()->toString() . '}';
+  }
+
+  /**
+   * @see xfCriterion
+   */
+  public function translate(xfCriterionTranslator $translator)
+  {
+    $this->openFields($this->fields);
+
+    $this->getCriterion()->translate($translator);
+
+    $this->closeFields();
   }
 }

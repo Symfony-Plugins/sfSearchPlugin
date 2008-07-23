@@ -10,16 +10,12 @@
 
 require dirname(__FILE__) . '/../../bootstrap/unit.php';
 require 'criteria/xfCriterion.interface.php';
-require 'criteria/xfCriteria.class.php';
 require 'criteria/xfCriterionTerm.class.php';
+require 'criteria/xfCriterionDecorator.class.php';
+require 'criteria/xfCriterionNegate.class.php';
 
-$t = new lime_test(3, new lime_output_color);
+$t = new lime_test(2, new lime_output_color);
+$c = new xfCriterionNegate(new xfCriterionTerm('foo'));
 
-$c = new xfCriteria;
-$c->add(new xfCriterionTerm('foobar'));
-$c->add(new xfCriterionTerm('baz'));
-
-$t->is(count($c->getCriterions()), 2, '->add() adds criterions to the boolean query');
-$t->is($c->toString(), 'BOOLEAN {[foobar] AND [baz]}', '->toString() returns a string representation');
-
+$t->is($c->toString(), 'NOT {foo}', '->toString() works');
 $t->todo('->translate()');

@@ -17,9 +17,17 @@
 interface xfCriterion
 {
   /**
-   * Breaks down the criterion into fundamental pieces.
+   * Gets the criterion as a string.  This should not considered parseable, but 
+   * just a way to debug the criterion.
    *
-   * @returns xfCriterion a broken down criterion that is part of the core
+   * @returns string
    */
-  public function breakdown();
+  public function toString();
+
+  /**
+   * Translates the criterion into a concrete for the engine.
+   *
+   * @param xfCriterionTranslator 
+   */
+  public function translate(xfCriterionTranslator $translator);
 }

@@ -10,16 +10,11 @@
 
 require dirname(__FILE__) . '/../../bootstrap/unit.php';
 require 'criteria/xfCriterion.interface.php';
-require 'criteria/xfCriteria.class.php';
 require 'criteria/xfCriterionTerm.class.php';
 
 $t = new lime_test(3, new lime_output_color);
+$c = new xfCriterionTerm('foo');
 
-$c = new xfCriteria;
-$c->add(new xfCriterionTerm('foobar'));
-$c->add(new xfCriterionTerm('baz'));
-
-$t->is(count($c->getCriterions()), 2, '->add() adds criterions to the boolean query');
-$t->is($c->toString(), 'BOOLEAN {[foobar] AND [baz]}', '->toString() returns a string representation');
-
+$t->is($c->getTerm(), 'foo', '->getTerm() returns the term');
+$t->is($c->toString(), 'foo', '->toString() returns the term');
 $t->todo('->translate()');
