@@ -54,9 +54,7 @@ final class xfCriteria implements xfCriterion
 
       foreach ($this->criterions as $crit)
       {
-        $translator->openBooleanItem();
         $crit->translate($translator);
-        $translator->closeBooleanItem();
       }
 
       $translator->closeBoolean();

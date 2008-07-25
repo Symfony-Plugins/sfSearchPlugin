@@ -33,64 +33,34 @@ interface xfCriterionTranslator
   public function closeBoolean();
 
   /**
-   * Opens a new item in a boolean query.
-   */
-  public function openBooleanItem();
-  
-  /**
-   * Closes the current item in the boolean quer.
-   */
-  public function closeBooleanItem();
-
-  /**
    * Sets these queries to have this boost.
    */
-  public function openBoost($boost);
-
-  /**
-   * Closes the current boost.
-   */
-  public function closeBoost();
+  public function setNextBoost($boost);
 
   /**
    * Opens a new requirement query.
    */
-  public function openRequirement();
-
-  /**
-   * Closes a requirement query.
-   */
-  public function closeRequirement();
+  public function setNextRequirement();
 
   /**
    * Opens a new negative query.
    */
-  public function openNegate();
-
-  /**
-   * Closes the current negative query.
-   */
-  public function closeNegate();
+  public function setNextNegate();
 
   /**
    * Opens a new fields query.
    */
-  public function openFields(array $fields);
-
-  /**
-   * Closes the current fields query.
-   */
-  public function closeFields();
+  public function setNextField($field);
 
   /**
    * Creates a phrase query.
    */
-  public function createPhrase($phrase);
+  public function createPhrase($phrase, $slop);
 
   /**
    * Creates a range query.
    */
-  public function createRange($start, $end);
+  public function createRange($start, $end, $startInclude, $endInclude);
 
   /**
    * Creates a term query.

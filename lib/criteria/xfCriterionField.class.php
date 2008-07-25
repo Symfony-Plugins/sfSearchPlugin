@@ -17,38 +17,33 @@
 final class xfCriterionField extends xfCriterionDecorator
 {
   /**
-   * The fields it must match on.
+   * The field it must match on.
    *
    * @var array
    */
-  private $fields = array();
+  private $field = array();
 
   /**
    * Constructor to set initial values.
    *
    * @param xfCriterion $criterion The criterion that must match this field.
-   * @param string|array $fields The field or fields that the criterion must match
+   * @param string $field The field that the criterion must match
    */
-  public function __construct(xfCriterion $criterion, $fields)
+  public function __construct(xfCriterion $criterion, $field)
   {
     parent::__construct($criterion);
     
-    if (is_string($fields))
-    {
-      $fields = array($fields);
-    }
-    
-    $this->fields = $fields;
+    $this->field = $field;
   }
 
   /**
-   * Gets the fields
+   * Gets the field
    *
    * @returns array
    */
-  public function getFields()
+  public function getField()
   {
-    return $this->fields;
+    return $this->field;
   }
 
   /**
@@ -56,12 +51,12 @@ final class xfCriterionField extends xfCriterionDecorator
    */
   public function toString()
   {
-    if (count($this->fields) == 1)
+    if (count($this->field) == 1)
     {
-      return 'FIELD {' . $this->fields[0] . ' IS ' . $this->getCriterion()->toString() . '}';
+      return 'FIELD {' . $this->field[0] . ' IS ' . $this->getCriterion()->toString() . '}';
     }
 
-    return 'FIELD {' . implode($this->fields, ', ') . ' ARE ' . $this->getCriterion()->toString() . '}';
+    return 'FIELD {' . implode($this->field, ', ') . ' ARE ' . $this->getCriterion()->toString() . '}';
   }
 
   /**
@@ -69,10 +64,8 @@ final class xfCriterionField extends xfCriterionDecorator
    */
   public function translate(xfCriterionTranslator $translator)
   {
-    $this->openFields($this->fields);
+    $this->setNextField($this->field);
 
     $this->getCriterion()->translate($translator);
-
-    $this->closeFields();
   }
 }

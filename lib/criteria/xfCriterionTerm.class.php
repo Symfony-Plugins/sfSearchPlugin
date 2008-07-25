@@ -48,7 +48,7 @@ final class xfCriterionTerm implements xfCriterion
    */
   public function translate(xfCriterionTranslator $translator)
   {
-    $translator->createTerm($translator);
+    $translator->createTerm($this->term);
   }
 
   /**
