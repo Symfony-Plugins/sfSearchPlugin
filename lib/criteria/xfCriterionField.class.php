@@ -51,12 +51,7 @@ final class xfCriterionField extends xfCriterionDecorator
    */
   public function toString()
   {
-    if (count($this->field) == 1)
-    {
-      return 'FIELD {' . $this->field[0] . ' IS ' . $this->getCriterion()->toString() . '}';
-    }
-
-    return 'FIELD {' . implode($this->field, ', ') . ' ARE ' . $this->getCriterion()->toString() . '}';
+    return 'FIELD {' . $this->field . ' IS ' . $this->getCriterion()->toString() . '}';
   }
 
   /**
