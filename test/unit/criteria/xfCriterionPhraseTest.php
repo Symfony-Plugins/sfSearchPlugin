@@ -11,6 +11,8 @@
 require dirname(__FILE__) . '/../../bootstrap/unit.php';
 require 'criteria/xfCriterion.interface.php';
 require 'criteria/xfCriterionPhrase.class.php';
+require 'criteria/xfCriterionTranslator.interface.php';
+require 'criteria/xfCriterionTranslatorString.class.php';
 
 $t = new lime_test(5, new lime_output_color);
 
@@ -21,4 +23,9 @@ $t->is($c->getSlop(), 1, '->getSlop() returns the slop');
 $c->setSlop(2);
 $t->is($c->getSlop(), 2, '->setSlop() changes the slop');
 $t->is($c->toString(), 'PHRASE {"foo bar baz" SLOP 2}', '->toString() produces the string representation');
-$t->todo('->translate()');
+
+
+$trans = new xfCriterionTranslatorString;
+$c->translate($trans);
+
+$t->is($trans->getString(), '"foo bar baz"~2', '->translate() translates the query');

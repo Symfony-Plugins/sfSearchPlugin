@@ -13,6 +13,8 @@ require 'criteria/xfCriterion.interface.php';
 require 'criteria/xfCriterionDecorator.class.php';
 require 'criteria/xfCriterionField.class.php';
 require 'criteria/xfCriterionTerm.class.php';
+require 'criteria/xfCriterionTranslator.interface.php';
+require 'criteria/xfCriterionTranslatorString.class.php';
 
 $t = new lime_test(4, new lime_output_color);
 
@@ -23,4 +25,7 @@ $t->is($c->getField(), 'bar', '->getField() returns the fields');
 $t->is($c->getCriterion(), $term, '->getCriterion() returns the criterion');
 $t->is($c->toString(), 'FIELD {bar IS foo}', '->toString() works on single fields');
 
-$t->todo('->translate()');
+$trans = new xfCriterionTranslatorString;
+$c->translate($trans);
+
+$t->is($trans->getString(), 'bar:foo', '->translate() translates the query');

@@ -11,9 +11,15 @@
 require dirname(__FILE__) . '/../../bootstrap/unit.php';
 require 'criteria/xfCriterion.interface.php';
 require 'criteria/xfCriterionEmpty.class.php';
+require 'criteria/xfCriterionTranslator.interface.php';
+require 'criteria/xfCriterionTranslatorString.class.php';
 
 $t = new lime_test(2, new lime_output_color);
 $c = new xfCriterionEmpty;
 
 $t->is($c->toString(), 'EMPTY', '->toString() works');
-$t->todo('->translate()');
+
+$trans = new xfCriterionTranslatorString;
+$c->translate($trans);
+
+$t->is($trans->getString(), '', '->translate() translates the query');

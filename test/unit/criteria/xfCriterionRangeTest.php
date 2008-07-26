@@ -10,6 +10,8 @@
 require dirname(__FILE__) . '/../../bootstrap/unit.php';
 require 'criteria/xfCriterion.interface.php';
 require 'criteria/xfCriterionRange.class.php';
+require 'criteria/xfCriterionTranslator.interface.php';
+require 'criteria/xfCriterionTranslatorString.class.php';
 require 'util/xfException.class.php';
 
 $t = new lime_test(6, new lime_output_color);
@@ -34,4 +36,9 @@ try {
   $t->pass($msg);
 }
 
-$t->todo('->translate()');
+$c = new xfCriterionRange(1, 100, false, true);
+
+$trans = new xfCriterionTranslatorString;
+$c->translate($trans);
+
+$t->is($trans->getString(), '(1 ... 100]', '->translate() translates the query');

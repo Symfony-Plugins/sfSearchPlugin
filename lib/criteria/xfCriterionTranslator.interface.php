@@ -40,12 +40,12 @@ interface xfCriterionTranslator
   /**
    * Opens a new requirement query.
    */
-  public function setNextRequirement();
+  public function setNextRequired();
 
   /**
    * Opens a new negative query.
    */
-  public function setNextNegate();
+  public function setNextProhibited();
 
   /**
    * Opens a new fields query.

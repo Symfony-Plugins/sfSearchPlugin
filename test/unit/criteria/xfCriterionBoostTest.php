@@ -12,6 +12,8 @@ require 'criteria/xfCriterion.interface.php';
 require 'criteria/xfCriterionDecorator.class.php';
 require 'criteria/xfCriterionBoost.class.php';
 require 'criteria/xfCriterionTerm.class.php';
+require 'criteria/xfCriterionTranslator.interface.php';
+require 'criteria/xfCriterionTranslatorString.class.php';
 
 $t = new lime_test(5, new lime_output_color);
 
@@ -24,4 +26,7 @@ $c->setBoost(3);
 $t->is($c->getBoost(), 3, '->setBoost() changes the boost');
 $t->is($c->toString(), 'BOOST {3 ON foo}', '->toString() produces the string representation');
 
-$t->todo('->translate()');
+$trans = new xfCriterionTranslatorString;
+$c->translate($trans);
+
+$t->is($trans->getString(), '3^foo', '->translate() translates the query');

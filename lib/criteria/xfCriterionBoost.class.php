@@ -61,11 +61,9 @@ final class xfCriterionBoost extends xfCriterionDecorator
    */
   public function translate(xfCriterionTranslator $translator)
   {
-    $translator->openBoost($this->boost);
+    $translator->setNextBoost($this->boost);
 
     $this->getCriterion()->translate($translator);
-
-    $translator->closeBoost();
   }
 
   /**

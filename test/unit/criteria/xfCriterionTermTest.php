@@ -11,10 +11,16 @@
 require dirname(__FILE__) . '/../../bootstrap/unit.php';
 require 'criteria/xfCriterion.interface.php';
 require 'criteria/xfCriterionTerm.class.php';
+require 'criteria/xfCriterionTranslator.interface.php';
+require 'criteria/xfCriterionTranslatorString.class.php';
 
 $t = new lime_test(3, new lime_output_color);
 $c = new xfCriterionTerm('foo');
 
 $t->is($c->getTerm(), 'foo', '->getTerm() returns the term');
 $t->is($c->toString(), 'foo', '->toString() returns the term');
-$t->todo('->translate()');
+
+$trans = new xfCriterionTranslatorString;
+$c->translate($trans);
+
+$t->is($trans->getString(), 'foo', '->translate() translates the query');

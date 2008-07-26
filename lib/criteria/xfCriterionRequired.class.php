@@ -14,11 +14,11 @@
  * @subpackage Criteria
  * @author Carl Vondrick
  */
-final class xfCriterionRequirement extends xfCriterionDecorator
+final class xfCriterionRequired extends xfCriterionDecorator
 {
   public function toString()
   {
-    return 'MUST {' . parent::toString() . '}';
+    return 'REQUIRED {' . parent::toString() . '}';
   }
 
   /**
@@ -26,11 +26,9 @@ final class xfCriterionRequirement extends xfCriterionDecorator
    */
   public function translate(xfCriterionTranslator $translator)
   {
-    $translator->createRequirement();
+    $translator->setNextRequired();
 
     $this->getCriterion()->translate($translator);
-
-    $translator->closeRequirement();
   }
 }
 

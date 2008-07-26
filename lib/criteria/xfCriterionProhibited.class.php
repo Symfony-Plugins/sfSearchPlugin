@@ -14,18 +14,16 @@
  * @subpackage Criteria
  * @author Carl Vondrick
  */
-final class xfCriterionNegate extends xfCriterionDecorator
+final class xfCriterionProhibited extends xfCriterionDecorator
 {
   /**
    * @see xfCriterion
    */
   public function translate(xfCriterionTranslator $translator)
   {
-    $translator->openNegate();
+    $translator->setNextProhibited();
 
     $this->getCriterion()->translate($translator);
-
-    $translator->closeNegate();
   }
 
   /**
@@ -33,6 +31,6 @@ final class xfCriterionNegate extends xfCriterionDecorator
    */
   public function toString()
   {
-    return 'NOT {' . parent::toString() . '}';
+    return 'PROHIBITED {' . parent::toString() . '}';
   }
 }

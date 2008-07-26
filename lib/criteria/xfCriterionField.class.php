@@ -59,7 +59,7 @@ final class xfCriterionField extends xfCriterionDecorator
    */
   public function translate(xfCriterionTranslator $translator)
   {
-    $this->setNextField($this->field);
+    $translator->setNextField($this->field);
 
     $this->getCriterion()->translate($translator);
   }

@@ -12,10 +12,16 @@ require dirname(__FILE__) . '/../../bootstrap/unit.php';
 require 'criteria/xfCriterion.interface.php';
 require 'criteria/xfCriterionTerm.class.php';
 require 'criteria/xfCriterionDecorator.class.php';
-require 'criteria/xfCriterionNegate.class.php';
+require 'criteria/xfCriterionProhibited.class.php';
+require 'criteria/xfCriterionTranslator.interface.php';
+require 'criteria/xfCriterionTranslatorString.class.php';
 
 $t = new lime_test(2, new lime_output_color);
-$c = new xfCriterionNegate(new xfCriterionTerm('foo'));
+$c = new xfCriterionProhibited(new xfCriterionTerm('foo'));
 
-$t->is($c->toString(), 'NOT {foo}', '->toString() works');
-$t->todo('->translate()');
+$t->is($c->toString(), 'PROHIBITED {foo}', '->toString() works');
+
+$trans = new xfCriterionTranslatorString;
+$c->translate($trans);
+
+$t->is($trans->getString(), '-foo', '->translate() translates the query');
