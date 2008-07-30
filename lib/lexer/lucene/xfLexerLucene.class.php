@@ -205,7 +205,7 @@ final class xfLexerLucene implements xfLexer
    */
   private function process()
   {
-    while ($char = $this->builder->next())
+    while (false !== $char = $this->builder->next())
     {
       $this->fsm->process($this->translateCharacter($char));
     }
