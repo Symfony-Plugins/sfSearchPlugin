@@ -88,13 +88,14 @@ EOF;
 
     $prefix = $this->formatter->format($arguments['index'], array('fg' => 'green', 'bold' => true)) . ' >> ';
 
-    $this->log($prefix . 'Query ' . $this->formatter->format($arguments['query'], array('fg' => 'blue', 'bold' => true)));
 
     $index = new $index;
     $index->setLogger(new xfLoggerTask($this->dispatcher, $this->formatter));
 
     $parser = new xfParserLucene();
     $criteria = $parser->parse($arguments['query']);
+
+    $this->log($prefix . 'Query ' . $this->formatter->format($criteria->toString(), array('fg' => 'blue', 'bold' => true)));
 
     $results = $index->find($criteria);
     $pager = new xfPager($results);
