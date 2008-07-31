@@ -63,12 +63,4 @@ final class xfCriterionField extends xfCriterionDecorator
 
     parent::translate($translator);
   }
-
-  /**
-   * @see xfCriterion
-   */
-  public function optimize()
-  {
-    return $this;
-  }
 }

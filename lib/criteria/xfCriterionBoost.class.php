@@ -84,6 +84,6 @@ final class xfCriterionBoost extends xfCriterionDecorator
       return $this->getCriterion()->optimize();
     }
 
-    return $this;
+    return parent::optimize();
   }
 }
