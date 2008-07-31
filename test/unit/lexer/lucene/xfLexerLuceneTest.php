@@ -23,7 +23,7 @@ require 'lexer/lucene/xfLexemeBuilderLuceneAddSyntax.class.php';
 require 'parser/xfParserFSMError.class.php';
 require 'parser/xfParserException.class.php';
 
-$t = new xfLexerTester(new lime_test(162, new lime_output_auto), new xfLexerLucene);
+$t = new xfLexerTester(new lime_test(182, new lime_output_auto), new xfLexerLucene);
 
 $t->pass('', array());
 
@@ -84,6 +84,7 @@ $t->pass('-bar', array(array('-', xfLexemeLucene::SYNTAX),
 
 $t->pass('\\+boo', array(array('+boo', xfLexemeLucene::WORD)));
 
+
 $t->pass('\\&', array(array('&', xfLexemeLucene::WORD)));
 
 $t->pass('a && b', array(array('a', xfLexemeLucene::WORD),
@@ -97,6 +98,18 @@ $t->pass('a || b', array(array('a', xfLexemeLucene::WORD),
                          array('b', xfLexemeLucene::WORD)));
 
 $t->fail('a | b', 'A | must follow a | character.');
+
+$t->pass('[1 to 30]', array(array('[', xfLexemeLucene::RANGE_START_INCLUSIVE),
+                            array('1', xfLexemeLucene::WORD),
+                            array('to', xfLexemeLucene::RANGE_SEPARATOR),
+                            array('30', xfLexemeLucene::WORD),
+                            array(']', xfLexemeLucene::RANGE_END_INCLUSIVE)));
+
+$t->pass('m*n', array(array('m*n', xfLexemeLucene::WILDCARD)));
+
+$t->pass('m?n', array(array('m?n', xfLexemeLucene::WILDCARD)));
+
+$t->pass('t*s?', array(array('t*s?', xfLexemeLucene::WILDCARD)));
 
 $t->pass('(+a || \\b) && f: c && ("foo bar"~2 || (y && +x))^2.5', array(array('(', xfLexemeLucene::SYNTAX),
                                                                         array('+', xfLexemeLucene::SYNTAX),

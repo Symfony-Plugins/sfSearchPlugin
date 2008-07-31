@@ -96,11 +96,11 @@ final class xfLexemeBuilder
   {
     $this->position++;
 
-    if (isset($this->characters[$this->position]))
+    if (array_key_exists($this->position, $this->characters))
     {
       return $this->characters[$this->position];
     }
-    
+
     return false;
   }
 

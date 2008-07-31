@@ -16,9 +16,6 @@
  */
 class xfLexeme
 {
-  const WORD = 1;
-  const SYNTAX = 2;
-
   /**
    * The type
    *

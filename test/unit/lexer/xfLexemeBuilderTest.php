@@ -12,7 +12,7 @@ require 'lexer/xfLexemeBuilder.class.php';
 require 'lexer/xfLexeme.class.php';
 require 'util/xfException.class.php';
 
-$t = new lime_test(17, new lime_output_color);
+$t = new lime_test(20, new lime_output_color);
 
 $b = new xfLexemeBuilder('symfony pròject');
 
@@ -73,3 +73,8 @@ try {
 
 $b->commit();
 $t->is($b->count(), 3, '->commit() does not create a new lexeme if the text is empty');
+
+$b = new xfLexemeBuilder('102');
+$t->is($b->next(), 1, '->next() works on numbers');
+$t->is($b->next(), 0, '->next() works on numbers');
+$t->is($b->next(), 2, '->next() works on numbers');
