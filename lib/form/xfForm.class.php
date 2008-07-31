@@ -10,6 +10,8 @@
 /**
  * The base sfSearch form.
  *
+ * This would be an interface, but we need to inherit from sfForm.
+ *
  * @package sfSearch
  * @subpackage Form
  * @author Carl Vondrick
@@ -17,18 +19,18 @@
 abstract class xfForm extends sfForm
 {
   /**
-   * Gets a criteria object from the object.
-   *
-   * @returns xfCriterion
-   */
-  abstract public function getCriterion();
-
-  /**
    * Gets the page number.
    *
    * @returns int
    */
   abstract public function getPageNumber();
+
+  /**
+   * Gets the user query.
+   *
+   * @returns string
+   */
+  abstract public function getQuery();
 
   /**
    * Returns the URL format with %s in place of the page.

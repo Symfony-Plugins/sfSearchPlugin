@@ -93,9 +93,10 @@ EOF;
     $index = new $index;
     $index->setLogger(new xfLoggerTask($this->dispatcher, $this->formatter));
 
-    $c = new xfCriterionString($arguments['query'], xfCriterionString::FATAL);
+    $parser = new xfParserLucene();
+    $criteria = $parser->parse($arguments['query']);
 
-    $results = $index->find($c);
+    $results = $index->find($criteria);
     $pager = new xfPager($results);
     $pager->setPerPage($options['limit']);
     $pager->setPage($options['page']);

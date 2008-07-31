@@ -35,8 +35,9 @@ abstract class <?php echo $this->getGeneratedModuleName() ?>Actions extends sfAc
 
       if ($this->form->isValid())
       {
-        $this->criteria = $this->form->getCriterion();
-        $this->results = $this->doSearch($this->criteria);
+        $this->parser   = new xfParserSilent(new xfParserLucene);
+        $this->criteria = $this->parser->parse($this->form->getQuery());
+        $this->results  = $this->doSearch($this->criteria);
 
         if (count($this->results))
         {
@@ -46,11 +47,11 @@ abstract class <?php echo $this->getGeneratedModuleName() ?>Actions extends sfAc
           $this->pager->setUrlFormat($this->form->getUrlFormat());
 
           $replacements = array(
-            '%total%' => $this->pager->getNbResults(),
-            '%page%' => $this->pager->getPage(),
-            '%total_pages%' => $this->pager->getLastPage(),
-            '%start_pos%' => $this->pager->getStartPosition(),
-            '%end_pos%' => $this->pager->getEndPosition(),
+            '%total%'         => $this->pager->getNbResults(),
+            '%page%'          => $this->pager->getPage(),
+            '%total_pages%'   => $this->pager->getLastPage(),
+            '%start_pos%'     => $this->pager->getStartPosition(),
+            '%end_pos%'       => $this->pager->getEndPosition(),
           );
 
           $this->setTitle(str_replace(array_keys($replacements), array_values($replacements), '<?php echo $this->get('simple.results.title', 'Results %start_pos% to %end_pos%') ?>'));

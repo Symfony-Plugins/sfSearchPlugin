@@ -20,15 +20,12 @@ require 'validator/sfValidatorBase.class.php';
 require 'validator/sfValidatorSchema.class.php';
 require 'validator/sfValidatorString.class.php';
 require 'validator/sfValidatorInteger.class.php';
-
 require 'form/xfForm.class.php';
 require 'form/xfSimpleFormBase.class.php';
 require 'form/xfSimpleForm.class.php';
-require 'criteria/xfCriterion.interface.php';
-require 'criteria/xfCriterionString.class.php';
 require 'util/xfException.class.php';
 
-$t = new lime_test(10, new lime_output_color);
+$t = new lime_test(7, new lime_output_color);
 
 $form = new xfSimpleForm;
 
@@ -36,7 +33,7 @@ $t->isa_ok($form->getWidgetSchema()->offsetGet('query'), 'sfWidgetFormInput', '-
 $t->isa_ok($form->getValidatorSchema()->offsetGet('query'), 'sfValidatorString', '->configure() validates "query" by "sfValidatorString"');
 $t->isa_ok($form->getValidatorSchema()->offsetGet('page'), 'sfValidatorInteger', '->configure() validates "page" by "sfValidatorInteger"');
 
-foreach (array('getCriterion', 'getPageNumber', 'getUrlFormat') as $method) {
+foreach (array('getPageNumber', 'getUrlFormat') as $method) {
   try {
     $msg = '->' . $method . '() fails if form is not bound';
     $form->$method();
@@ -50,9 +47,6 @@ $form->bind(array(
   'query' => 'foobar',
   'page' => 5
 ));
-
-$t->isa_ok($form->getCriterion(), 'xfCriterionString', '->getCriterion() returns a "xfCriterionString"');
-$t->is($form->getCriterion()->getQuery(), 'foobar', '->getCriterion() returns a "xfCriterionString" with the query');
 
 $t->is($form->getPageNumber(), 5, '->getPageNumber() returns the page number.');
 

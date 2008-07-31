@@ -18,10 +18,11 @@ require 'service/xfService.class.php';
 require 'service/xfServiceRegistry.class.php';
 require 'mock/service/xfMockIdentifier.class.php';
 require 'mock/engine/xfMockEngine.class.php';
+require 'criteria/xfCriterion.interface.php';
+require 'criteria/xfCriteria.class.php';
 require 'document/xfDocument.class.php';
 require 'document/xfField.class.php';
 require 'document/xfFieldValue.class.php';
-require 'mock/criteria/xfMockCriterion.class.php';
 require 'result/xfResultIterator.class.php';
 require 'result/xfDocumentHit.class.php';
 require 'util/xfException.class.php';
@@ -99,12 +100,12 @@ try {
 }
 
 $t->diag('->find()');
-$results = $index->find(new xfMockCriterion);
+$results = $index->find(new xfCriteria);
 $t->isa_ok($results, 'xfResultIterator', '->find() returns an xfResultIterator');
 $t->is($results->count(), 3, '->find() returns results that match');
 try {
   $msg = '->find() fails if an engine does not exist';
-  $invalid->find(new xfMockCriterion);
+  $invalid->find(new xfCriteria);
   $t->fail($msg);
 } catch (Exception $e) {
   $t->pass($msg);

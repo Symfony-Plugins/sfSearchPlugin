@@ -33,13 +33,15 @@ abstract class xfSimpleFormBase extends xfForm
   }
 
   /**
-   * @see xfForm
+   * Gets the query.
+   *
+   * @return string
    */
-  public function getCriterion()
+  public function getQuery()
   {
     $this->checkIfBound();
 
-    return new xfCriterionString($this->getValue('query'), xfCriterionString::FAILSAFE);
+    return $this->getValue('query');
   }
 
   /**
