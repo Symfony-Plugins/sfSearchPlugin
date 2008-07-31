@@ -25,6 +25,10 @@ final class xfPopulateTask extends xfBaseTask
   {
     $this->addArguments(array(new sfCommandArgument('index', sfCommandArgument::REQUIRED, 'The index name to populate')));
 
+    $this->addOptions(array(
+      new sfCommandOption('optimize', 'o', sfCommandOption::PARAMETER_NONE, 'If passed, the index is optimized after population'),
+    ));
+
     $this->namespace = 'search';
     $this->name = 'populate';
 
@@ -60,6 +64,10 @@ EOF;
     $index = new $index;
     $index->setLogger(new xfLoggerTask($this->dispatcher, $this->formatter));
     $index->populate();
-    $index->optimize();
+
+    if ($options['optimize'])
+    {
+      $index->optimize();
+    }
   }
 }
