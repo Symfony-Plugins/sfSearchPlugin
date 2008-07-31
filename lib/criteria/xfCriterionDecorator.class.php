@@ -59,4 +59,12 @@ abstract class xfCriterionDecorator implements xfCriterion
   {
     return $this->criterion->toString();
   }
+
+  /**
+   * @see xfCriterion
+   */
+  public function optimize()
+  {
+    return $this;
+  }
 }

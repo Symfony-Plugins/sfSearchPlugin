@@ -58,4 +58,12 @@ final class xfCriterionTerm implements xfCriterion
   {
     return $this->term;
   }
+
+  /**
+   * @see xfCriterion
+   */
+  public function optimize()
+  {
+    return $this;
+  }
 }

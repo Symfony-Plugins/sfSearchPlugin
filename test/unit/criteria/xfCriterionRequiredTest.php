@@ -16,7 +16,7 @@ require 'criteria/xfCriterionRequired.class.php';
 require 'criteria/xfCriterionTranslator.interface.php';
 require 'criteria/xfCriterionTranslatorString.class.php';
 
-$t = new lime_test(2, new lime_output_color);
+$t = new lime_test(3, new lime_output_color);
 $c = new xfCriterionRequired(new xfCriterionTerm('foo'));
 
 $t->is($c->toString(), 'REQUIRED {foo}', '->toString() works');
@@ -25,3 +25,5 @@ $trans = new xfCriterionTranslatorString;
 $c->translate($trans);
 
 $t->is($trans->getString(), '+foo', '->translate() translates the query');
+
+$t->is($c->optimize(), $c, '->optimize() does nothing');

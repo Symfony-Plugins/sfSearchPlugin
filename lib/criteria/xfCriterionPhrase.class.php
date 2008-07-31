@@ -94,4 +94,12 @@ final class xfCriterionPhrase implements xfCriterion
   {
     $translator->createPhrase($this->phrase, $this->slop);
   }
+
+  /**
+   * @see xfCriterion
+   */
+  public function optimize()
+  {
+    return $this;
+  }
 }

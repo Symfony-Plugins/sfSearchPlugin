@@ -14,7 +14,7 @@ require 'criteria/xfCriterionPhrase.class.php';
 require 'criteria/xfCriterionTranslator.interface.php';
 require 'criteria/xfCriterionTranslatorString.class.php';
 
-$t = new lime_test(5, new lime_output_color);
+$t = new lime_test(6, new lime_output_color);
 
 $c = new xfCriterionPhrase('foo bar baz', 1);
 
@@ -29,3 +29,5 @@ $trans = new xfCriterionTranslatorString;
 $c->translate($trans);
 
 $t->is($trans->getString(), '"foo bar baz"~2', '->translate() translates the query');
+
+$t->is($c->optimize(), $c, '->optimize() does nothing');

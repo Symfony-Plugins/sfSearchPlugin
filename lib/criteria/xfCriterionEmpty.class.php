@@ -30,4 +30,12 @@ final class xfCriterionEmpty implements xfCriterion
   {
     return 'EMPTY';
   }
+
+  /**
+   * @see xfCriterion
+   */
+  public function optimize()
+  {
+    return $this;
+  }
 }

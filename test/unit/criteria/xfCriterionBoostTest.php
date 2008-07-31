@@ -15,7 +15,7 @@ require 'criteria/xfCriterionTerm.class.php';
 require 'criteria/xfCriterionTranslator.interface.php';
 require 'criteria/xfCriterionTranslatorString.class.php';
 
-$t = new lime_test(5, new lime_output_color);
+$t = new lime_test(7, new lime_output_color);
 
 $term = new xfCriterionTerm('foo');
 $c = new xfCriterionBoost($term, 2);
@@ -30,3 +30,8 @@ $trans = new xfCriterionTranslatorString;
 $c->translate($trans);
 
 $t->is($trans->getString(), '3^foo', '->translate() translates the query');
+
+$t->is($c->optimize()->toString(), 'BOOST {3 ON foo}', '->optimize() does nothing if nothing can be optimized');
+
+$c = new xfCriterionBoost($term, 1);
+$t->is($c->optimize()->toString(), 'foo', '->optimize() reduces the query if the boost is 1');

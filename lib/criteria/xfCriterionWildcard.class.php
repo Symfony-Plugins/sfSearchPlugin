@@ -51,4 +51,17 @@ final class xfCriterionWildcard implements xfCriterion
   {
     $translator->createWildcard($this->query);
   }
+
+  /**
+   * @see xfCriterion
+   */
+  public function optimize()
+  {
+    if (false === strpos($this->query, '?') && false === strpos($this->query, '*'))
+    {
+      return new xfCriterionTerm($this->query);
+    }
+    
+    return $this;
+  }
 }

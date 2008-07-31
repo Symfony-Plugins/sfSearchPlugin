@@ -44,6 +44,40 @@ final class xfCriteria implements xfCriterion
   }
 
   /**
+   * Gets the last criterion
+   *
+   * @returns xfCriterion 
+   */
+  public function getLast()
+  {
+    $c = count($this->criterions);
+
+    if ($c == 0)
+    {
+      throw new xfException('No criterions are added.');
+    }
+    
+    return $this->criterions[$c - 1];
+  }
+
+  /**
+   * Replaces the last criterion with another.
+   *
+   * @param xfCriterion $new The new criterion
+   */
+  public function replaceLast(xfCriterion $new)
+  {
+    $c = count($this->criterions);
+
+    if ($c == 0)
+    {
+      throw new xfException('No criterions are added.');
+    }
+
+    $this->criterions[$c - 1] = $new;
+  }
+
+  /**
    * @see xfCriterion
    */
   public function translate(xfCriterionTranslator $translator)
@@ -79,5 +113,36 @@ final class xfCriteria implements xfCriterion
     }
 
     return $string . '}';
+  }
+
+  /**
+   * @see xfCriterion
+   */
+  public function optimize()
+  {
+    if (count($this->criterions) == 0)
+    {
+      return new xfCriterionEmpty;
+    }
+
+    if (count($this->criterions) == 1)
+    {
+      return $this->criterions[0]->optimize();
+    }
+
+    $crits = $this->criterions;
+    $this->criterions = array();
+
+    foreach ($crits as $crit)
+    {
+      $new = $crit->optimize();
+
+      if (!$new instanceof xfCriterionEmpty)
+      {
+        $this->criterions[] = $new;
+      }
+    }
+
+    return $this;
   }
 }

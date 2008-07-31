@@ -23,7 +23,7 @@ final class xfCriterionProhibited extends xfCriterionDecorator
   {
     $translator->setNextProhibited();
 
-    $this->getCriterion()->translate($translator);
+    parent::translate($translator);
   }
 
   /**

@@ -123,4 +123,12 @@ final class xfCriterionRange implements xfCriterion
   {
     $translator->createRange($this->start, $this->end, $this->startInclude, $this->endInclude);
   }
+
+  /**
+   * @see xfCriterion
+   */
+  public function optimize()
+  {
+    return $this;
+  }
 }

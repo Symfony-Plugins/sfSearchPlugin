@@ -21,7 +21,7 @@ final class xfCriterionTranslatorString implements xfCriterionTranslator
    *
    * @var string
    */
-  private $modofiers = '';
+  private $modifiers = '';
 
   /**
    * The current string.
@@ -114,11 +114,11 @@ final class xfCriterionTranslatorString implements xfCriterionTranslator
   {
     if ($startInclude)
     {
-      $string .= '[';
+      $string = '[';
     }
     else
     {
-      $string .= '(';
+      $string = '(';
     }
 
     $string .= $start . ' ... ' . $end;

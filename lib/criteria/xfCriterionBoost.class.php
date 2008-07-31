@@ -63,7 +63,7 @@ final class xfCriterionBoost extends xfCriterionDecorator
   {
     $translator->setNextBoost($this->boost);
 
-    $this->getCriterion()->translate($translator);
+    parent::translate($translator);
   }
 
   /**
@@ -72,5 +72,18 @@ final class xfCriterionBoost extends xfCriterionDecorator
   public function toString()
   {
     return 'BOOST {' . $this->boost . ' ON ' . parent::toString() . '}';
+  }
+
+  /**
+   * @see xfCriterion
+   */
+  public function optimize()
+  {
+    if ($this->boost == 1)
+    {
+      return $this->getCriterion()->optimize();
+    }
+
+    return $this;
   }
 }

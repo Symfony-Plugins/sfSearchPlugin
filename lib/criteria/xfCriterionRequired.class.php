@@ -28,7 +28,7 @@ final class xfCriterionRequired extends xfCriterionDecorator
   {
     $translator->setNextRequired();
 
-    $this->getCriterion()->translate($translator);
+    parent::translate($translator);
   }
 }
 

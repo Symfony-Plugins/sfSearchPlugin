@@ -30,4 +30,14 @@ interface xfCriterion
    * @param xfCriterionTranslator 
    */
   public function translate(xfCriterionTranslator $translator);
+
+  /**
+   * Attempts to optimize the query by reducing empty or impossible steps.
+   *
+   * This method should return an optimized version of itself, or itself
+   * if no optimized version exists.
+   *
+   * @returns xfCriterion
+   */
+  public function optimize();
 }
