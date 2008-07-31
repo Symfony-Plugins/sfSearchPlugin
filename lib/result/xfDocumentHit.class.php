@@ -138,4 +138,14 @@ final class xfDocumentHit
   {
     return $this->document;
   }
+
+  /**
+   * Gets the service
+   *
+   * @returns string
+   */
+  public function getServiceName()
+  {
+    return $this->document->getField('_service')->getValue();
+  }
 }

@@ -21,7 +21,7 @@ abstract class <?php echo $this->getGeneratedModuleName() ?>Components extends s
   {
     sfLoader::loadHelpers('Partial');
 
-    switch ($this->result->getDocument()->getField('_service')->getValue())
+    switch ($this->result->getServiceName())
     {
       <?php
       $config = $this->get('simple.services', array());

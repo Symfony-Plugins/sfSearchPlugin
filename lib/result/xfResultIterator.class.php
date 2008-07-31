@@ -59,8 +59,7 @@ final class xfResultIterator implements SeekableIterator, Countable
       throw new xfResultException('Iterator for engine must return instances of xfDocumentHit, ' . gettype($hit) . ' given');
     }
 
-    $serviceName = $hit->getDocument()->getField('_service')->getValue();
-    $service = $this->registry->getService($serviceName);
+    $service = $this->registry->getService($hit->getServiceName());
     $hit->setRetorts($service->getRetorts());
 
     return $hit;
