@@ -15,12 +15,14 @@ require 'result/xfDocumentHit.class.php';
 require 'document/xfDocument.class.php';
 require 'document/xfField.class.php';
 require 'document/xfFieldValue.class.php';
+require 'util/xfToolkit.class.php';
 
 $doc = new xfDocument('guid');
 $doc->addField(new xfFieldValue(new xfField('name', xfField::KEYWORD), 'carl'));
+$doc->addField(new xfFieldValue(new xfField('cat_name', xfField::KEYWORD), 'earl'));
 $hit = new xfDocumentHit($doc);
 
-$t = new lime_test(4, new lime_output_color);
+$t = new lime_test(5, new lime_output_color);
 
 $retort = new xfRetortField;
 
@@ -31,3 +33,4 @@ $t->ok(!$retort->can($hit, 'fetchName'), '->can() returns false if method is inv
 
 $t->diag('->respond()');
 $t->is($retort->respond($hit, 'getName'), 'carl', '->respond() returns the field response');
+$t->is($retort->respond($hit, 'getCatName'), 'earl', '->respond() uses camel case');

@@ -60,11 +60,6 @@ final class xfRetortField implements xfRetort
    */
   private function normalize($camel)
   {
-    $camel = substr($camel, 3);
-    $camel = preg_replace('/([A-Z]+)([A-Z][a-z])/', '$1_$2', $camel);
-    $camel = preg_replace('/([a-z\d])([A-Z])/', '$1_$2', $camel);
-    $camel = strtolower($camel);
-
-    return $camel;
+    return xfToolkit::underscore(substr($camel, 3));
   }
 }

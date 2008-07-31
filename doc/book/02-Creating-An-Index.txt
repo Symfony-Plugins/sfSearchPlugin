@@ -108,6 +108,8 @@ $field->registerCallback('md5');
 }}}
 All the fields for 'title' will now automatically be MD5 before being processed by the index.
 
+'''Note:''' sfSearch uses the underscore convention when defining fields.  Instead of creating the field {{{ authorName }}}, use the field {{{ author_name }}}.
+
 === Retorts ===
 Retorts describe how to display the data indexed by the builders.  They provide a convenient means of easily generating data from the results. Like builders, you may register as many retorts as you require.
 
