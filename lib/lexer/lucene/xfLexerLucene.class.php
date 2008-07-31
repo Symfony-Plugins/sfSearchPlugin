@@ -191,6 +191,13 @@ final class xfLexerLucene implements xfLexer
    */
   public function tokenize($string, $encoding = 'utf-8')
   {
+    $string = trim($string, "\r\n\t ");
+
+    if ($string === '')
+    {
+      return array();
+    }
+
     $this->builder = new xfLexemeBuilder($string, $encoding, 'xfLexemeLucene');
 
     $this->setupFiniteStateMachine();
