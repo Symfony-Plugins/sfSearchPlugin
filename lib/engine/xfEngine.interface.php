@@ -90,4 +90,11 @@ interface xfEngine
    * @returns array
    */
   public function describe();
+
+  /**
+   * Gets a unique ID for this engine.
+   *
+   * @returns string
+   */
+  public function id();
 }

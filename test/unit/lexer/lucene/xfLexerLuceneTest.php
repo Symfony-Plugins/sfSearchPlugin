@@ -23,7 +23,7 @@ require 'lexer/lucene/xfLexemeBuilderLuceneAddSyntax.class.php';
 require 'parser/xfParserFSMError.class.php';
 require 'parser/xfParserException.class.php';
 
-$t = new xfLexerTester(new lime_test(182, new lime_output_auto), new xfLexerLucene);
+$t = new xfLexerTester(new lime_test(182, new lime_output_color), new xfLexerLucene);
 
 $t->pass('', array());
 

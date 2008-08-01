@@ -82,4 +82,9 @@ class xfMockEngine implements xfEngine
   {
     return $this->documents;
   }
+
+  public function id()
+  {
+    return 'mock';
+  }
 }
