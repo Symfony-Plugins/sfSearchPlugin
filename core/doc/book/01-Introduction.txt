@@ -25,7 +25,7 @@ cd /path/to/symfony/project
 }}}
   * Checkout sfSearch:
 {{{
-svn co http://svn.symfony-project.com/plugins/sfSearchPlugin/trunk plugins/sfSearchPlugin
+svn co http://svn.symfony-project.com/plugins/sfSearchPlugin/trunk/core plugins/sfSearchPlugin
 }}}
   * Clear symfony's internal cache:
 {{{

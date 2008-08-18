@@ -5,15 +5,15 @@ This guide will quickly setup sfSearch in about 10 minutes.  It is written to in
 Checkout the neccessary packages:
   * Checkout [wiki:sfSearchPlugin]:
 {{{
-svn co http://svn.symfony-project.com/plugins/sfSearchPlugin/trunk plugins/sfSearchPlugin
+svn co http://svn.symfony-project.com/plugins/sfSearchPlugin/trunk/core plugins/sfSearchPlugin
 }}}
   * Checkout [wiki:sfLucenePlugin]:
 {{{
-svn co http://svn.symfony-project.com/plugins/sfLucenePlugin/trunk plugins/sfLucenePlugin
+svn co http://svn.symfony-project.com/plugins/sfLucenePlugin/trunk/lucene plugins/sfLucenePlugin
 }}}
   * Checkout [wiki:sfPropelSearchPlugin]:
 {{{
-svn co http://svn.symfony-project.com/plugins/sfPropelSearchPlugin/trunk plugins/sfPropelSearchPlugin
+svn co http://svn.symfony-project.com/plugins/sfPropelSearchPlugin/trunk/propel plugins/sfPropelSearchPlugin
 }}}
 
 == Configure Index ==
