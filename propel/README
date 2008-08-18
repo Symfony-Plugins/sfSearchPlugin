@@ -15,11 +15,11 @@ sfPropelSearch is currently available from subversion only:
 
   * Checkout sfPropelSearch:
 {{{
-svn co http://svn.symfony-project.com/plugins/sfPropelSearchPlugin/trunk plugins/sfPropelSearchPlugin
+svn co http://svn.symfony-project.com/plugins/sfSearchPlugin/trunk/propel plugins/sfPropelSearchPlugin
 }}}
   * You will also need [wiki:sfSearchPlugin]:
 {{{
-svn co http://svn.symfony-project.com/plugins/sfSearchPlugin/trunk plugins/sfSearchPlugin
+svn co http://svn.symfony-project.com/plugins/sfSearchPlugin/trunk/core plugins/sfSearchPlugin
 }}}
 
 = Usage =

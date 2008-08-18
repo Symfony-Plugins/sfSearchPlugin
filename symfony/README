@@ -15,11 +15,11 @@ sfSymfonySearch is currently available from subversion only:
 
   * Checkout from subversion:
 {{{
-svn co http://svn.symfony-project.com/plugins/sfSymfonySearchPlugin/trunk plugins/sfSymfonySearchPlugin
+svn co http://svn.symfony-project.com/plugins/sfSearchPlugin/trunk/symfony plugins/sfSymfonySearchPlugin
 }}}
   * You will also need [wiki:sfSearchPlugin]:
 {{{
-svn co http://svn.symfony-project.com/plugins/sfSearchPlugin/trunk plugins/sfSearchPlugin
+svn co http://svn.symfony-project.com/plugins/sfSearchPlugin/trunk/core plugins/sfSearchPlugin
 }}}
 
 = Usage =

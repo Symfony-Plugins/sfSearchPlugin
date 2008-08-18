@@ -8,7 +8,7 @@ sfCachedSearch integrates with sfSearch and caches search results to speed up re
 ## Installation
 - sfCachedSearch is available from symfony's subversion repository:
 
-        svn co http://svn.symfony-project.com/plugins/sfCachedSearchPlugin/trunk plugins/sfCachedSearchPlugin
+        svn co http://svn.symfony-project.com/plugins/sfSearchPlugin/trunk/cached plugins/sfCachedSearchPlugin
 
 ## Cache Search Results
 Using sfCachedSearch is easy:

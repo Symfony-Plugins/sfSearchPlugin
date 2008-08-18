@@ -1,0 +1,17 @@
+This repository contains many plugins that relate to the sfSearch system. When 
+checking out sfSearch, write each plugin to its own directory.  
+
+The core of sfSearch is located in the core/ directory.  To checkout the core,
+we would execute:
+
+    $ svn co http://svn.symfony-project.com/plugins/sfSearchPlugin/core plugins/sfSearchPlugin
+
+When checking out additional search plugins, we place them in its own directory:
+
+    $ svn co http://svn.symfony-project.com/plugins/sfSearchPlugin/lucene plugins/sfLucenePlugin
+    $ svn co http://svn.symfony-project.com/plugins/sfSearchPlugin/propel plugins/sfPropelSearchPlugin
+
+New search plugins may be committed to the sfSearch repository at any time
+However, please ensure that every plugin can stand on its own.  This means they
+must have a README and LICENSE file, a lib and test directory, and possibly a
+`package.xml' file for pear.

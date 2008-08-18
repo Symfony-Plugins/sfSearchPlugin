@@ -14,11 +14,11 @@ sfLucene integrates Zend_Search_Lucene and [wiki:sfSearchPlugin sfSearch] to cre
 = Installation =
 sfLucene is currently available from subversion only:
 {{{
-svn co http://svn.symfony-project.com/plugins/sfLucenePlugin/trunk plugins/sfLucenePlugin 
+svn co http://svn.symfony-project.com/plugins/sfSearchPlugin/trunk/lucene plugins/sfLucenePlugin 
 }}}
 You will also need [wiki:sfSearchPlugin]:
 {{{
-svn co http://svn.symfony-project.com/plugins/sfSearchPlugin/trunk plugins/sfSearchPlugin
+svn co http://svn.symfony-project.com/plugins/sfSearchPlugin/trunk/core plugins/sfSearchPlugin
 }}}
 
 = Setup =
