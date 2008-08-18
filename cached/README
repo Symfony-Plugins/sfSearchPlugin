@@ -1,0 +1,53 @@
+# sfCachedSearch
+sfCachedSearch integrates with sfSearch and caches search results to speed up retrievel time.  When sfCachedSearch is queried with the same query, it pulls the results from the cache instead of searching again.
+
+## Requirements
+- sfSearch
+- symfony 1.1
+
+## Installation
+- sfCachedSearch is available from symfony's subversion repository:
+
+        svn co http://svn.symfony-project.com/plugins/sfCachedSearchPlugin/trunk plugins/sfCachedSearchPlugin
+
+## Cache Search Results
+Using sfCachedSearch is easy:
+
+1. Open your search configuration class in `lib/search/YourSearch.class.php`.
+2. Find the line where you set the engine:
+  
+        $this->setEngine($engine);
+
+3. Change the above line so xfCachedEngine wraps your regular engine:
+
+        $this->setEngine(new xfCachedEngine($engine, new sfXCacheCache));
+
+   The constructor to xfCachedEngine takes two arguments.  The first argument is an xfEngine object and the second is a sfCache object.
+
+4. You're done! 
+
+### Cache Lifetime
+sfCachedSearch defaults to you to specify the cache lifetime.  If you do not specify a cache lifetime, results will be stored for a day, which may be too long for popular websites.
+
+You can tweak the lifetime when you create the sfCache object by specifying the `lifetime` option:
+        
+    // set the cache to a lifetime of a minute
+    $this->setEngine(new xfCachedEngine($engine, new sfXCacheCache(array('lifetime' => 60))));
+
+### Optimization and Cleaning
+The cache will be cleaned when the index is optimized. Cleaning means removing all old records. The cache object may do its own automatic cleaning as well.
+
+### Erasing Index
+When the index is erased, the cache is cleared.
+
+
+### Pitfals
+1. While caching your search results *can* improve your performance, it can also degrade it. Please evaluate carefully if you need to utilize caching.  sfCachedSearch is most useful when the same queries are performed repeatedly.
+2. When the index holds an xfCachedEngine object, the cache is activated even if the cache is disabled in your `settings.yml`. 
+
+## License
+sfCachedSearch is released under the MIT license and is free, open source software.
+
+<!--
+vim:ft=mkd
+-->
