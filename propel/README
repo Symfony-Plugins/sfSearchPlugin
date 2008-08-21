@@ -1,42 +1,40 @@
-= Introduction =
+# Introduction =
 sfPropelSearch integrates Propel and sfSearch for indexing of Propel models.
 
 Warning: This documentation is a work-in-progress and may be difficult to read.
 
-= Requirements =
-  * symfony 1.1
-  * PHP 5.2
+# Dependencies
+* sfSearchPlugin
 
-= Dependencies =
-  * [wiki:sfSearchPlugin]
-
-= Installation =
+# Installation
 sfPropelSearch is currently available from subversion only:
 
-  * Checkout sfPropelSearch:
-{{{
-svn co http://svn.symfony-project.com/plugins/sfSearchPlugin/trunk/propel plugins/sfPropelSearchPlugin
-}}}
-  * You will also need [wiki:sfSearchPlugin]:
-{{{
-svn co http://svn.symfony-project.com/plugins/sfSearchPlugin/trunk/core plugins/sfSearchPlugin
-}}}
+* Checkout sfPropelSearch:
 
-= Usage =
+        svn co http://svn.symfony-project.com/plugins/sfSearchPlugin/trunk/propel plugins/sfPropelSearchPlugin
+
+* You will also need [wiki:sfSearchPlugin]:
+
+        svn co http://svn.symfony-project.com/plugins/sfSearchPlugin/trunk/core plugins/sfSearchPlugin
+
+# Usage
 To use sfPropelSearch, configure your service like so in your index:
-{{{
-protected function configure()
-{
-  // ..
 
-  $propelService = new xfService(new xfPropelIdentifier('MyModel'));
-  $propelService->addBuilder(new xfPropelBuilder(array(new xfField('username', xfField::TEXT), new xfField('about', xfField::TEXT))));
+    protected function configure()
+    {
+    // ..
 
-  $this->getServiceRegistry()->register($propelService);
+    $propelService = new xfService(new xfPropelIdentifier('MyModel'));
+    $propelService->addBuilder(new xfPropelBuilder(array(new xfField('username', xfField::TEXT), new xfField('about', xfField::TEXT))));
 
-  // ...
-}
-}}}
+    $this->getServiceRegistry()->register($propelService);
 
-= Coming Soon =
+    // ...
+    }
+
+# Coming Soon 
 The rest of the documentation will be coming shortly.
+
+<!--
+vim:ft=mkd
+-->

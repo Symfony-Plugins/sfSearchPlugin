@@ -1,40 +1,37 @@
-= Introduction =
+# Introduction
 sfSymfonySearch gives sfSearch the ability to index and display symfony actions.
 
 Warning: This documentation is a work-in-progress and may be difficult to read.
 
-= Requiremenets =
-  * symfony 1.1
-  * PHP 5.2
+# Dependencies
+* sfSearchPlugin
 
-= Dependencies =
-  * [wiki:sfSearchPlugin]
-
-= Installation =
+# Installation 
 sfSymfonySearch is currently available from subversion only:
 
-  * Checkout from subversion:
-{{{
-svn co http://svn.symfony-project.com/plugins/sfSearchPlugin/trunk/symfony plugins/sfSymfonySearchPlugin
-}}}
-  * You will also need [wiki:sfSearchPlugin]:
-{{{
-svn co http://svn.symfony-project.com/plugins/sfSearchPlugin/trunk/core plugins/sfSearchPlugin
-}}}
+* Checkout from subversion:
 
-= Usage =
+        svn co http://svn.symfony-project.com/plugins/sfSearchPlugin/trunk/symfony plugins/sfSymfonySearchPlugin
+
+* You will also need sfSearchPlugin:
+
+        svn co http://svn.symfony-project.com/plugins/sfSearchPlugin/trunk/core plugins/sfSearchPlugin
+
+# Usage
 Configure sfSymfonySearch through a sfSearch service:
 
-{{{
-$identifier = new xfSymfonyIdentifier('app', 'module');
-$identifier->addAction('action', array('key' => 'value'));
-$identifier->addAction('action', array('key2' => 'value2')); // same action, different request params
-$identifier->addAction('foobar');
+    $identifier = new xfSymfonyIdentifier('app', 'module');
+    $identifier->addAction('action', array('key' => 'value'));
+    $identifier->addAction('action', array('key2' => 'value2')); // same action, different request params
+    $identifier->addAction('foobar');
 
-$service = new xfService($identifier);
-$service->addBuilder(new xfSymfonyBuilder);
-$service->addRetort(new xfSymfonyRetortRoute);
-$service->addRetort(new xfRetortField);
+    $service = new xfService($identifier);
+    $service->addBuilder(new xfSymfonyBuilder);
+    $service->addRetort(new xfSymfonyRetortRoute);
+    $service->addRetort(new xfRetortField);
 
-$registry->register($service);
-}}}
+    $registry->register($service);
+
+<!--
+vim:ft=mkd
+-->
