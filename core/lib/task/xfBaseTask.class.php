@@ -52,7 +52,13 @@ abstract class xfBaseTask extends sfBaseTask
   {
     if (!class_exists($index, true))
     {
-      throw new sfException('Index ' . $index . ' does not exist');
+      throw new sfException('Index "' . $index . '" does not exist');
+    }
+
+    $ref = new ReflectionClass($index);
+    if (!$ref->implementsInterface('xfIndex'))
+    {
+      throw new sfException('Class "' . $index . '" does not implement xfIndex interface.');
     }
   }
 }
