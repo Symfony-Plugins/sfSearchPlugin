@@ -39,7 +39,7 @@ $t->diag('->set*(), ->add*()');
 $a = new xfLuceneAnalyzer(xfLuceneAnalyzer::UTF8);
 $a->setCaseInsensitive();
 $a->addStopWords(array('the', 'was', 'were'));
-$a->addStopWordsFromFile(dirname(__FILE__) . '/../../sandbox/stopwords.txt');
+$a->addStopWordsFromFile(dirname(__FILE__) . '/stopwords.txt');
 $a->setShortWordLength(2);
 $a->setStemmer(new xfLuceneStemmerPorter);
 
