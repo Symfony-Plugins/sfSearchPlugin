@@ -1,0 +1,3 @@
+Unit Tests
+==========
+sfPropelSearch requires Propel 1.3 to properly execute unit tests.
