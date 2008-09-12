@@ -7,10 +7,10 @@
  * file that was distributed with this source code.
  */
 
-require dirname(__FILE__) . '/../../../sfSearchPlugin/test/bootstrap/unit.php';
+require dirname(__FILE__) . '/../../../core/test/bootstrap/unit.php';
 
 define('PROPEL_12', SF_LIB_DIR . '/plugins/sfPropelPlugin/lib');
-define('PROPEL_13', dirname(__FILE__) . '/../../../sfPropelPlugin/lib');
+define('PROPEL_13', realpath(dirname(__FILE__) . '/../../../../sf/plugins/sfPropelPlugin/lib'));
 
 set_include_path(get_include_path() . PATH_SEPARATOR . dirname(__FILE__) . '/../../lib');
 set_include_path(get_include_path() . PATH_SEPARATOR . dirname(__FILE__) . '/../../test');
@@ -43,7 +43,7 @@ function autoloadPropel($v)
   sfSimpleAutoload::register();
 }
 
-function setupPropel($db = 'database.db', $v)
+function setupPropel($db, $v)
 {
   if ($v == 12)
   {

@@ -7,8 +7,6 @@
  * file that was distributed with this source code.
  */
 
-require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'util' . DIRECTORY_SEPARATOR . 'xfException.class.php';
-
 /**
  * A service exception
  *

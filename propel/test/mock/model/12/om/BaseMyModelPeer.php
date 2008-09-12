@@ -54,7 +54,7 @@ abstract class BaseMyModelPeer {
 	
 	public static function getMapBuilder()
 	{
-		return BasePeer::getMapBuilder('plugins.sfPropelSearchPlugin.test.mock.model.12.map.MyModelMapBuilder');
+		return BasePeer::getMapBuilder('mock.model.12.map.MyModelMapBuilder');
 	}
 	
 	public static function getPhpNameMap()

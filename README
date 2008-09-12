@@ -1,17 +1,59 @@
-This repository contains many plugins that relate to the sfSearch system. When 
-checking out sfSearch, write each plugin to its own directory.  
+sfSearch Repository
+===================
+This repository contains plugins that relate to the sfSearch system:
 
-The core of sfSearch is located in the core/ directory.  To checkout the core,
-we would execute:
+    core/           All sfSearch plugins depend on the core
+    lucene/         Searches using Zend_Search_Lucene
+    solr/           Searches using Apache Solr
+    cached/         Searches using a cache layer
+    propel/         Indexes Propel models
+    doctrine/       Indexes Doctrine models
+    symfony/        Indexes symfony actions
 
-    $ svn co http://svn.symfony-project.com/plugins/sfSearchPlugin/core plugins/sfSearchPlugin
+    bin/            Contains common scripts
+    test/           Contains the test suite helpers
 
-When checking out additional search plugins, we place them in its own directory:
+Each package exists as its own plugin.  There is no bloated sfSearchPlugin that
+contains everything.
 
-    $ svn co http://svn.symfony-project.com/plugins/sfSearchPlugin/lucene plugins/sfLucenePlugin
-    $ svn co http://svn.symfony-project.com/plugins/sfSearchPlugin/propel plugins/sfPropelSearchPlugin
+Notes for Users
+---------------
+If you are using the sfSearch system, be warned that this plugin is HIGHLY
+unstable and has not even reached alpha testing!  To start using the plugin,
+checkout the core into your project and read the documentation:
 
-New search plugins may be committed to the sfSearch repository at any time
+    $ cd /path/to/project
+    $ svn co http://svn.symfony-project.com/plugins/sfSearchPlugin/trunk/core plugins/sfSearchPlugin
+
+Notes for Developers
+--------------------
+sfSearch provides a shell script to quickly get started with sfSearch
+development.  Simply check the shell script out from the repository and use it
+to initialize a development environment:
+
+    $ cd ~
+    $ svn export http://svn.symfony-project.com/plugins/sfSearchPlugin/trunk/bin/init-dev.sh
+    $ mkdir sfSearch 
+    $ cd sfSearch
+    $ ../init-dev.sh
+
+This sequence will create the file structure:
+
+    sfSearch/
+        search/
+            core/
+            lucene/
+            solr/
+            ...
+        symfony/
+            apps/
+            ...
+            plugins/
+                sfSearchPlugin (symbolic link)
+                sfLucenePlugin (symbolic link)
+                ...
+
+New search plugins may be committed to the sfSearch repository at any time.
 However, please ensure that every plugin can stand on its own.  This means they
 must have a README and LICENSE file, a lib and test directory, and possibly a
 `package.xml' file for pear.

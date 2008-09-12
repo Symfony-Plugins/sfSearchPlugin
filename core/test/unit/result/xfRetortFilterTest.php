@@ -9,6 +9,7 @@
 
 
 require dirname(__FILE__) . '/../../bootstrap/unit.php';
+require 'util/xfException.class.php';
 require 'result/xfRetort.interface.php';
 require 'result/xfRetortFilter.class.php';
 require 'result/xfRetortFilterCallback.interface.php';

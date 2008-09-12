@@ -7,8 +7,6 @@
  * file that was distributed with this source code.
  */
 
-require_once dirname(__FILE__) . '/xfServiceException.class.php';
-
 /**
  * Service found, but ignored exception
  *

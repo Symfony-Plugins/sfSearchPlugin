@@ -7,8 +7,6 @@
  * file that was distributed with this source code.
  */
 
-require_once dirname(__FILE__) . '/../../../sfSearchPlugin/lib/util/xfException.class.php';
-
 /**
  * Exception for sfSymfonySearch
  *

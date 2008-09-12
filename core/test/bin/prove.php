@@ -7,7 +7,7 @@
  * file that was distributed with this source code.
  */
 
-require dirname(__FILE__) . '/suite.php';
+require dirname(__FILE__) . '/../../../test/suite.php';
 
 $t = new lime_search(dirname(__FILE__) . '/../../', new lime_output_color);
 $t->prove();

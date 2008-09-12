@@ -7,6 +7,6 @@
  * file that was distributed with this source code.
  */
 
-require dirname(__FILE__) . '/../../../sfSearchPlugin/test/bootstrap/unit.php';
+require dirname(__FILE__) . '/../../../core/test/bootstrap/unit.php';
 
 set_include_path(get_include_path() . PATH_SEPARATOR . dirname(__FILE__) . '/../../lib');

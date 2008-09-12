@@ -9,6 +9,7 @@
 
 
 require dirname(__FILE__) . '/../../bootstrap/unit.php';
+require 'util/xfException.class.php';
 require 'engine/xfEngineException.class.php';
 
 $t = new lime_test(1, new lime_output_color);

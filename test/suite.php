@@ -7,7 +7,8 @@
  * file that was distributed with this source code.
  */
 
-require_once dirname(__FILE__) . '/../bootstrap/unit.php';
+require_once dirname(__FILE__) . '/symfony.php';
+require_once 'vendor/lime/lime.php';
 require_once 'util/sfFinder.class.php';
 
 /**
@@ -95,7 +96,7 @@ class lime_search_harness extends lime_harness
 {
   protected function get_relative_file($file)
   {
-    return preg_replace('#^.*/(.*?)Plugin/test/(unit|functional)/#', '[$1] $2/', $file);
+    return preg_replace('#^.*/(.*?)/test/(unit|functional)/#', '[$1] $2/', $file);
   }
 }
 

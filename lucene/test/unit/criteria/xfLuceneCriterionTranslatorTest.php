@@ -8,6 +8,7 @@
  */
 
 require dirname(__FILE__) . '/../../bootstrap/unit.php';
+require 'util/xfException.class.php';
 require 'util/xfLuceneZendManager.class.php';
 require 'criteria/xfCriterionTranslator.interface.php';
 require 'criteria/xfLuceneCriterionTranslator.class.php';

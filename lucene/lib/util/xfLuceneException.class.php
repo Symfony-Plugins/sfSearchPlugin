@@ -7,9 +7,6 @@
  * file that was distributed with this source code.
  */
 
-
-require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'sfSearchPlugin' . DIRECTORY_SEPARATOR . 'lib' . DIRECTORY_SEPARATOR . 'util' . DIRECTORY_SEPARATOR . 'xfException.class.php';
-
 /**
  * The base xfLuceneException
  *

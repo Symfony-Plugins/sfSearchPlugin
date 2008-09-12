@@ -8,8 +8,8 @@
  */
 
 require dirname(__FILE__) . '/../../bootstrap/unit.php';
-require 'util/xfPropelPDOIterator.class.php';
 require 'util/xfException.class.php';
+require 'util/xfPropelPDOIterator.class.php';
 
 autoloadPropel(13);
 setupPropel('iterator', 13);

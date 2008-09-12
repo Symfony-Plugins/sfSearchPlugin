@@ -8,10 +8,10 @@
  */
 
 require dirname(__FILE__) . '/../../bootstrap/unit.php';
+require 'util/xfException.class.php';
 require 'service/xfIdentifier.interface.php';
 require 'service/xfPropelIdentifier.class.php';
 require 'util/xfPropelResourceIterator.class.php';
-require 'util/xfException.class.php';
 require 'util/xfPropelVersion.class.php';
 
 autoloadPropel(12);

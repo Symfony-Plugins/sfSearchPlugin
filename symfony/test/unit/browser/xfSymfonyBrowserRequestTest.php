@@ -9,6 +9,7 @@
 
 require dirname(__FILE__) . '/../../bootstrap/unit.php';
 require 'browser/xfSymfonyBrowserRequest.class.php';
+require 'util/xfException.class.php';
 require 'util/xfSymfonyException.class.php';
 
 $t = new lime_test(30, new lime_output_color);

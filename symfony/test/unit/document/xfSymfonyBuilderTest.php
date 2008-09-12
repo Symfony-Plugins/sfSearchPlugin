@@ -8,6 +8,7 @@
  */
 
 require dirname(__FILE__) . '/../../bootstrap/unit.php';
+require 'util/xfException.class.php';
 require 'document/xfBuilder.interface.php';
 require 'document/xfSymfonyBuilder.class.php';
 require 'document/xfDocument.class.php';

@@ -19,12 +19,14 @@ require 'result/xfDocumentHit.class.php';
 require 'cache/sfCache.class.php';
 require 'cache/sfFileCache.class.php';
 
+define('LOCATION', realpath(dirname(__FILE__) . '/../../sandbox'));
+
 $t = new lime_test(10, new lime_output_color);
 
 $real = new xfMockEngine;
 $real->add(new xfDocument('foo'));
 
-$cache = new sfFileCache(array('lifetime' => 1, 'cache_dir' => realpath(dirname(__FILE__) . '/../../sandbox')));
+$cache = new sfFileCache(array('lifetime' => 1, 'cache_dir' => LOCATION));
 $cache->clean(sfCache::ALL);
 
 $cengine = new xfCachedEngine($real, $cache);
@@ -60,3 +62,9 @@ $t->isa_ok($cengine->describe(), 'array', '->describe() produces an array');
 $t->is($cengine->id(), 'cached_mock', '->id() produces an ID');
 
 $cache->clean(sfCache::ALL);
+
+foreach (glob(LOCATION . '/*') as $file)
+{
+  unlink($file);
+}
+rmdir(LOCATION);

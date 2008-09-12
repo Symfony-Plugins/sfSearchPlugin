@@ -9,6 +9,7 @@
 
 
 require dirname(__FILE__) . '/../../bootstrap/unit.php';
+require 'util/xfException.class.php';
 require 'document/xfDocument.class.php';
 require 'document/xfFieldValue.class.php';
 require 'document/xfField.class.php';

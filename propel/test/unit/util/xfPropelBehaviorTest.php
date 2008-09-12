@@ -8,12 +8,12 @@
  */
 
 require dirname(__FILE__) . '/../../bootstrap/unit.php';
+require 'util/xfException.class.php';
 require 'util/xfPropelBehavior.class.php';
 require 'index/xfIndexManager.class.php';
 require 'mock/index/xfMockPropelIndex.class.php';
 require 'log/xfLogger.interface.php';
 require 'log/xfLoggerBlackhole.class.php';
-require 'util/xfException.class.php';
 require 'util/xfPropelVersion.class.php';
 require 'util/xfToolkit.class.php';
 autoloadPropel(12);

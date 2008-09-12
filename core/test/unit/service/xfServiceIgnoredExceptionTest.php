@@ -10,6 +10,8 @@
 require dirname(__FILE__) . '/../../bootstrap/unit.php';
 require 'service/xfService.class.php';
 require 'mock/service/xfMockIdentifier.class.php';
+require 'util/xfException.class.php';
+require 'service/xfServiceException.class.php';
 require 'service/xfServiceIgnoredException.class.php';
 
 $t = new lime_test(1, new lime_output_color);
